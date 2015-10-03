@@ -6,7 +6,7 @@
 package dao;
 
 import java.util.List;
-import model.Grupo;
+import model.Pessoa;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -15,11 +15,11 @@ import util.HibernateUtil;
  *
  * @author mateus
  */
-public class GrupoDAO {
-    
+public class PessoaDAO {
+     
     private Session session;
     
-    public GrupoDAO() {
+    public PessoaDAO() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
 
@@ -30,7 +30,7 @@ public class GrupoDAO {
         return session;
     }
 
-    public void insert(Grupo i) {
+    public void insert(Pessoa i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.save(i);
@@ -38,7 +38,7 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public void update(Grupo i) {
+    public void update(Pessoa i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.merge(i);
@@ -46,7 +46,7 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public void delete(Grupo i) {
+    public void delete(Pessoa i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.delete(i);
@@ -54,18 +54,17 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public Grupo findById(int id) {
+    public Pessoa findById(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Grupo m = (Grupo) session.get(Grupo.class, id);
+        Pessoa m = (Pessoa) session.get(Pessoa.class, id);
         //session.close();
         return m;
     }
 
-    public List<Grupo> findAll() {
+    public List<Pessoa> findAll() {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Grupo> ls = session.createQuery("from Grupo").list();
+        List<Pessoa> ls = session.createQuery("from Pessoa").list();
         //session.close();
         return ls;
     }
-    
 }

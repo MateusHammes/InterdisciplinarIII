@@ -5,5 +5,6 @@
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.dialect">org.hibernate.dialect.DB2Dialect</property>
     <property name="hibernate.format_sql">true</property>
+    <mapping class="model.Grupo"/>
   </session-factory>
 </hibernate-configuration>

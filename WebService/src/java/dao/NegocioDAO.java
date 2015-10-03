@@ -6,7 +6,7 @@
 package dao;
 
 import java.util.List;
-import model.Grupo;
+import model.Negocio;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -15,11 +15,11 @@ import util.HibernateUtil;
  *
  * @author mateus
  */
-public class GrupoDAO {
-    
+public class NegocioDAO {
+     
     private Session session;
     
-    public GrupoDAO() {
+    public NegocioDAO() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
 
@@ -30,7 +30,7 @@ public class GrupoDAO {
         return session;
     }
 
-    public void insert(Grupo i) {
+    public void insert(Negocio i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.save(i);
@@ -38,7 +38,7 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public void update(Grupo i) {
+    public void update(Negocio i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.merge(i);
@@ -46,7 +46,7 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public void delete(Grupo i) {
+    public void delete(Negocio i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.delete(i);
@@ -54,18 +54,17 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public Grupo findById(int id) {
+    public Negocio findById(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Grupo m = (Grupo) session.get(Grupo.class, id);
+        Negocio m = (Negocio) session.get(Negocio.class, id);
         //session.close();
         return m;
     }
 
-    public List<Grupo> findAll() {
+    public List<Negocio> findAll() {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Grupo> ls = session.createQuery("from Grupo").list();
+        List<Negocio> ls = session.createQuery("from Negocio").list();
         //session.close();
         return ls;
     }
-    
 }

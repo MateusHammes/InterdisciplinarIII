@@ -6,7 +6,7 @@
 package dao;
 
 import java.util.List;
-import model.Grupo;
+import model.Registros;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -15,11 +15,10 @@ import util.HibernateUtil;
  *
  * @author mateus
  */
-public class GrupoDAO {
-    
+public class RegistrosDAO {
     private Session session;
     
-    public GrupoDAO() {
+    public RegistrosDAO() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
 
@@ -30,7 +29,7 @@ public class GrupoDAO {
         return session;
     }
 
-    public void insert(Grupo i) {
+    public void insert(Registros i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.save(i);
@@ -38,7 +37,7 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public void update(Grupo i) {
+    public void update(Registros i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.merge(i);
@@ -46,7 +45,7 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public void delete(Grupo i) {
+    public void delete(Registros i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.delete(i);
@@ -54,18 +53,17 @@ public class GrupoDAO {
         //session.close();
     }
 
-    public Grupo findById(int id) {
+    public Registros findById(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Grupo m = (Grupo) session.get(Grupo.class, id);
+        Registros m = (Registros) session.get(Registros.class, id);
         //session.close();
         return m;
     }
 
-    public List<Grupo> findAll() {
+    public List<Registros> findAll() {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Grupo> ls = session.createQuery("from Grupo").list();
+        List<Registros> ls = session.createQuery("from Registros").list();
         //session.close();
         return ls;
     }
-    
 }
