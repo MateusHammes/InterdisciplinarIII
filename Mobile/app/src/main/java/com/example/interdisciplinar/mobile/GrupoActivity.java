@@ -37,7 +37,7 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
         btnNovo = (Button)findViewById(R.id.grupoBtnNovo);
         btnNovo.setOnClickListener(this);
 
-        adpGrupo = new ArrayAdapter<Grupo>(this, android.R.layout.simple_list_item_1);
+        adpGrupo = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
         grupoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -68,7 +68,6 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         Log.i("--ACAO--", "onDESTROY");
-
     }
 
     @Override
@@ -82,20 +81,17 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
     protected void onStop() {
         super.onStop();
         Log.i("--ACAO--", "onSTOP");
-
     }
 
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
         Log.i("--ACAO--", "onFINALIZE");
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-       // new CarregaGrupos().execute();
     }
 
     @Override
