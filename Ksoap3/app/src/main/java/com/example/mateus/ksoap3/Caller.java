@@ -8,6 +8,10 @@ public class Caller extends Thread {
             //GroupList.lsNamesGrupos = call.SelectGrupos();
             MainActivity.lsNamesGrupos.add(call.GetWord());
 
+///metodo de testees
+
+
+
             MainActivity.keep =false;
         }catch (Exception e){
                     /*List<String> lsErros = new ArrayList<String>();
