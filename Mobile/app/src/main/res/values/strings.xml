@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Mobile</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_grupo">Grupos</string>
+    <string name="title_activity_activity_grupo_form">Grupo</string>
+    <string name="GrupoNome">Nome</string>
+    <string name="grupoNomeHint">Nome do Grupo</string>
+    <string name="Salvar">Salvar</string>
+    <string name="grupoNovo">Novo Grupo</string>
+    <string name="title_activity_negocio">Negocios</string>
+    <string name="Pesquisar">Pesquisar</string>
+    <string name="title_activity_negocio_form">negocioFormActivity</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="title_activity_produto">Produtos</string>
+    <string name="title_activity_produto_activity_form">Produto</string>
+    <string name="Nome">Nome</string>
+    <string name="Descricao">Descriçao</string>
+    <string name="Produtos">Produtos</string>
+    <string name="Materiais">Materiais</string>
+    <string name="title_activity_negocio_activity_details">Detalhes</string>
+</resources>
