@@ -57,7 +57,6 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
                 final Grupo gp = adpGrupo.getItem(position);
                 //  boolean deleta = Dialog.ShowDialog(GrupoActivity.this, "Deletar Grupo", "Você deseja deletar este Grupo?");
                 Log.i("Clickou", " -  Passou - ");
-
                 new AlertDialog.Builder(GrupoActivity.this)
                         .setTitle("Deletar Grupo")
                         .setMessage("Você deseja deletar este Grupo?")
@@ -158,21 +157,18 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-    public void AtualizaGrid(List<Grupo> lsGrupos){
-        Log.i("ATUALIZA","VAI CARREGA");
+    protected void AtualizaGrid(List<Grupo> lsGrupos){
         if(lsGrupos!=null) {
             adpGrupo.clear();
             for (Grupo gp : lsGrupos) {
                 adpGrupo.add(gp);//converte object em Grupo
             }
             grupoListView.setAdapter(adpGrupo);
-            Log.i("ATUALIZA", " FEIIIITOOO!!!!!!!");
         }
     }
 
     private class CarregaRegistros extends AsyncTask<String, Integer, List<Grupo>> {
-        ProgressBar pg = (ProgressBar) findViewById(R.id.progressBar);
-
+        ProgressBar pg = (ProgressBar) findViewById(R.id.grupoProgressBar);
         @Override
         protected List<Grupo> doInBackground(String... params) {
             try{

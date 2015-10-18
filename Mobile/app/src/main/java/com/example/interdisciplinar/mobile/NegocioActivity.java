@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -69,9 +70,18 @@ public class NegocioActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    protected void AtualizaGrid(List<Negocio> lsItens){
+        if(lsItens!=null) {
+            adpNegocio.clear();
+            for (Negocio item : lsItens) {
+                adpNegocio.add(item);//converte object em Grupo
+            }
+            listView.setAdapter(adpNegocio);
+        }
+    }
 
     private class CarregaRegistros extends AsyncTask<String, Integer, List<Negocio>>{
-
+        ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
         @Override
         protected List<Negocio> doInBackground(String... params) {
             return DAO.SelecionaNegocios();
@@ -81,16 +91,16 @@ public class NegocioActivity extends AppCompatActivity {
         protected void onPostExecute(List<Negocio> lsNegocios) {
             super.onPostExecute(lsNegocios);
             if(lsNegocios!=null){
-                adpNegocio.clear();
-                for (Negocio neg:lsNegocios) {
-                    adpNegocio.add(neg);
-                }
+                AtualizaGrid(lsNegocios);
             }
+            pg.setVisibility(View.GONE);
         }
+
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
+            pg.setProgress(values[0]);
         }
     }
 

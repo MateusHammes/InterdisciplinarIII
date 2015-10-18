@@ -10,14 +10,12 @@
 
 
     <TextView
+        style="@style/txtHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Grupos"
         android:id="@+id/textView5"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:gravity="center" />
+     />
 
     <TextView
         android:layout_width="match_parent"
@@ -32,11 +30,29 @@
         android:id="@+id/grupoTxtNome"
         android:hint="@string/grupoNomeHint" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Salvar"
-        android:id="@+id/grupoButtonSalvar"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="70dp">
+
+        <Button
+            style="@style/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Cancelar"
+            android:id="@+id/button2" />
+
+        <Button
+            style="@style/btnSalvar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Salvar"
+            android:id="@+id/grupoButtonSalvar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp" />
+
+    </LinearLayout>
+
 </LinearLayout>

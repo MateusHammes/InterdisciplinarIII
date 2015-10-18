@@ -46,66 +46,11 @@ public class GrupoActivityForm extends AppCompatActivity {
     public void salvaGrupo(){
         grupo.setGru_vdescricao(txtNome.getText().toString());
         Log.i("SALVA", "VAI SALVA?");
-
-      //  DAO.Salvar(grupo);
         new Salvar().execute();
     }
 
-    //region inserir
-    /*public void InserirGrupo(final Grupo grupo){
-        final String nameSpace = "http://Server/";
-        final String metodoWeb = "salvar";
-        final String soapAction ="http://Server/salvar";
-        final String url = "http://192.168.0.106:8080/WebService/WService?wsdl";
-
-        Thread insertThread  = new Thread(){
-            public  void run(){
-                try {
-                    SoapObject request = new SoapObject(nameSpace, metodoWeb);
-                    PropertyInfo pi = new PropertyInfo();
-                    pi.name = "Grupo";
-                    pi.setValue(new Wrapper(grupo));
-                    pi.setType(Wrapper.class);
-                    pi.setNamespace(nameSpace);
-
-                    request.addProperty(pi);
-                    SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-                    envelope.dotNet = true;
-                    envelope.setOutputSoapObject(request);
-
-                    envelope.addMapping(nameSpace, "Grupo", Wrapper.class);
-
-                    HttpTransportSE androidHttpTransport = new HttpTransportSE(url);
-                    androidHttpTransport.call(soapAction, envelope);
-                    envelope.setOutputSoapObject(request);
-                    HttpTransportSE http = new HttpTransportSE(url);
-                    http.call(soapAction, envelope);
-
-                    final SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-
-                    if(response.toString().equals("True")){
-                        //Objeto Inserido
-                    }else{
-                        //Erro ao Inserir
-                    }
-
-                }catch (Exception e){
-                    Log.i("Erro",e.toString());
-                    e.printStackTrace();
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-        insertThread.start();
-
-
-
-    }*/
-///endregion
-
     private void GetGrupo(){
         EditText descricao = (EditText) findViewById(R.id.grupoTxtNome);
-        //Grupo gru = new Grupo();
         grupo.setGru_vdescricao(descricao.getText().toString());
     }
 

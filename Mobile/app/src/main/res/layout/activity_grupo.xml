@@ -21,6 +21,14 @@
             android:layout_centerHorizontal="true" />
     </LinearLayout>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText4"
+        android:hint="Pesquisar" />
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,6 +41,7 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar" />
+        android:id="@+id/grupoProgressBar"
+        android:layout_gravity="center" />
 
 </LinearLayout>

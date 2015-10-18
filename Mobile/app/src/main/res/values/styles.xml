@@ -5,4 +5,38 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="btnSalvar">
+        <item name="android:background">#00bf06</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="btnCancelar">
+        <item name="android:background">#ccc</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="txtHeader">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">30dp</item>
+    </style>
+
+
+    <style name="loader" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:minWidth">55dp</item>
+        <item name="android:maxWidth">60dp</item>
+        <item name="android:minHeight">55dp</item>
+        <item name="android:maxHeight">60dp</item>
+    </style>
+
+
 </resources>
