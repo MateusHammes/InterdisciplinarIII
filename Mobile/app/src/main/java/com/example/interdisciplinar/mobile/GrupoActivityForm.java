@@ -43,6 +43,12 @@ public class GrupoActivityForm extends AppCompatActivity {
         }
     }
 
+    public void Cancelar(View view){
+        finish();
+    }
+
+
+
     public void salvaGrupo(){
         grupo.setGru_vdescricao(txtNome.getText().toString());
         Log.i("SALVA", "VAI SALVA?");

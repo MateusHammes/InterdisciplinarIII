@@ -34,7 +34,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:layout_marginTop="70dp">
 
         <Button
@@ -42,16 +41,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Cancelar"
-            android:id="@+id/button2" />
+            android:id="@+id/button2"
+            android:onClick="Cancelar"/>
 
         <Button
             style="@style/btnSalvar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Salvar"
-            android:id="@+id/grupoButtonSalvar"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp" />
+            android:id="@+id/grupoButtonSalvar" />
 
     </LinearLayout>
 

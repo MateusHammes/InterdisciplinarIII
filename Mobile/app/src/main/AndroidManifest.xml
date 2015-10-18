@@ -22,31 +22,38 @@
         </activity>
         <activity
             android:name=".GrupoActivity"
-            android:label="@string/title_activity_grupo" >
+            android:label="@string/title_activity_grupo"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".GrupoActivityForm"
-            android:label="@string/title_activity_activity_grupo_form" >
+            android:label="@string/title_activity_activity_grupo_form"
+            android:parentActivityName=".GrupoActivity">
         </activity>
         <activity
             android:name=".NegocioActivity"
-            android:label="@string/title_activity_negocio" >
+            android:label="@string/title_activity_negocio"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".NegocioActivityForm"
-            android:label="@string/title_activity_negocio_form" >
+            android:label="@string/title_activity_negocio_form"
+            android:parentActivityName=".NegocioActivity">
         </activity>
         <activity
             android:name=".ProdutoActivity"
-            android:label="@string/title_activity_produto" >
+            android:label="@string/title_activity_produto"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".ProdutoActivityForm"
-            android:label="@string/title_activity_produto_activity_form" >
+            android:label="@string/title_activity_produto_activity_form"
+            android:parentActivityName=".ProdutoActivity">
         </activity>
         <activity
             android:name=".negocioActivityDetails"
-            android:label="@string/title_activity_negocio_activity_details" >
+            android:label="@string/title_activity_negocio_activity_details"
+            android:parentActivityName=".NegocioActivity">
         </activity>
     </application>
 

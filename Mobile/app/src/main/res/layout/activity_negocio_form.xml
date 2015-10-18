@@ -118,15 +118,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/Cancelar"
                     android:id="@+id/negocioBtnCancelar"
-                    android:onClick="CallNegocioIndex"/>
+                    android:onClick="Cancelar"/>
 
                 <Button
                     style="@style/btnSalvar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Salvar"
-                    android:id="@+id/negocioBtnSalvar"
-                    />
+                    android:id="@+id/negocioBtnSalvar"/>
+
             </LinearLayout>
 
         </LinearLayout>

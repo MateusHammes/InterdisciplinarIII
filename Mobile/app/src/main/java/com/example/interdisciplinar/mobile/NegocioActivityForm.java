@@ -82,6 +82,9 @@ public class NegocioActivityForm extends AppCompatActivity {
         dpk.show();
     }
 
+    public void Cancelar(View view) {
+        finish();
+    }
 
 
     private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
