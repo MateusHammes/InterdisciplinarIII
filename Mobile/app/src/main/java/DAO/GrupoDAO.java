@@ -15,16 +15,20 @@ import util.Connection;
 public class GrupoDAO {
 
     public List<Grupo> SelecionaGrupo(){
-        String url = Connection.url.concat("grupos");
-        RestTemplate rest = new RestTemplate();
-        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-        messageConverters.add(new MappingJackson2HttpMessageConverter());
-        // Add the message converters to the restTemplate
-        rest.setMessageConverters(messageConverters);
-
-        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        Grupo[] arrayGrupo  = rest.getForObject(url, Grupo[].class); //(url,Grupo.class,));
-        return Arrays.asList(arrayGrupo);
+        try {
+            String url = Connection.url.concat("grupos");
+            RestTemplate rest = new RestTemplate();
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            // Add the message converters to the restTemplate
+            rest.setMessageConverters(messageConverters);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            Grupo[] arrayGrupo = rest.getForObject(url, Grupo[].class); //(url,Grupo.class,));
+            return Arrays.asList(arrayGrupo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean Salvar(Grupo grupo){

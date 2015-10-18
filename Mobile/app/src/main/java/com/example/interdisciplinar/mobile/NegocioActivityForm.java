@@ -2,8 +2,8 @@ package com.example.interdisciplinar.mobile;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,9 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import model.Negocio;
 import util.DateUtil;
@@ -40,11 +38,7 @@ public class NegocioActivityForm extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle !=null && bundle.containsKey("NEGOCIO")){
             negocio =(Negocio) bundle.getSerializable("NEGOCIO");
-
         }
-
-
-
     }
 
     @Override
@@ -90,15 +84,9 @@ public class NegocioActivityForm extends AppCompatActivity {
     private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            Calendar cal  = Calendar.getInstance();
-            cal.set(year, monthOfYear, dayOfMonth);
-            Date date = cal.getTime();
-            DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
-            String dt = format.format(date);
-
+            String dt =  DateUtil.dateToString(year,monthOfYear,dayOfMonth);
             txtDate.setText(dt);
-            negocio.setNeg_dprevisao(date); //passo a data direto pro objeto
-
+            // negocio.setNeg_dprevisao(date); //passo a data direto pro objeto
         }
     }
 
