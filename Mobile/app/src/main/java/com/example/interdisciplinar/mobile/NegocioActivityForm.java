@@ -9,14 +9,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import model.Negocio;
+import util.DateUtil;
+
 public class NegocioActivityForm extends AppCompatActivity {
 
     private EditText txtDate;
+    private Negocio negocio = new Negocio();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,14 @@ public class NegocioActivityForm extends AppCompatActivity {
                     ShowCalendar();
             }
         });
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle !=null && bundle.containsKey("NEGOCIO")){
+            negocio =(Negocio) bundle.getSerializable("NEGOCIO");
+
+        }
+
+
 
     }
 
@@ -81,9 +94,37 @@ public class NegocioActivityForm extends AppCompatActivity {
             String dt = format.format(date);
 
             txtDate.setText(dt);
-
+            negocio.setNeg_dprevisao(date); //passo a data direto pro objeto
 
         }
+    }
+
+    private void SetNegocio(Negocio negocio){
+        TextView txtNome = (TextView)findViewById(R.id.negocioTxtNome);
+        TextView txtCliente = (TextView)findViewById(R.id.negocioTxtCliente);
+        TextView txtEndereço = (TextView)findViewById(R.id.negocioTxtClienteEndereco);
+        TextView txtDataPrevisao = (TextView)findViewById(R.id.negocioTxtDataPrevisao);
+        TextView txtdescricao = (TextView)findViewById(R.id.negocioTxtDescricao);
+
+        txtNome.setText(negocio.getNeg_vnome());
+        txtCliente.setText(negocio.getNeg_vcliente());
+        txtEndereço.setText(negocio.getNeg_vendereco());
+        txtDataPrevisao.setText(DateUtil.dateToString(negocio.getNeg_dprevisao()));
+        txtdescricao.setText(negocio.getNeg_vdescricao());
+    }
+
+    private void GetNegocio(){
+        TextView txtNome = (TextView)findViewById(R.id.negocioTxtNome);
+        TextView txtCliente = (TextView)findViewById(R.id.negocioTxtCliente);
+        TextView txtEndereço = (TextView)findViewById(R.id.negocioTxtClienteEndereco);
+        // TextView txtDataPrevisao = (TextView)findViewById(R.id.negocioTxtDataPrevisao);
+        TextView txtdescricao = (TextView)findViewById(R.id.negocioTxtDescricao);
+
+        negocio.setNeg_vnome(txtNome.getText().toString());
+        negocio.setNeg_vcliente(txtCliente.getText().toString());
+        negocio.setNeg_vdescricao(txtdescricao.getText().toString());
+        negocio.setNeg_vendereco(txtEndereço.getText().toString());
+        //   negocio.setNeg_dprevisao(DateUtil.dateToString());
     }
 
 }

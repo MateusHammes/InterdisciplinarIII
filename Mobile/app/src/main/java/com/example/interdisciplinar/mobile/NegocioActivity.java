@@ -1,18 +1,45 @@
 package com.example.interdisciplinar.mobile;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.List;
+
+import DAO.NegocioDAO;
+import model.Negocio;
 
 public class NegocioActivity extends AppCompatActivity {
+
+    private NegocioDAO DAO = new NegocioDAO();
+    private Negocio negocio;
+    private ArrayAdapter<Negocio> adpNegocio;
+    private ListView listView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_negocio);
+        negocio = new Negocio();
+        adpNegocio = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2);
+        listView = (ListView) findViewById(R.id.negocioListView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Negocio neg= adpNegocio.getItem(position);
+                Intent i = new Intent(NegocioActivity.this, NegocioActivityForm.class);
+                i.putExtra("NEGOCIO",neg);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -41,5 +68,32 @@ public class NegocioActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NegocioActivityForm.class );
         startActivity(intent);
     }
+
+
+    private class CarregaRegistros extends AsyncTask<String, Integer, List<Negocio>>{
+
+        @Override
+        protected List<Negocio> doInBackground(String... params) {
+            return DAO.SelecionaNegocios();
+        }
+
+        @Override
+        protected void onPostExecute(List<Negocio> lsNegocios) {
+            super.onPostExecute(lsNegocios);
+            if(lsNegocios!=null){
+                adpNegocio.clear();
+                for (Negocio neg:lsNegocios) {
+                    adpNegocio.add(neg);
+                }
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
+
 
 }

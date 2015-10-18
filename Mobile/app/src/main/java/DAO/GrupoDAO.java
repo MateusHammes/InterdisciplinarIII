@@ -12,55 +12,60 @@ import java.util.Arrays;
 import java.util.List;
 
 import model.Grupo;
+import util.Connection;
 
 public class GrupoDAO {
 
     public List<Grupo> SelecionaGrupo(){
-        String url = "http://192.168.0.102:44608/WebServiceREST/service/grupos";
+        ///"http://192.168.0.102:8080/WebServiceREST/
+        String url = Connection.url.concat("service/grupos");
 
         RestTemplate rest = new RestTemplate();
-        List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
+        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
         messageConverters.add(new MappingJackson2HttpMessageConverter());
         // Add the message converters to the restTemplate
         rest.setMessageConverters(messageConverters);
 
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         Grupo[] arrayGrupo  = rest.getForObject(url, Grupo[].class); //(url,Grupo.class,));
-        List<Grupo> listGrupos = Arrays.asList(arrayGrupo);
-        return listGrupos;
+        return Arrays.asList(arrayGrupo);
     }
 
 
     public boolean Salvar(Grupo grupo){
         //try {
         Log.i("Carrega", "Chegou aki!");
-        String url = "http://192.168.0.102:44608/WebServiceREST/service";
+        String url = Connection.url.concat("service/grupos"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
         Log.i("Carrega", "Chegou pra salva");
         RestTemplate rest = new RestTemplate();
         //List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
-
-            /*Map<String, String> vars = new HashMap<String, String>();
-            vars.put("id",""+grupo.getGru_codigo());*/
 
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
         //rest.setMessageConverters(messageConverters);
 
-        Log.i("Carrega", "MAndou salva");
+        /// HttpHeaders headers = new HttpHeaders();
+        //  headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+
+        Log.i("Carrega", "MAndou salva o..");
         // rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        //Grupo[] arrayGrupo = rest.getForObject(url, Grupo[].class); //(url,Grupo.class,));
-        //   List<Grupo> listGrupos = Arrays.asList(arrayGrupo);
+//JsonSerialize JS = new JsonSerialize();
 
-       /*  = new Grupo();
-        grupo.setGru_vdescricao("TEstes aki");*/
+       /* JSONStringer js = new JSONStringer();
+        JSONObject jo = new JSONObject();
+        JSONStringer valor =null;
+        try {
+            valor =  js.value(grupo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
 
-        return  rest.postForObject(url,grupo, boolean.class);
+        /// url = new StringBuilder().append(url).append(valor).toString();
 
-           /* if(grupo.getGru_codigo()!=0) {
-                //edita
-            }else {
-                //salva
-            }*/
+
+
+        return  rest.postForObject(url,grupo, boolean.class);//, headers);
+
        /* }catch (Exception e){
             e.printStackTrace();
         }*/

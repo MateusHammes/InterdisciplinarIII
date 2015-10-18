@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Negocio {
+public class Negocio implements Serializable {
 
     private int neg_codigo;
     private String neg_vnome;

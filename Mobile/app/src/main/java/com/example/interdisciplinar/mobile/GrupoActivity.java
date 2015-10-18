@@ -23,10 +23,10 @@ import model.Grupo;
 public class GrupoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ListView grupoListView;
-    static public List<Grupo> lsGrupos;
+    //  static public List<Grupo> lsGrupos;
     private Button btnNovo;
     private ArrayAdapter<Grupo> adpGrupo;
-    GrupoDAO DAO = new GrupoDAO();
+    private GrupoDAO DAO = new GrupoDAO();
     //= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
     @Override
@@ -54,7 +54,7 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
     protected void onRestart() {
         super.onRestart();
         Log.i("--ACAO--", "onRESTART");
-       // new CarregaGrupos().execute();
+        // new CarregaGrupos().execute();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         Log.i("--ACAO--", "onRESUME");
-        new CarregaGrupos().execute();
+        new CarregaRegistros().execute();
     }
 
     @Override
@@ -132,21 +132,22 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
     public void AtualizaGrid(List<Grupo> lsGrupos){
         Log.i("ATUALIZA","VAI CARREGA");
         if(lsGrupos!=null) {
+            adpGrupo.clear();
             for (Grupo gp : lsGrupos) {
                 adpGrupo.add(gp);//converte object em Grupo
             }
             grupoListView.setAdapter(adpGrupo);
-           Log.i("ATUALIZA", " FEIIIITOOO!!!!!!!");
+            Log.i("ATUALIZA", " FEIIIITOOO!!!!!!!");
         }
     }
 
-    private class CarregaGrupos extends AsyncTask<String, Integer, List<Grupo>> {
+    private class CarregaRegistros extends AsyncTask<String, Integer, List<Grupo>> {
         ProgressBar pg = (ProgressBar) findViewById(R.id.progressBar);
 
         @Override
         protected List<Grupo> doInBackground(String... params) {
             try{
-              return DAO.SelecionaGrupo();
+                return DAO.SelecionaGrupo();
             }catch (Exception e){
                 Log.e("CARREGA-GRUPOS",e.getMessage(),e);
             }

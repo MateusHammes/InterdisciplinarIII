@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import DAO.GrupoDAO;
 import model.Grupo;
+import util.Dialog;
 
 public class GrupoActivityForm extends AppCompatActivity {
 
@@ -43,21 +44,11 @@ public class GrupoActivityForm extends AppCompatActivity {
     }
 
     public void salvaGrupo(){
-        // grupo = new Grupo();
         grupo.setGru_vdescricao(txtNome.getText().toString());
-
-        // InserirGrupo(grupo);
-
-       /* if(GrupoActivity.lsGrupos == null)
-            GrupoActivity.lsGrupos = new ArrayList<>();
-        GrupoActivity.lsGrupos.add(grupo);*/
-     /*   Intent intent = new Intent(this, GrupoActivity.class);
-        startActivity(intent);*/
         Log.i("SALVA", "VAI SALVA?");
-      new Salvar().execute();
 
-        //finish();
-
+      //  DAO.Salvar(grupo);
+        new Salvar().execute();
     }
 
     //region inserir
@@ -112,17 +103,16 @@ public class GrupoActivityForm extends AppCompatActivity {
     }*/
 ///endregion
 
-    public Grupo GetGrupo(){
+    private void GetGrupo(){
         EditText descricao = (EditText) findViewById(R.id.grupoTxtNome);
         //Grupo gru = new Grupo();
         grupo.setGru_vdescricao(descricao.getText().toString());
-        return grupo;
     }
 
-    public void SetGrupo(Grupo grupo){
+    private void SetGrupo(Grupo grupo){
         if(grupo!=null) {
             EditText descricao = (EditText) findViewById(R.id.grupoTxtNome);
-            descricao.setText(grupo.getGru_vdescricao().toString());
+            descricao.setText(grupo.getGru_vdescricao());
         }
     }
 
@@ -146,7 +136,7 @@ public class GrupoActivityForm extends AppCompatActivity {
             if(salvo)
                 finish();
             else {
-              //  Dialog.ShowAlert(null,"Erro", "Erro ao Inserir");
+                Dialog.ShowAlert(GrupoActivityForm.this, "Erro", "Erro ao Inserir");
                 Log.e("EROO","NOA SSALVO");
             }
 
