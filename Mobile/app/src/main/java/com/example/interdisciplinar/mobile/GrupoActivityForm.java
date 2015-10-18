@@ -117,7 +117,7 @@ public class GrupoActivityForm extends AppCompatActivity {
     }
 
 
-    private class Salvar extends AsyncTask<Grupo,String,Boolean>{
+    private class Salvar extends AsyncTask<Grupo,Integer,Boolean>{
         @Override
         protected Boolean doInBackground(Grupo... params) {
             try {
@@ -136,7 +136,7 @@ public class GrupoActivityForm extends AppCompatActivity {
             if(salvo)
                 finish();
             else {
-                Dialog.ShowAlert(GrupoActivityForm.this, "Erro", "Erro ao Inserir");
+                Dialog.ShowAlert(GrupoActivityForm.this, "Erro", "Erro ao Inserir registro, Favor tente novamente");
                 Log.e("EROO","NOA SSALVO");
             }
 

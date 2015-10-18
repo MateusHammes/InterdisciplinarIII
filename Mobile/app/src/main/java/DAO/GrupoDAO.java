@@ -18,7 +18,7 @@ public class GrupoDAO {
 
     public List<Grupo> SelecionaGrupo(){
         ///"http://192.168.0.102:8080/WebServiceREST/
-        String url = Connection.url.concat("service/grupos");
+        String url = Connection.url.concat("grupos");
 
         RestTemplate rest = new RestTemplate();
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
@@ -31,46 +31,28 @@ public class GrupoDAO {
         return Arrays.asList(arrayGrupo);
     }
 
-
     public boolean Salvar(Grupo grupo){
         //try {
         Log.i("Carrega", "Chegou aki!");
-        String url = Connection.url.concat("service/grupos"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
+        String url = Connection.url.concat("grupos/salvaGrupo"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
         Log.i("Carrega", "Chegou pra salva");
         RestTemplate rest = new RestTemplate();
         //List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
-
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
-        //rest.setMessageConverters(messageConverters);
-
-        /// HttpHeaders headers = new HttpHeaders();
-        //  headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
-
         Log.i("Carrega", "MAndou salva o..");
-        // rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-//JsonSerialize JS = new JsonSerialize();
 
-       /* JSONStringer js = new JSONStringer();
-        JSONObject jo = new JSONObject();
-        JSONStringer valor =null;
-        try {
-            valor =  js.value(grupo);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-        /// url = new StringBuilder().append(url).append(valor).toString();
-
-
-
-        return  rest.postForObject(url,grupo, boolean.class);//, headers);
-
-       /* }catch (Exception e){
-            e.printStackTrace();
-        }*/
-        //  return false;
+       return "1".equals(rest.postForObject(url, grupo, String.class));
     }
+
+    public boolean Deletar(Grupo grupo){
+        String url = Connection.url.concat("grupos/deleteGrupo");
+        RestTemplate rest = new RestTemplate();
+        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        rest.getMessageConverters().add(new StringHttpMessageConverter());
+        return rest.postForObject(url, grupo, String.class).equals("1");
+    }
+
 //region outro tipo
 /*    public void invokeWS(RequestParams params){
         // Show Progress Dialog

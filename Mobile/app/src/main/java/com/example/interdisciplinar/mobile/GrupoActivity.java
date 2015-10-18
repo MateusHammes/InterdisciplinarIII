@@ -1,5 +1,7 @@
 package com.example.interdisciplinar.mobile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import DAO.GrupoDAO;
 import model.Grupo;
+import util.Dialog;
 
 public class GrupoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,6 +49,32 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
                 Intent i = new Intent(GrupoActivity.this, GrupoActivityForm.class);
                 i.putExtra("GRUPO", grupo);
                 startActivity(i);
+            }
+        });
+        grupoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                final Grupo gp = adpGrupo.getItem(position);
+                //  boolean deleta = Dialog.ShowDialog(GrupoActivity.this, "Deletar Grupo", "Você deseja deletar este Grupo?");
+                Log.i("Clickou", " -  Passou - ");
+
+                new AlertDialog.Builder(GrupoActivity.this)
+                        .setTitle("Deletar Grupo")
+                        .setMessage("Você deseja deletar este Grupo?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new Delete().execute(gp);
+                    }
+                }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+
+                return false;
             }
         });
     }
@@ -173,6 +202,27 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private  class Delete extends AsyncTask<Grupo, Integer, Boolean>{
+        @Override
+        protected Boolean doInBackground (Grupo...params){
+            try{
+                return DAO.Deletar(params[0]);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(aBoolean){
+               new CarregaRegistros().execute();
+            }else{
+                Dialog.ShowAlert(GrupoActivity.this,"Deletar","Opss, Esta Categoria ja esta sendo utilizada por outros registros!");
+            }
+        }
+    }
 
 
 }
