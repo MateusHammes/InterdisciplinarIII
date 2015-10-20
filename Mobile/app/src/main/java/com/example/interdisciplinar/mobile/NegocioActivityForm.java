@@ -2,6 +2,7 @@ package com.example.interdisciplinar.mobile;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,17 +10,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
+import DAO.NegocioDAO;
 import model.Negocio;
 import util.DateUtil;
+import util.Dialog;
+import util.FuncoesExternas;
 
 public class NegocioActivityForm extends AppCompatActivity {
 
     private EditText txtDate;
     private Negocio negocio = new Negocio();
+    private NegocioDAO DAO = new NegocioDAO();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,7 @@ public class NegocioActivityForm extends AppCompatActivity {
         txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus)
+                if (hasFocus)
                     ShowCalendar();
             }
         });
@@ -80,6 +85,16 @@ public class NegocioActivityForm extends AppCompatActivity {
         finish();
     }
 
+    public void SalvarNegocio(View view){
+        EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
+        EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
+        if(FuncoesExternas.Valida(txtNome))
+            if(FuncoesExternas.Valida(txtCliente)){
+                Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
+                t.show();
+            }
+
+    }
 
     private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
         @Override
@@ -90,12 +105,13 @@ public class NegocioActivityForm extends AppCompatActivity {
         }
     }
 
+    //region /Get e Set Valores
     private void SetNegocio(Negocio negocio){
-        TextView txtNome = (TextView)findViewById(R.id.negocioTxtNome);
-        TextView txtCliente = (TextView)findViewById(R.id.negocioTxtCliente);
-        TextView txtEndereço = (TextView)findViewById(R.id.negocioTxtClienteEndereco);
-        TextView txtDataPrevisao = (TextView)findViewById(R.id.negocioTxtDataPrevisao);
-        TextView txtdescricao = (TextView)findViewById(R.id.negocioTxtDescricao);
+        EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
+        EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
+        EditText txtEndereço = (EditText)findViewById(R.id.negocioTxtClienteEndereco);
+        EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
+        EditText txtdescricao = (EditText)findViewById(R.id.negocioTxtDescricao);
 
         txtNome.setText(negocio.getNeg_vnome());
         txtCliente.setText(negocio.getNeg_vcliente());
@@ -105,11 +121,11 @@ public class NegocioActivityForm extends AppCompatActivity {
     }
 
     private void GetNegocio(){
-        TextView txtNome = (TextView)findViewById(R.id.negocioTxtNome);
-        TextView txtCliente = (TextView)findViewById(R.id.negocioTxtCliente);
-        TextView txtEndereço = (TextView)findViewById(R.id.negocioTxtClienteEndereco);
-        // TextView txtDataPrevisao = (TextView)findViewById(R.id.negocioTxtDataPrevisao);
-        TextView txtdescricao = (TextView)findViewById(R.id.negocioTxtDescricao);
+        EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
+        EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
+        EditText txtEndereço = (EditText)findViewById(R.id.negocioTxtClienteEndereco);
+        // EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
+        EditText txtdescricao = (EditText)findViewById(R.id.negocioTxtDescricao);
 
         negocio.setNeg_vnome(txtNome.getText().toString());
         negocio.setNeg_vcliente(txtCliente.getText().toString());
@@ -117,6 +133,26 @@ public class NegocioActivityForm extends AppCompatActivity {
         negocio.setNeg_vendereco(txtEndereço.getText().toString());
         //   negocio.setNeg_dprevisao(DateUtil.dateToString());
     }
+//endregion
+
+
+    //region salvar Assincrono
+    private class Salvar extends AsyncTask<Negocio, String, Boolean>{
+        @Override
+        protected Boolean doInBackground(Negocio... params) {
+            return DAO.Salvar(negocio);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean salvo) {
+            super.onPostExecute(salvo);
+            if(salvo)
+                finish();
+            else
+                Dialog.ShowAlert(NegocioActivityForm.this,"Erro","Ops, houve um imprevisto, favor tente novamente!");
+        }
+    }
+//endregion
 
 }
 

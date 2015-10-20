@@ -125,7 +125,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Salvar"
-                    android:id="@+id/negocioBtnSalvar"/>
+                    android:id="@+id/negocioBtnSalvar"
+                    android:onClick="SalvarNegocio"/>
 
             </LinearLayout>
 

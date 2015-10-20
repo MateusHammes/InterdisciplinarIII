@@ -11,6 +11,7 @@ import android.widget.EditText;
 import DAO.GrupoDAO;
 import model.Grupo;
 import util.Dialog;
+import util.FuncoesExternas;
 
 public class GrupoActivityForm extends AppCompatActivity {
 
@@ -48,9 +49,11 @@ public class GrupoActivityForm extends AppCompatActivity {
     }
 
     public void salvaGrupo(){
-        grupo.setGru_vdescricao(txtNome.getText().toString());
-        Log.i("SALVA", "VAI SALVA?");
-        new Salvar().execute();
+        if(FuncoesExternas.Valida(txtNome)) {
+            grupo.setGru_vdescricao(txtNome.getText().toString());
+            Log.i("SALVA", "VAI SALVA?");
+            new Salvar().execute();
+        }
     }
 
     private void GetGrupo(){
@@ -71,7 +74,6 @@ public class GrupoActivityForm extends AppCompatActivity {
         protected Boolean doInBackground(Grupo... params) {
             try {
                 Log.i("SALVA", "Chamo Mt."+ grupo.toString());
-
                 return DAO.Salvar(grupo);
             }catch (Exception e){
                 Log.e("EROO",e.toString());
@@ -91,4 +93,6 @@ public class GrupoActivityForm extends AppCompatActivity {
 
         }
     }
+
+
 }
