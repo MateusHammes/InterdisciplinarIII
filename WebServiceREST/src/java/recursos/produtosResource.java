@@ -1,0 +1,72 @@
+package recursos;
+
+import dao.ProdutoDAO;
+import java.util.List;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import model.Produto;
+
+@Path("/produtos")
+public class produtosResource {
+
+    ProdutoDAO produtoDAO = new ProdutoDAO();
+    @Context
+    private UriInfo context;
+
+    public produtosResource() {
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Produto> findAll() {
+        return produtoDAO.findAll();
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("{id}")
+    public Produto findById(@PathParam("id") Integer id) {
+
+        return produtoDAO.findById(id);
+    }
+
+    @POST
+    @Path("salvaProduto")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public String insert(Produto p) {
+
+        try {
+
+            if (p.getPro_codigo() == 0) {
+                produtoDAO.insert(p);
+            } else {
+                produtoDAO.update(p);
+            }
+            return "1";
+
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
+    @POST
+    @Path("deleteProduto")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public String delete(Produto p) {
+        try {
+            produtoDAO.delete(p);
+            return "1";
+        } catch (Exception e) {
+            return "0";
+        }
+    }
+
+}
