@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class NegocioActivity extends AppCompatActivity {
     private Negocio negocio;
     private ArrayAdapter<Negocio> adpNegocio;
     private ListView listView;
+    public static String msn=null;
 
 
     @Override
@@ -47,6 +49,11 @@ public class NegocioActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         new CarregaRegistros().execute();
+        if(msn!=null&& !msn.isEmpty()){
+            Toast t = Toast.makeText(this,msn,Toast.LENGTH_SHORT);
+            t.show();
+            msn = null;
+        }
     }
 
     @Override

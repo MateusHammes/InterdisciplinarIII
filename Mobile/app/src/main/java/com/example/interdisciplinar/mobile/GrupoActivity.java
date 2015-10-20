@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,6 +31,8 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
     private Button btnNovo;
     private ArrayAdapter<Grupo> adpGrupo;
     private GrupoDAO DAO = new GrupoDAO();
+    public static String msn =null; //usado pra msn para Toast
+
     //= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
     @Override
@@ -62,11 +65,11 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
                         .setMessage("Você deseja deletar este Grupo?")
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        new Delete().execute(gp);
-                    }
-                }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new Delete().execute(gp);
+                            }
+                        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -76,6 +79,40 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
                 return false;
             }
         });
+
+
+        new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                ////carrega mais registros
+
+                Toast t = Toast.makeText(GrupoActivity.this,"Deu Scrolll!!",Toast.LENGTH_SHORT);
+                t.show();
+               /* if (totalItemCount < currentTotalItems) {
+                    currentPage = firstItemPageIndex;
+                    currentTotalItems = totalItemCount;
+                    if (totalItemCount == 0) { loading = true; }
+                }
+
+                if (loading && (totalItemCount > currentTotalItems)) {
+                    loading = false;
+                    currentTotalItems = totalItemCount;
+                    currentPage++;
+                }
+
+                if (!loading && (totalItemCount - visibleItemCount) <=
+                        (firstVisibleItem + visibleThreshold)) {
+                    loadMoreListener.onLoadMore(currentPage + 1, totalItemCount);
+                    loading = true;
+                }*/
+
+            }
+        };
     }
 
     @Override
@@ -103,6 +140,11 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
         super.onResume();
         Log.i("--ACAO--", "onRESUME");
         new CarregaRegistros().execute();
+        if(msn!=null&& !msn.isEmpty()){
+            Toast t = Toast.makeText(this,msn,Toast.LENGTH_SHORT);
+            t.show();
+            msn = null;
+        }
     }
 
     @Override
@@ -213,12 +255,15 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if(aBoolean){
-               new CarregaRegistros().execute();
+                new CarregaRegistros().execute();
             }else{
                 Dialog.ShowAlert(GrupoActivity.this,"Deletar","Opss, Esta Categoria ja esta sendo utilizada por outros registros!");
             }
         }
     }
+
+
+
 
 
 }

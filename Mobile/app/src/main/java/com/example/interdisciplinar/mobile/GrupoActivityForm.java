@@ -84,8 +84,10 @@ public class GrupoActivityForm extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
-            if(salvo)
+            if(salvo){
+                GrupoActivity.msn = grupo.getGru_codigo()!=0 ? "Registro editado com Sucesso!" : "Registro salvo com Sucesso!";
                 finish();
+            }
             else {
                 Dialog.ShowAlert(GrupoActivityForm.this, "Erro", "Erro ao Inserir registro, Favor tente novamente");
                 Log.e("EROO","NOA SSALVO");

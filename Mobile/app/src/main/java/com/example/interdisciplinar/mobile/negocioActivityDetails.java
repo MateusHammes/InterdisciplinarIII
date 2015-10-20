@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import model.Negocio;
+
 public class negocioActivityDetails extends AppCompatActivity {
 
     @Override
@@ -34,4 +36,15 @@ public class negocioActivityDetails extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    //region Get e Set Values
+
+    private void SetValues(Negocio item){
+
+    }
+
+
+    //endregion
+
 }

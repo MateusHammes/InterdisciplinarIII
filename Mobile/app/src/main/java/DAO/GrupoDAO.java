@@ -34,10 +34,8 @@ public class GrupoDAO {
     public boolean Salvar(Grupo grupo){
         String url = Connection.url.concat("grupos/salvaGrupo"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
         RestTemplate rest = new RestTemplate();
-        //List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
-
         return "1".equals(rest.postForObject(url, grupo, String.class));
     }
 

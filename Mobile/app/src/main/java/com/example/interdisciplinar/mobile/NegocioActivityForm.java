@@ -133,7 +133,7 @@ public class NegocioActivityForm extends AppCompatActivity {
         negocio.setNeg_vendereco(txtEndereço.getText().toString());
         //   negocio.setNeg_dprevisao(DateUtil.dateToString());
     }
-//endregion
+    //endregion
 
 
     //region salvar Assincrono
@@ -146,9 +146,10 @@ public class NegocioActivityForm extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
-            if(salvo)
+            if(salvo) {
                 finish();
-            else
+                NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
+            }else
                 Dialog.ShowAlert(NegocioActivityForm.this,"Erro","Ops, houve um imprevisto, favor tente novamente!");
         }
     }
