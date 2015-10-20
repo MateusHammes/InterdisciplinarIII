@@ -7,6 +7,7 @@ package dao;
 
 import java.util.List;
 import model.Grupo;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -66,6 +67,18 @@ public class GrupoDAO {
         List<Grupo> ls = session.createQuery(" from Grupo order by gru_vdescricao").list();
         //session.close();
         return ls;
+    }
+
+    public List<Grupo> findRange(int id, int id2) {
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        //List<Grupo> ls
+        Query q = session.createQuery(" from Grupo order by gru_vdescricao");
+        q.setMaxResults(id2-(id+1));
+        q.setFirstResult(id);
+        //q.list();
+        //session.close();
+        return q.list();
     }
 
 }

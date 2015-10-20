@@ -32,6 +32,13 @@ public class GrupoRecurso {
         return grupoDAO.findAll();
     }
 
+     @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+     @Path("{id}/{id2}")
+    public List<Grupo> findRange(@PathParam("id") Integer id, @PathParam("id2") Integer id2) {
+        return grupoDAO.findRange(id,id2);
+    }
+    
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("{id}")
