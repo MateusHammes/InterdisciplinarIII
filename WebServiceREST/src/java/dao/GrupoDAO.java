@@ -78,6 +78,7 @@ public class GrupoDAO {
         q.setFirstResult(id);
         //q.list();
         //session.close();
+        
         return q.list();
     }
 
