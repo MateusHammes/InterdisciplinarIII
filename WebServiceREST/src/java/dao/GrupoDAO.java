@@ -74,7 +74,7 @@ public class GrupoDAO {
 
         //List<Grupo> ls
         Query q = session.createQuery(" from Grupo order by gru_vdescricao");
-        q.setMaxResults(id2-(id+1));
+        q.setMaxResults(15);//(id2-(id+1));   total maximo de registros que o metodo pode retornar
         q.setFirstResult(id);
         //q.list();
         //session.close();
