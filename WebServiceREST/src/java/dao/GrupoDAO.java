@@ -68,6 +68,8 @@ public class GrupoDAO {
         //session.close();
         return ls;
     }
+    
+    ///teste 1
     public List<Grupo> findRange(int id, int id2) {
         session = HibernateUtil.getSessionFactory().openSession();
         Query q = session.createQuery(" from Grupo order by gru_vdescricao");
