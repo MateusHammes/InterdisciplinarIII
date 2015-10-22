@@ -70,14 +70,9 @@ public class GrupoDAO {
     }
     public List<Grupo> findRange(int id, int id2) {
         session = HibernateUtil.getSessionFactory().openSession();
-
-        //List<Grupo> ls
         Query q = session.createQuery(" from Grupo order by gru_vdescricao");
         q.setMaxResults(15);//(id2-(id+1));   total maximo de registros que o metodo pode retornar
-        q.setFirstResult(id);
-        //q.list();
-        //session.close();
-        
+        q.setFirstResult(id);      
         return q.list();
     }
 

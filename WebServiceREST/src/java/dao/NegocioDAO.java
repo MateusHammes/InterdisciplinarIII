@@ -7,6 +7,7 @@ package dao;
 
 import java.util.List;
 import model.Negocio;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -16,9 +17,9 @@ import util.HibernateUtil;
  * @author mateus
  */
 public class NegocioDAO {
-     
+
     private Session session;
-    
+
     public NegocioDAO() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
@@ -66,5 +67,13 @@ public class NegocioDAO {
         List<Negocio> ls = session.createQuery("from Negocio").list();
         //session.close();
         return ls;
+    }
+
+    public List<Negocio> findRange(int id, int id2) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query q = session.createQuery(" from Negocio order by neg_vnome");
+        q.setMaxResults(15);//(id2-(id+1));   total maximo de registros que o metodo pode retornar
+        q.setFirstResult(id);
+        return q.list();
     }
 }
