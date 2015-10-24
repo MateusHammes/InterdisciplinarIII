@@ -48,7 +48,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Cliente"
                 android:id="@+id/textView17"
-                android:textColor="#000" />
+                android:textColor="#000"
+                android:layout_marginTop="10dp"
+                android:textSize="23dp" />
 
             <TextView
                 android:layout_width="wrap_content"

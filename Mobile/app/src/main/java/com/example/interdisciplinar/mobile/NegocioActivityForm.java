@@ -1,7 +1,6 @@
 package com.example.interdisciplinar.mobile;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -68,12 +67,12 @@ public class NegocioActivityForm extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+/*
     public void CallNegocioIndex(View view){
-
-
         Intent intent = new Intent(this, NegocioActivity.class);
         startActivity(intent);
     }
+*/
 
     private void ShowCalendar(){
         Calendar cal  = Calendar.getInstance();
