@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import java.util.List;
@@ -12,10 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 
-/**
- *
- * @author mateus
- */
+
 public class GrupoDAO {
 
     private Session session;
@@ -67,6 +60,15 @@ public class GrupoDAO {
         List<Grupo> ls = session.createQuery(" from Grupo order by gru_vdescricao").list();
         //session.close();
         return ls;
+    }
+    
+    ///teste 1
+    public List<Grupo> findRange(int id, int id2) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query q = session.createQuery(" from Grupo order by gru_vdescricao");
+        q.setMaxResults(15);//(id2-(id+1));   total maximo de registros que o metodo pode retornar
+        q.setFirstResult(id);      
+        return q.list();
     }
 
     public List<Grupo> findRange(int id, int id2) {

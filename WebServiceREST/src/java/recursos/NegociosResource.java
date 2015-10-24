@@ -13,6 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import model.Grupo;
 import model.Negocio;
 
 
@@ -33,6 +34,13 @@ public class NegociosResource {
         return negocioDAO.findAll();
     }
 
+     @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Path("{id}/{id2}")
+    public List<Negocio> findRange(@PathParam("id") Integer id, @PathParam("id2") Integer id2) {
+        return negocioDAO.findRange(id, id2);
+    }
+    
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("{id}")
