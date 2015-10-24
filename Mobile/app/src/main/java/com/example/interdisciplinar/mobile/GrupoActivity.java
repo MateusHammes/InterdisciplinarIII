@@ -64,12 +64,20 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
                         .setTitle("Deletar Grupo")
                         .setMessage("Você deseja deletar este Grupo?")
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 new Delete().execute(gp);
                             }
-                        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Grupo grupo = adpGrupo.getItem(position);
+                        Intent i = new Intent(GrupoActivity.this, GrupoActivityForm.class);
+                        i.putExtra("GRUPO", grupo);
+                        startActivity(i);
+                    }
+                }).setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
