@@ -7,11 +7,8 @@ package recursos;
 
 import dao.PessoaDAO;
 import java.util.List;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,8 +20,7 @@ import model.Pessoa;
 public class PessoaResource {
 
     PessoaDAO pessoaDAO = new PessoaDAO();
-    @Context
-    private UriInfo context;
+ 
 
     public PessoaResource() {
     }
