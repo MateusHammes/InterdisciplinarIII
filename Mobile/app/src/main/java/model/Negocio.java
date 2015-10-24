@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Negocio implements Serializable {
 
@@ -14,6 +15,11 @@ public class Negocio implements Serializable {
     private  Date neg_dprevisao;
     private String neg_vendereco;
     private  String neg_vdescricao;
+
+    private double neg_valorTotal;
+    private double neg_valorAdquirido;
+
+    private List<Produto>lsProdutos;
 
     public Negocio(){}
 
@@ -87,5 +93,34 @@ public class Negocio implements Serializable {
 
     public void setNeg_vdescricao(String neg_vdescricao) {
         this.neg_vdescricao = neg_vdescricao;
+    }
+
+    public double getNeg_valorTotal() {
+        return neg_valorTotal;
+    }
+
+    public void setNeg_valorTotal(double neg_valorTotal) {
+        this.neg_valorTotal = neg_valorTotal;
+    }
+
+    public double getNeg_valorAdquirido() {
+        return neg_valorAdquirido;
+    }
+
+    public void setNeg_valorAdquirido(double neg_valorAdquirido) {
+        this.neg_valorAdquirido = neg_valorAdquirido;
+    }
+
+    public List<Produto> getLsProdutos() {
+        return lsProdutos;
+    }
+
+    public void setLsProdutos(List<Produto> lsProdutos) {
+        this.lsProdutos = lsProdutos;
+    }
+
+    @Override
+    public String toString() {
+        return getNeg_vnome();
     }
 }

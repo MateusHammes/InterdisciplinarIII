@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,26 +24,29 @@ import DAO.GrupoDAO;
 import model.Grupo;
 import util.Dialog;
 
-public class GrupoActivity extends AppCompatActivity implements View.OnClickListener {
+public class GrupoActivity extends AppCompatActivity {
 
     private ListView grupoListView;
     //  static public List<Grupo> lsGrupos;
-    private Button btnNovo;
     private ArrayAdapter<Grupo> adpGrupo;
     private GrupoDAO DAO = new GrupoDAO();
     public static String msn =null; //usado pra msn para Toast
-
-    //= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grupo);
         grupoListView = (ListView) findViewById(R.id.grupoListView);
-        btnNovo = (Button)findViewById(R.id.grupoBtnNovo);
-        btnNovo.setOnClickListener(this);
 
         adpGrupo = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.grupoBtnNovo);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GrupoActivity.this, GrupoActivityForm.class);
+                startActivity(intent);
+            }
+        });
 
         grupoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,6 +57,7 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(i);
             }
         });
+
         grupoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -83,7 +87,6 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
 
                     }
                 }).show();
-
                 return false;
             }
         });
@@ -192,20 +195,6 @@ public class GrupoActivity extends AppCompatActivity implements View.OnClickList
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(this, GrupoActivityForm.class);
-        startActivity(intent);
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Toast ts = Toast.makeText(this,"TEste de result", Toast.LENGTH_SHORT);
-        ts.show();
-    }
-
-
 
     protected void AtualizaGrid(List<Grupo> lsGrupos){
         if(lsGrupos!=null) {

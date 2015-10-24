@@ -40,8 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Negócio 1 com nome gigante para teste de verificaçã do label da activity do Mobile"
-                android:id="@+id/textView16" />
+                android:text="..."
+                android:id="@+id/negocioDetailNome" />
 
             <TextView
                 style="@style/labelDetails"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/textView18" />
+                android:id="@+id/negocioDetailCliente" />
 
             <TextView
                 style="@style/labelDetails"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/textView20" />
+                android:id="@+id/negocioDetailEndereco" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -121,8 +121,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="R$ "
-                    android:id="@+id/negocioTxtValorA" />
+                    android:text="... "
+                    android:id="@+id/negocioDetailValorAdquirido" />
             </LinearLayout>
 
             <LinearLayout
@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="R$"
-                    android:id="@+id/negocioTxtValorTotal" />
+                    android:id="@+id/negocioDetailValorTotal" />
             </LinearLayout>
 
         </LinearLayout>
