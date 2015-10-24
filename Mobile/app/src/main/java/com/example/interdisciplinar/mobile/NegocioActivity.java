@@ -3,6 +3,7 @@ package com.example.interdisciplinar.mobile;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,8 +30,39 @@ public class NegocioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_negocio);
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.negocioBtnNovo);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NegocioActivity.this, NegocioActivityForm.class);
+                startActivity(intent);
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("teste", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast t  = Toast.makeText(NegocioActivity.this,"TEste1",Toast.LENGTH_SHORT);
+                                t.show();
+                            }
+                        }).setAction("Teste 2222", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast t = Toast.makeText(NegocioActivity.this, "TEste222", Toast.LENGTH_SHORT);
+                        t.show();
+                    }
+                }).show();*/
+            }
+        });
+        ///getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+       /*
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_negocio);*/
         negocio = new Negocio();
         adpNegocio = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2);
         listView = (ListView) findViewById(R.id.negocioListView);

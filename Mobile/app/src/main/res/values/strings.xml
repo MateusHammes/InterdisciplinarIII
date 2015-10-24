@@ -20,4 +20,6 @@
     <string name="Produtos">Produtos</string>
     <string name="Materiais">Materiais</string>
     <string name="title_activity_negocio_activity_details">Detalhes</string>
+    <string name="title_activity_teste">TesteActivity</string>
+    <string name="title_activity_negocio2">Negocios</string>
 </resources>
