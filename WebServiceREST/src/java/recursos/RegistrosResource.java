@@ -20,8 +20,7 @@ import model.Registros;
 public class RegistrosResource {
 
     RegistrosDAO registrosDAO = new RegistrosDAO();
-    @Context
-    private UriInfo context;
+
 
  
     public RegistrosResource() {
