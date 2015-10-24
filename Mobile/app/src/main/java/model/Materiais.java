@@ -1,7 +1,9 @@
 package model;
 
 
-public class Materiais {
+import java.io.Serializable;
+
+public class Materiais implements Serializable {
 
     private int mtr_codigo;
     private String mtr_vnome;
