@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_grupo"
+    tools:context="com.example.interdisciplinar.mobile.GrupoActivity"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editText4"
+        android:hint="Pesquisar" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grupoListView"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/grupoProgressBar"
+        android:layout_gravity="center" />
+
+</LinearLayout>
+
