@@ -11,7 +11,7 @@ public class FuncoesExternas {
             var = false;
             txt.setError("Campo Obrigatório");
            // txt.setFocusable(true);
-            //txt.requestFocus();
+            txt.requestFocus();
         }else
             txt.setError(null);
 

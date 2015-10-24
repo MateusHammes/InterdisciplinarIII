@@ -7,12 +7,19 @@ import android.view.MenuItem;
 
 import model.Negocio;
 
-public class negocioActivityDetails extends AppCompatActivity {
+public class NegocioActivityDetails extends AppCompatActivity {
+
+    private Negocio negocio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_negocio_details);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null && bundle.containsKey("NEGOCIO")){
+            negocio =(Negocio) bundle.getSerializable("NEGOCIO");
+        }
     }
 
     @Override

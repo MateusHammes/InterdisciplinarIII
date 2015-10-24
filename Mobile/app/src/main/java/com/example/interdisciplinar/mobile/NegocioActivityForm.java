@@ -1,6 +1,7 @@
 package com.example.interdisciplinar.mobile;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -92,7 +93,6 @@ public class NegocioActivityForm extends AppCompatActivity {
                 Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
                 t.show();
             }
-
     }
 
     private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
@@ -147,6 +147,8 @@ public class NegocioActivityForm extends AppCompatActivity {
             super.onPostExecute(salvo);
             if(salvo) {
                 finish();
+                Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetails.class);
+                startActivity(i);
                 NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
             }else
                 Dialog.ShowAlert(NegocioActivityForm.this,"Erro","Ops, houve um imprevisto, favor tente novamente!");

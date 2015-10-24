@@ -51,14 +51,9 @@
             android:parentActivityName=".ProdutoActivity" >
         </activity>
         <activity
-            android:name=".negocioActivityDetails"
+            android:name=".NegocioActivityDetails"
             android:label="@string/title_activity_negocio_activity_details"
             android:parentActivityName=".NegocioActivity" >
-        </activity>
-        <activity
-            android:name=".TesteActivity"
-            android:label="@string/title_activity_teste"
-            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 
