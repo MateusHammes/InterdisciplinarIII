@@ -9,9 +9,9 @@
 
 
     <TextView
+        style="@style/txtHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/Produtos"
         android:id="@+id/textView12" />
 
@@ -35,7 +35,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText2" />
+                android:id="@+id/produtoNome" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,40 +47,15 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText3" />
+                android:id="@+id/produtoDescricao" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/Materiais"
-                    android:id="@+id/textView13"
-                    android:layout_weight="2"
-                    android:gravity="fill_vertical"
-                    android:password="false" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageButton2"
-                    android:src="@android:drawable/ic_menu_add" />
-            </LinearLayout>
-
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/listView3" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="60dp">
 
                 <Button
                     android:layout_width="wrap_content"

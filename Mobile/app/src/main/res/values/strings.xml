@@ -22,4 +22,6 @@
     <string name="title_activity_negocio_activity_details">Detalhes</string>
     <string name="title_activity_teste">TesteActivity</string>
     <string name="title_activity_negocio2">Negocios</string>
+    <string name="Especificacoes">Especificaçoes</string>
+    <string name="ProdutoDetalhe">Detalhes do Produto</string>
 </resources>

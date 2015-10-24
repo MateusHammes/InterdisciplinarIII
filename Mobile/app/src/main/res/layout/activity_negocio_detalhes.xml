@@ -76,19 +76,14 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    style="@style/TxtHeaderList"
                     android:text="Produtos"
-                    android:id="@+id/textView21"
-                    android:gravity="center"
-                    android:textColor="#000"
-                    android:layout_weight="2" />
+                    android:id="@+id/textView21"/>
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageButton3"
+                    android:id="@+id/NegocioBtnNovoProduto"
                     android:src="@android:drawable/ic_menu_add" />
             </LinearLayout>
 

@@ -87,12 +87,11 @@ public class NegocioActivityForm extends AppCompatActivity {
 
     public void SalvarNegocio(View view){
         EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
-        EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
-        if(FuncoesExternas.Valida(txtNome))
-            if(FuncoesExternas.Valida(txtCliente)){
-                Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
-                t.show();
-            }
+        if(FuncoesExternas.Valida(txtNome)){
+            Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
+            t.show();
+            //  new Salvar().execute();
+        }
     }
 
     private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
@@ -147,14 +146,14 @@ public class NegocioActivityForm extends AppCompatActivity {
             super.onPostExecute(salvo);
             if(salvo) {
                 finish();
-                Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetails.class);
+                Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetalhes.class);
                 startActivity(i);
                 NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
             }else
                 Dialog.ShowAlert(NegocioActivityForm.this,"Erro","Ops, houve um imprevisto, favor tente novamente!");
         }
     }
-//endregion
+    //endregion
 
 }
 

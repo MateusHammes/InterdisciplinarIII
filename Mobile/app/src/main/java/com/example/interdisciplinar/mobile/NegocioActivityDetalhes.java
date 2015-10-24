@@ -1,5 +1,6 @@
 package com.example.interdisciplinar.mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -15,7 +16,7 @@ import java.text.NumberFormat;
 import model.Negocio;
 import model.Produto;
 
-public class NegocioActivityDetails extends AppCompatActivity {
+public class NegocioActivityDetalhes extends AppCompatActivity {
 
     private Negocio negocio;
     private ArrayAdapter<Produto> adpItens;
@@ -24,7 +25,7 @@ public class NegocioActivityDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_negocio_details);
+        setContentView(R.layout.activity_negocio_detalhes);
 
         adpItens = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
@@ -33,9 +34,9 @@ public class NegocioActivityDetails extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ///chama detalhes do produto
-              /*  Negocio neg= adpNegocio.getItem(position);
-                Intent i = new Intent(NegocioActivity.this, NegocioActivityForm.class);
-                i.putExtra("NEGOCIO",neg);
+                /*Produto pro = adpItens.getItem(position);
+                Intent i = new Intent(NegocioActivityDetahes.this, ProdutoActivity.class);
+                i.putExtra("PRODUTO",pro);
                 startActivity(i);*/
             }
         });
@@ -71,6 +72,12 @@ public class NegocioActivityDetails extends AppCompatActivity {
     }
 
 
+    public void CallProdutoForm(View view){
+        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityForm.class);
+        i.putExtra("NEG_CODIGO", negocio.getNeg_codigo());
+        startActivity(i);
+    }
+
     //region Get e Set Values
     private void SetValues(Negocio item){
 
@@ -81,7 +88,6 @@ public class NegocioActivityDetails extends AppCompatActivity {
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
         TextView valorT = (TextView)findViewById(R.id.negocioDetailValorAdquirido);
         TextView valorAd = (TextView)findViewById(R.id.negocioDetailValorTotal);
-
 
         nome.setText(item.getNeg_vnome());
         cliente.setText(item.getNeg_vcliente());

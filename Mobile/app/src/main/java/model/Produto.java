@@ -1,6 +1,9 @@
 package model;
 
-public class Produto {
+import java.io.Serializable;
+import java.util.List;
+
+public class Produto implements Serializable {
 
     private int pro_codigo;
     private String pro_vnome;
@@ -8,6 +11,9 @@ public class Produto {
     private char pro_cstatus;
 
     private Negocio negocio;
+
+    private List<Produto_material> lsProdutoMateriais;
+    private List<Registros> lsRegistros;
 
     public Produto (){}
 
@@ -49,5 +55,26 @@ public class Produto {
 
     public void setNegocio(Negocio negocio) {
         this.negocio = negocio;
+    }
+
+    public List<Produto_material> getLsProdutoMateriais() {
+        return lsProdutoMateriais;
+    }
+
+    public void setLsProdutoMateriais(List<Produto_material> lsProdutoMateriais) {
+        this.lsProdutoMateriais = lsProdutoMateriais;
+    }
+
+    public List<Registros> getLsRegistros() {
+        return lsRegistros;
+    }
+
+    public void setLsRegistros(List<Registros> lsRegistros) {
+        this.lsRegistros = lsRegistros;
+    }
+
+    @Override
+    public String toString() {
+        return getPro_vnome();
     }
 }
