@@ -62,4 +62,11 @@ public class Dialog {
         });*/
         return bool;
     }
+
+    public static  void ShowProgressDialog(Context ctx, String titulo, String msn){
+
+    }
+    public static void CancelProgressDialog(){
+
+    }
 }

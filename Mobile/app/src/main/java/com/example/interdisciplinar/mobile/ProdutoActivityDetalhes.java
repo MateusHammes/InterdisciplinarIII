@@ -1,6 +1,7 @@
 package com.example.interdisciplinar.mobile;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import DAO.RegistrosDAO;
 import model.Produto;
 import model.Produto_material;
 import model.Registros;
+import util.Dialog;
 import util.FuncoesExternas;
 
 public class ProdutoActivityDetalhes extends AppCompatActivity {
@@ -25,6 +27,8 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
     private ListView listViewMateriais;
     private ArrayAdapter<Registros> adpRegistros;
     private ListView listViewRegistros;
+    AlertDialog alert;
+    ProgressDialog PD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,17 +86,24 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             }
         });
 
-        AlertDialog alert = dialog.create();
+      alert = dialog.create();
         alert.show();
         alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // ProgressBar pg =(ProgressBar) findViewById(R.id.produtoDetalheProgressBar);
                 if (FuncoesExternas.Valida(input)) {
                     new SalvaRegistro().execute();
+                    PD = new ProgressDialog(ProdutoActivityDetalhes.this);
+                    PD.setTitle("Salvando...");
+                    PD.setIndeterminate(true);
+                    PD.setCancelable(false);
+                    PD.setMessage("Por favor, espere um momento");
+                    PD.show();
+                 //   pg.setVisibility(View.VISIBLE);
                 }
             }
         });
-
 
     }
 
@@ -116,12 +127,16 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if(aBoolean){
-                adpRegistros.clear();
-               // adpRegistros =(ArrayAdapter<Registros>)listViewRegistros.getAdapter();
+                adpRegistros.add(registro);
+                listViewRegistros.setAdapter(adpRegistros);
+                alert.cancel();
             }else {
-
+                Dialog.ShowAlert(ProdutoActivityDetalhes.this, "Erro", "Ops, houve um imprevisto, favor tente novamente!");
                 //remove loader desta tela
             }
+            PD.cancel();
+            //ProgressBar pg =(ProgressBar) findViewById(R.id.produtoDetalheProgressBar);
+           // pg.setVisibility(View.GONE);
         }
     }
 }

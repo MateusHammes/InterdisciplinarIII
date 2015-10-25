@@ -98,6 +98,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/produtoDetalheListViewEspecificacao" />
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/produtoDetalheProgressBar"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone" />
+
         </LinearLayout>
     </ScrollView>
 
