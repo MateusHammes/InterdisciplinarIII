@@ -5,13 +5,18 @@
  */
 package model;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -19,6 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mateus
  */
 @Entity
+@Table(name = "produto")
 @XmlRootElement
 public class Produto {
 
@@ -34,6 +40,13 @@ public class Produto {
     @JoinColumn(name = "neg_codigo", referencedColumnName = "neg_codigo")
     private Negocio negocio;
    
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<ProdutoMaterial> lsProdutoMaterial;
+    
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Registros> lsRegistros;
+    
+    
     public Produto() {
     }
 
@@ -81,6 +94,15 @@ public class Produto {
     public String toString() {
         return getPro_vnome();
     }
+
+    public List<ProdutoMaterial> getLsProdutoMaterial() {
+        return lsProdutoMaterial;
+    }
+
+    public void setLsProdutoMaterial(List<ProdutoMaterial> lsProdutoMaterial) {
+        this.lsProdutoMaterial = lsProdutoMaterial;
+    }
+    
     
     
     @Override

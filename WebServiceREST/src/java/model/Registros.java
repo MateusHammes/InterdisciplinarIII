@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -19,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mateus
  */
 @Entity
+@Table(name = "registros")
 @XmlRootElement
 public class Registros {
 
@@ -106,9 +108,5 @@ public class Registros {
         }
         return true;
     }
-    
-    
-    
-    
 
 }
