@@ -7,25 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import DAO.ProdutoDAO;
 import model.Negocio;
 import model.Produto;
-import model.Produto_material;
-import model.Registros;
 import util.Dialog;
 import util.FuncoesExternas;
 
 public class ProdutoActivityForm extends AppCompatActivity {
     private Produto produto;
-    private ArrayAdapter<Produto_material> adpMateriais;
-    private ListView listViewMateriais;
-    private ArrayAdapter<Registros> adpRegistros;
-    private ListView listViewRegistros;
+
 
     private ProdutoDAO DAO;
 
@@ -35,11 +28,6 @@ public class ProdutoActivityForm extends AppCompatActivity {
         setContentView(R.layout.activity_produto_form);
         produto = new Produto();
 
-        adpMateriais = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        listViewMateriais = (ListView) findViewById(R.id.produtoDetalheListViewMaterial);
-
-        adpRegistros = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2);
-        listViewRegistros = (ListView) findViewById(R.id.produtoDetalheListViewEspecificacao);
 
         Bundle bundle = getIntent().getExtras();
         try {
@@ -47,8 +35,7 @@ public class ProdutoActivityForm extends AppCompatActivity {
                 Negocio neg = new Negocio();
                 String id = String.valueOf(bundle.getBundle("NEG_CODIGO"));
                 neg.setNeg_codigo(Integer.parseInt(id));
-                produto.setNegocio(new Negocio() {
-                });
+                produto.setNegocio(neg);
             }
         }catch (Exception e){
             finish();
@@ -87,6 +74,8 @@ public class ProdutoActivityForm extends AppCompatActivity {
             new Salvar().execute();
         }
     }
+
+
 
     //region salvar Assincrono
     private class Salvar extends AsyncTask<Produto, String, Boolean> {

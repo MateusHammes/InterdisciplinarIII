@@ -65,11 +65,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * testa metodo de conexão
-     * @param view
-     */
-    public void testaWeb(View view){
+      public void testaWeb(View view){
 
         Log.i("MOBILE","Entrou testaWeb");
 
@@ -182,5 +178,10 @@ public class MainActivity extends AppCompatActivity {
     }
 */
     //endregion
+
+    public void CallDetalheProduto(View view){
+        Intent i = new Intent(this, ProdutoActivityDetalhes.class);
+        startActivity(i);
+    }
 
 }

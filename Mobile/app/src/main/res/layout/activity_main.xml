@@ -42,10 +42,12 @@
         android:id="@+id/txtTeste"
         android:layout_gravity="center_horizontal" />
 
-    <ListView
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lsRegistros" />
+        android:text="detalhes do produto"
+        android:id="@+id/btnDetProduto"
+        android:onClick="CallDetalheProduto" />
 
 
 </LinearLayout>

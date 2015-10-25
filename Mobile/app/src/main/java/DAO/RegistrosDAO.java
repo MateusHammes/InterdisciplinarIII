@@ -1,5 +1,7 @@
 package DAO;
 
+import android.util.Log;
+
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -30,12 +32,17 @@ public class RegistrosDAO {
         return null;
     }
 
-    public boolean Salvar(Registros Registros){
-        String url = Connection.url.concat("Registros/salvaRegistros"); ////"http://192.168.0.102:8080/WebServiceREST/service/Registross";
-        RestTemplate rest = new RestTemplate();
-        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return "1".equals(rest.postForObject(url, Registros, String.class));
+    public String Salvar(Registros Registros){
+        try {
+            String url = Connection.url.concat("Registros/salvaRegistros"); ////"http://192.168.0.102:8080/WebServiceREST/service/Registross";
+            RestTemplate rest = new RestTemplate();
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            rest.getMessageConverters().add(new StringHttpMessageConverter());
+            return rest.postForObject(url, Registros, String.class);
+        }catch (Exception e){
+            Log.e("ERRO",e.toString());
+        }
+        return "0";
     }
 
     public boolean Deletar(Registros Registros){
