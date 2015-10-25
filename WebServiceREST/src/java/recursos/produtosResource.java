@@ -45,8 +45,7 @@ public class produtosResource {
             } else {
                 produtoDAO.update(p);
             }
-            return "1";
-
+            return ""+p.getPro_codigo();
         } catch (Exception e) {
             return "0";
         }
@@ -63,5 +62,7 @@ public class produtosResource {
             return "0";
         }
     }
+    
+    
 
 }

@@ -34,18 +34,11 @@ public class GrupoRecurso {
 
      @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-     @Path("{id}/{id2}")
-    public List<Grupo> findRange(@PathParam("id") Integer id, @PathParam("id2") Integer id2) {
-        return grupoDAO.findRange(id,id2);
+     @Path("{id}")
+    public List<Grupo> findRange(@PathParam("id") Integer id) {
+        return grupoDAO.findRange(id);
     }
     
-    @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("{id}/{id2}")
-    public List<Grupo> findRange(@PathParam("id") Integer id, @PathParam("id2") Integer id2) {
-        return grupoDAO.findRange(id, id2);
-    }
-
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("{id}")
@@ -58,9 +51,7 @@ public class GrupoRecurso {
     @Path("salvaGrupo")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Grupo g) {
-
         try {
-
             if (g.getGru_codigo() == 0) {
                 grupoDAO.insert(g);
             } else {

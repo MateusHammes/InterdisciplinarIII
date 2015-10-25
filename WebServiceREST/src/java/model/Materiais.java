@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -19,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mateus
  */
 @Entity
+@Table(name = "materiais")
 @XmlRootElement
 public class Materiais {
 
@@ -95,6 +97,30 @@ public class Materiais {
         this.grupo = grupo;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + this.mtr_codigo;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Materiais other = (Materiais) obj;
+        if (this.mtr_codigo != other.mtr_codigo) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
     @Override
     public String toString() {
         return getMtr_vnome();
