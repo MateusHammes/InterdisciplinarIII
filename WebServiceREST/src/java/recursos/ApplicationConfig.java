@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
         resources.add(recursos.MateriaisResource.class);
         resources.add(recursos.NegociosResource.class);
         resources.add(recursos.PessoaResource.class);
+        resources.add(recursos.ProdutoMaterialResource.class);
         resources.add(recursos.RegistrosResource.class);
         resources.add(recursos.produtosResource.class);
     }
