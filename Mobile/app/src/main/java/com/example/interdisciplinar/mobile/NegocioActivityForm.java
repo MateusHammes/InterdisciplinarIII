@@ -82,11 +82,14 @@ public class NegocioActivityForm extends AppCompatActivity {
 
     public void SalvarNegocio(View view){
         EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
-        if(FuncoesExternas.Valida(txtNome)){
-            Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
-            t.show();
-            new Salvar().execute();
-        }
+        EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
+        if(FuncoesExternas.Valida(txtNome))
+            if(FuncoesExternas.Valida(txtCliente)){
+                Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
+                t.show();
+                new Salvar().execute();
+                Dialog.ShowProgressDialog(NegocioActivityForm.this);
+            }
     }
 
     private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
@@ -134,7 +137,6 @@ public class NegocioActivityForm extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Negocio... params) {
             try {
-                Dialog.ShowProgressDialog(NegocioActivityForm.this);
                 String id = DAO.Salvar(negocio);
                 if(!id.equals("0")) {///se for diferente de 0, salvou :)
                     negocio.setNeg_codigo(Integer.parseInt(id));

@@ -18,8 +18,6 @@ import util.FuncoesExternas;
 
 public class ProdutoActivityForm extends AppCompatActivity {
     private Produto produto;
-
-
     private ProdutoDAO DAO;
 
     @Override
@@ -27,8 +25,6 @@ public class ProdutoActivityForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto_form);
         produto = new Produto();
-
-
         Bundle bundle = getIntent().getExtras();
         try {
             if (bundle != null && bundle.containsKey("NEG_CODIGO")) {
@@ -72,6 +68,7 @@ public class ProdutoActivityForm extends AppCompatActivity {
             Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
             t.show();
             new Salvar().execute();
+            Dialog.ShowProgressDialog(ProdutoActivityForm.this);
         }
     }
 
@@ -97,10 +94,10 @@ public class ProdutoActivityForm extends AppCompatActivity {
                 Intent i = new Intent(ProdutoActivityForm.this, ProdutoActivityDetalhes.class);
                 i.putExtra("PRODUTO",produto);
                 startActivity(i);
-
                 //NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
             }else
                 Dialog.ShowAlert(ProdutoActivityForm.this, "Erro", "Ops, houve um imprevisto, favor tente novamente!");
+            Dialog.CancelProgressDialog();
         }
     }
     //endregion
