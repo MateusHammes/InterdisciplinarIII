@@ -45,7 +45,7 @@ public class ProdutoActivityForm extends AppCompatActivity {
         try {
             if (bundle != null && bundle.containsKey("NEG_CODIGO")) {
                 Negocio neg = new Negocio();
-                String id = bundle.getBundle("NEG_CODIGO").toString();
+                String id = String.valueOf(bundle.getBundle("NEG_CODIGO"));
                 neg.setNeg_codigo(Integer.parseInt(id));
                 produto.setNegocio(new Negocio() {
                 });
@@ -92,7 +92,12 @@ public class ProdutoActivityForm extends AppCompatActivity {
     private class Salvar extends AsyncTask<Produto, String, Boolean> {
         @Override
         protected Boolean doInBackground(Produto... params) {
-            return DAO.Salvar(produto);
+           String id = DAO.Salvar(produto);
+            if(!id.isEmpty() && !id.equals("0")){
+                produto.setPro_codigo(Integer.parseInt(id));
+                return true;
+            }else
+                return false;
         }
 
         @Override

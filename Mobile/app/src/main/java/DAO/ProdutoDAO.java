@@ -31,12 +31,12 @@ public class ProdutoDAO {
         return null;
     }
 
-    public boolean Salvar(Produto Produto){
+    public String Salvar(Produto Produto){
         String url = Connection.url.concat("Produtos/salvaProduto"); ////"http://192.168.0.102:8080/WebServiceREST/service/Produtos";
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return "1".equals(rest.postForObject(url, Produto, String.class));
+        return rest.postForObject(url, Produto, String.class);
     }
 
     public boolean Deletar(Produto Produto){
