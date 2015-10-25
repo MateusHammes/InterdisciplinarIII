@@ -12,7 +12,7 @@ public class Produto implements Serializable {
 
     private Negocio negocio;
 
-    private List<Produto_material> lsProdutoMateriais;
+    private List<Produto_material> lsProdutoMaterial;
     private List<Registros> lsRegistros;
 
     public Produto (){}
@@ -58,11 +58,11 @@ public class Produto implements Serializable {
     }
 
     public List<Produto_material> getLsProdutoMateriais() {
-        return lsProdutoMateriais;
+        return lsProdutoMaterial;
     }
 
     public void setLsProdutoMateriais(List<Produto_material> lsProdutoMateriais) {
-        this.lsProdutoMateriais = lsProdutoMateriais;
+        this.lsProdutoMaterial = lsProdutoMateriais;
     }
 
     public List<Registros> getLsRegistros() {

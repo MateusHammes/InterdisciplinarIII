@@ -7,6 +7,8 @@ import java.util.List;
 public class Negocio implements Serializable {
 
     private int neg_codigo;
+    private int neg_codigoParent;
+
     private String neg_vnome;
     private Date neg_dcadastro;
     private char neg_cstatus;
@@ -15,6 +17,7 @@ public class Negocio implements Serializable {
     private  Date neg_dprevisao;
     private String neg_vendereco;
     private  String neg_vdescricao;
+    private char neg_ctipo;///define se é Negocio ou Orçamento
 
     private double neg_valorTotal;
     private double neg_valorAdquirido;
@@ -117,6 +120,22 @@ public class Negocio implements Serializable {
 
     public void setLsProdutos(List<Produto> lsProdutos) {
         this.lsProdutos = lsProdutos;
+    }
+
+    public int getNeg_codigoParent() {
+        return neg_codigoParent;
+    }
+
+    public void setNeg_codigoParent(int neg_codigoParent) {
+        this.neg_codigoParent = neg_codigoParent;
+    }
+
+    public char getNeg_ctipo() {
+        return neg_ctipo;
+    }
+
+    public void setNeg_ctipo(char neg_ctipo) {
+        this.neg_ctipo = neg_ctipo;
     }
 
     @Override

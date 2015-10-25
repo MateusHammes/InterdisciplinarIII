@@ -11,7 +11,6 @@ public class Materiais implements Serializable {
     private char mtr_cstatus;
     private String mtr_vdescricao;
     private int mtr_iestoque;
-
     private Grupo grupo;
 
     public Materiais() {

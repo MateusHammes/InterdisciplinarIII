@@ -7,7 +7,7 @@ public class Produto_material {
     private double prm_nvalor;
 
     private Produto produto;
-    private Materiais materiais;
+    private Materiais material;
 
 
     public Produto_material() {
@@ -30,11 +30,11 @@ public class Produto_material {
     }
 
     public Materiais getMateriais() {
-        return materiais;
+        return material;
     }
 
     public void setMateriais(Materiais materiais) {
-        this.materiais = materiais;
+        this.material = materiais;
     }
 
     public int getPrm_iunidadeUtilizada() {
