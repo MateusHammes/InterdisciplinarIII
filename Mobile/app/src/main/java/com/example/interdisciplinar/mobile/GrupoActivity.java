@@ -2,7 +2,6 @@ package com.example.interdisciplinar.mobile;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -23,11 +23,12 @@ import java.util.List;
 import DAO.GrupoDAO;
 import model.Grupo;
 import util.Dialog;
+import util.FuncoesExternas;
 
 public class GrupoActivity extends AppCompatActivity {
 
     private ListView grupoListView;
-    //  static public List<Grupo> lsGrupos;
+    private Grupo grupo = new Grupo() ;
     private ArrayAdapter<Grupo> adpGrupo;
     private GrupoDAO DAO = new GrupoDAO();
     public static String msn =null; //usado pra msn para Toast
@@ -43,18 +44,16 @@ public class GrupoActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GrupoActivity.this, GrupoActivityForm.class);
-                startActivity(intent);
+                grupo = new Grupo();
+               GrupoForm();
             }
         });
 
         grupoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Grupo grupo = adpGrupo.getItem(position);
-                Intent i = new Intent(GrupoActivity.this, GrupoActivityForm.class);
-                i.putExtra("GRUPO", grupo);
-                startActivity(i);
+                grupo = adpGrupo.getItem(position);
+                GrupoForm();
             }
         });
 
@@ -76,15 +75,12 @@ public class GrupoActivity extends AppCompatActivity {
                         }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Grupo grupo = adpGrupo.getItem(position);
-                        Intent i = new Intent(GrupoActivity.this, GrupoActivityForm.class);
-                        i.putExtra("GRUPO", grupo);
-                        startActivity(i);
+                         grupo = adpGrupo.getItem(position);
+                        GrupoForm();
                     }
                 }).setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 }).show();
                 return false;
@@ -134,19 +130,6 @@ public class GrupoActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i("--ACAO--", "onPAUSE");
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("--ACAO--", "onDESTROY");
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         Log.i("--ACAO--", "onRESUME");
@@ -158,22 +141,39 @@ public class GrupoActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i("--ACAO--", "onSTOP");
+    public void GrupoForm(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.GrupoNome);
+        alert.setMessage(R.string.grupoNomeHint);
+
+        final EditText txt = new EditText(this);
+        if(grupo!=null)
+            txt.setText(grupo.getGru_vdescricao());
+        alert.setView(txt);
+        alert.setCancelable(false);
+
+        alert.setNegativeButton(R.string.Salvar, null);
+        alert.setPositiveButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dlg = alert.create();
+        dlg.show();
+
+        dlg.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FuncoesExternas.Valida(txt)) {
+                    new Salvar().execute();
+                    Dialog.ShowProgressDialog(GrupoActivity.this);
+                }
+            }
+        });
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        Log.i("--ACAO--", "onFINALIZE");
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -259,6 +259,32 @@ public class GrupoActivity extends AppCompatActivity {
         }
     }
 
+    private class Salvar extends AsyncTask<Grupo,Integer,Boolean>{
+        @Override
+        protected Boolean doInBackground(Grupo... params) {
+            try {
+                Log.i("SALVA", "Chamo Mt."+ grupo.toString());
+                return DAO.Salvar(grupo);
+            }catch (Exception e){
+                Log.e("EROO", e.toString());
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean salvo) {
+            super.onPostExecute(salvo);
+            if(salvo){
+                msn = grupo.getGru_codigo()!=0 ? "Registro editado com Sucesso!" : "Registro salvo com Sucesso!";
+                finish();
+            }
+            else {
+                Dialog.ShowAlert(GrupoActivity.this, "Erro", "Erro ao Inserir registro, Favor tente novamente");
+                Log.e("EROO", "NOA SSALVO");
+            }
+            Dialog.CancelProgressDialog();
+        }
+    }
 
 
 

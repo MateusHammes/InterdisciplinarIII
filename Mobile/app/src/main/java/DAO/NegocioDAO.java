@@ -31,13 +31,12 @@ public class NegocioDAO {
         return null;
     }
 
-    public boolean Salvar(Negocio item){
+    public String Salvar(Negocio item){
         String url = Connection.url.concat("negocios/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
         RestTemplate rest = new RestTemplate();
-        //List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return "1".equals(rest.postForObject(url, item, String.class));
+        return rest.postForObject(url, item, String.class);
     }
 
     public boolean Deletar(Negocio item){

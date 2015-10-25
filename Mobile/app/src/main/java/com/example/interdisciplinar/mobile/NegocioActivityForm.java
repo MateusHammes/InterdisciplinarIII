@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,12 +69,6 @@ public class NegocioActivityForm extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-/*
-    public void CallNegocioIndex(View view){
-        Intent intent = new Intent(this, NegocioActivity.class);
-        startActivity(intent);
-    }
-*/
 
     private void ShowCalendar(){
         Calendar cal  = Calendar.getInstance();
@@ -90,7 +85,7 @@ public class NegocioActivityForm extends AppCompatActivity {
         if(FuncoesExternas.Valida(txtNome)){
             Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
             t.show();
-            //  new Salvar().execute();
+            new Salvar().execute();
         }
     }
 
@@ -138,7 +133,18 @@ public class NegocioActivityForm extends AppCompatActivity {
     private class Salvar extends AsyncTask<Negocio, String, Boolean>{
         @Override
         protected Boolean doInBackground(Negocio... params) {
-            return DAO.Salvar(negocio);
+            try {
+                Dialog.ShowProgressDialog(NegocioActivityForm.this);
+                String id = DAO.Salvar(negocio);
+                if(!id.equals("0")) {///se for diferente de 0, salvou :)
+                    negocio.setNeg_codigo(Integer.parseInt(id));
+                    return true;
+                }else
+                    return false;
+            }catch (Exception e){
+                Log.e("ERRO",e.toString());
+            }
+            return false;
         }
 
         @Override
@@ -147,10 +153,13 @@ public class NegocioActivityForm extends AppCompatActivity {
             if(salvo) {
                 finish();
                 Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetalhes.class);
+                i.putExtra("NEGOCiO",negocio);
                 startActivity(i);
                 NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
-            }else
+            }else{
                 Dialog.ShowAlert(NegocioActivityForm.this,"Erro","Ops, houve um imprevisto, favor tente novamente!");
+            }
+            Dialog.CancelProgressDialog();
         }
     }
     //endregion

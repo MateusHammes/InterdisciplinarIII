@@ -1,19 +1,25 @@
 package util;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 
 public class Dialog {
     static private boolean bool;
+    static private ProgressDialog PD;
+
+    public static void ShowAlertError(Context ctx){
+        Show(ctx, "Erro", "Ops, houve um imprevisto, favor tente novamente!", android.R.drawable.ic_dialog_alert);
+    }
 
     public static void ShowAlert(Context ctx, String titulo, String message){
         Show(ctx, titulo, message, android.R.drawable.ic_dialog_alert);
     }
 
     public static void Show(Context ctx, String titulo, String message){
-        Show(ctx, titulo, message,0);
+        Show(ctx, titulo, message, 0);
     }
 
     public static void Show(Context ctx, String titulo, String message, int iconId){
@@ -37,11 +43,9 @@ public class Dialog {
         dialog.setPositiveButton(textBtnPositive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 bool = true;
             }
         });
-
         dialog.setNegativeButton(textBtnNegative, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -49,24 +53,19 @@ public class Dialog {
             }
         });
         dialog.show();
-       /* new AlertDialog.Builder(ctx).setTitle(titulo).setMessage(msm).setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                bool = true;
-            }
-        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                bool = false;
-            }
-        });*/
-        return bool;
+          return bool;
     }
 
-    public static  void ShowProgressDialog(Context ctx, String titulo, String msn){
-
+    public static  void ShowProgressDialog(Context ctx){
+        PD = new ProgressDialog(ctx);
+        PD.setTitle("Salvando...");
+        PD.setIndeterminate(true);
+        PD.setCancelable(false);
+        PD.setMessage("Por favor, espere um momento");
+        PD.show();
     }
+
     public static void CancelProgressDialog(){
-
+        PD.cancel();
     }
 }

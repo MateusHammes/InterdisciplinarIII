@@ -1,7 +1,6 @@
 package com.example.interdisciplinar.mobile;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,7 +27,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
     private ArrayAdapter<Registros> adpRegistros;
     private ListView listViewRegistros;
     AlertDialog alert;
-    ProgressDialog PD;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,21 +85,14 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             }
         });
 
-      alert = dialog.create();
+        alert = dialog.create();
         alert.show();
         alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // ProgressBar pg =(ProgressBar) findViewById(R.id.produtoDetalheProgressBar);
                 if (FuncoesExternas.Valida(input)) {
                     new SalvaRegistro().execute();
-                    PD = new ProgressDialog(ProdutoActivityDetalhes.this);
-                    PD.setTitle("Salvando...");
-                    PD.setIndeterminate(true);
-                    PD.setCancelable(false);
-                    PD.setMessage("Por favor, espere um momento");
-                    PD.show();
-                 //   pg.setVisibility(View.VISIBLE);
+                    Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
                 }
             }
         });
@@ -131,12 +123,9 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 listViewRegistros.setAdapter(adpRegistros);
                 alert.cancel();
             }else {
-                Dialog.ShowAlert(ProdutoActivityDetalhes.this, "Erro", "Ops, houve um imprevisto, favor tente novamente!");
-                //remove loader desta tela
+                Dialog.ShowAlertError(ProdutoActivityDetalhes.this);
             }
-            PD.cancel();
-            //ProgressBar pg =(ProgressBar) findViewById(R.id.produtoDetalheProgressBar);
-           // pg.setVisibility(View.GONE);
+            Dialog.CancelProgressDialog();
         }
     }
 }
