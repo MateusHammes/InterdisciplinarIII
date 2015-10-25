@@ -32,6 +32,7 @@ public class GrupoActivity extends AppCompatActivity {
     private ArrayAdapter<Grupo> adpGrupo;
     private GrupoDAO DAO = new GrupoDAO();
     public static String msn =null; //usado pra msn para Toast
+    private int ValorListView=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,10 @@ public class GrupoActivity extends AppCompatActivity {
                     loadMoreListener.onLoadMore(currentPage + 1, totalItemCount);
                     loading = true;
                 }*/
+                if(grupoListView.getLastVisiblePosition()==(adpGrupo.getCount()-1)){
+                    Log.e("AKI", "--- FINALZAUM -- da lista -- -");
+                }
+
 
             }
         };
