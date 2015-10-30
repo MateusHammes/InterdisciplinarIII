@@ -11,7 +11,7 @@ import util.Connection;
 public class ProdutoMaterialDAO {
 
     public boolean Salvar(Produto_material Pmaterial){
-        String url = Connection.url.concat("produtoMaterial/edita"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
+        String url = Connection.url.concat("produtoMaterial/edita");
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
