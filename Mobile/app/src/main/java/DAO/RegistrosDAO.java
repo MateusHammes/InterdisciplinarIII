@@ -32,6 +32,7 @@ public class RegistrosDAO {
         return null;
     }
 
+
     public String Salvar(Registros Registros){
         try {
             String url = Connection.url.concat("Registros/salvaRegistros"); ////"http://192.168.0.102:8080/WebServiceREST/service/Registross";
