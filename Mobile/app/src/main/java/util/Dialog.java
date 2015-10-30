@@ -56,6 +56,7 @@ public class Dialog {
           return bool;
     }
 
+
     public static  void ShowProgressDialog(Context ctx){
         PD = new ProgressDialog(ctx);
         PD.setTitle("Salvando...");
