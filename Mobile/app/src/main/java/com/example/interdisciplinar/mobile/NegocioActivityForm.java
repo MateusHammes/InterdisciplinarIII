@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -20,6 +21,7 @@ import model.Negocio;
 import util.DateUtil;
 import util.Dialog;
 import util.FuncoesExternas;
+import Enum.NegocioTipo;
 
 public class NegocioActivityForm extends AppCompatActivity {
 
@@ -42,8 +44,22 @@ public class NegocioActivityForm extends AppCompatActivity {
         });
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle !=null && bundle.containsKey("NEGOCIO")){
-            negocio =(Negocio) bundle.getSerializable("NEGOCIO");
+        if(bundle !=null){
+            if(bundle.containsKey("NEGOCIO")){
+                negocio =(Negocio) bundle.getSerializable("NEGOCIO");
+            }
+
+            if(bundle.containsKey("TIPO")){
+                char tipo = bundle.getChar("TIPO");
+                TextView txtHeader = (TextView)findViewById(R.id.negocioTxtHeader);
+                EditText txtNome = (EditText) findViewById(R.id.negocioTxtNome);
+                if(tipo == NegocioTipo.Orcamento) {
+                    negocio.setNeg_ctipo(NegocioTipo.Orcamento);
+                    txtHeader.setText(R.string.Orcamento);
+                    txtNome.setHint(R.string.OrcamentoNome);
+                }else
+                    negocio.setNeg_ctipo(NegocioTipo.Orcamento);
+            }
         }
     }
 

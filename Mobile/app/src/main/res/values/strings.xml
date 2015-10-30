@@ -26,4 +26,6 @@
     <string name="ProdutoDetalhe">Detalhes do Produto</string>
     <string name="Registros">Especificações</string>
     <string name="RegistrosNome">Informe uma especificação deste Produto</string>
+    <string name="Orcamento">Orçamento</string>
+    <string name="OrcamentoNome">nome do Orçamento</string>
 </resources>

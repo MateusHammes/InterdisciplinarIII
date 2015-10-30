@@ -143,3 +143,4 @@ public class Negocio implements Serializable {
         return getNeg_vnome();
     }
 }
+

@@ -12,12 +12,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import DAO.NegocioDAO;
 import model.Negocio;
+import Enum.NegocioTipo;
 
 public class NegocioActivity extends AppCompatActivity {
 
@@ -75,6 +77,17 @@ public class NegocioActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null && bundle.containsKey("TIPO")){
+            char tipo =  bundle.getChar("TIPO");
+            if(tipo== NegocioTipo.Orcamento){
+                TextView txtTitulo = (TextView)findViewById(R.id.negocioListagemTxtTitulo);
+                txtTitulo.setText(R.string.Orcamento);
+                negocio.setNeg_ctipo(NegocioTipo.Orcamento);
+            }else
+                negocio.setNeg_ctipo(NegocioTipo.Negocio);
+        }
     }
 
     @Override
@@ -129,7 +142,7 @@ public class NegocioActivity extends AppCompatActivity {
         ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
         @Override
         protected List<Negocio> doInBackground(String... params) {
-            return DAO.SelecionaNegocios();
+            return DAO.SelecionaNegocios(negocio.getNeg_ctipo());
         }
 
         @Override

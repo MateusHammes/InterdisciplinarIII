@@ -8,23 +8,30 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.Negocio;
 import util.Connection;
 
 public class NegocioDAO {
 
-    public List<Negocio>SelecionaNegocios(){
+    public List<Negocio>SelecionaNegocios(char tipo){
         try{
             String url = Connection.url.concat("negocios");
-            RestTemplate rest = new RestTemplate();
+                RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
             // Add the message converters to the restTemplate
+
+            Map<String, String> params = new HashMap<>();
+            params.put("tipo",String.valueOf(tipo));
+
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            return Arrays.asList(rest.getForObject(url, Negocio[].class));
+            return Arrays.asList(rest.getForObject(url, Negocio[].class, params));
+          //  return Arrays.asList(rest.getForObject(url, Negocio[].class));
         }catch (Exception e){
             e.printStackTrace();
         }

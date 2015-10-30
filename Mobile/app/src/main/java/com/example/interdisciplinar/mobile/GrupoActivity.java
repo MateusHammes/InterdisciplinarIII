@@ -121,9 +121,7 @@ public class GrupoActivity extends AppCompatActivity {
                 if(grupoListView.getLastVisiblePosition()==(adpGrupo.getCount()-1)){
                     Log.e("AKI", "--- FINALZAUM -- da lista -- -");
                 }
-
-
-            }
+           }
         };
     }
 
