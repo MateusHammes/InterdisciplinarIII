@@ -20,13 +20,40 @@
         android:onClick="CallGrupo" />
 
     <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Orcamento"
+        android:id="@+id/MainBtnOrcamento"
+        android:layout_gravity="center_horizontal"
+        android:onClick="CallOrcamentos" />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Negócios"
-        android:id="@+id/button"
+        android:id="@+id/MainBtnNegocio"
         android:layout_gravity="center_horizontal"
         style="@style/Widget.AppCompat.Button.Colored"
         android:onClick="CallNegocios"/>
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Materiais"
+        android:id="@+id/MainBtnMateriais"
+        android:layout_gravity="center_horizontal"
+         />
+
+    <Button
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Grupos"
+        android:id="@+id/MainBtnGrupo"
+        android:layout_gravity="center_horizontal"
+        android:onClick="CallGrupo" />
 
     <Button
         android:layout_width="wrap_content"

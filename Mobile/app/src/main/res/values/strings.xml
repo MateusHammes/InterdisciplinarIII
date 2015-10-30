@@ -21,11 +21,12 @@
     <string name="Materiais">Materiais</string>
     <string name="title_activity_negocio_activity_details">Detalhes</string>
     <string name="title_activity_teste">TesteActivity</string>
-    <string name="title_activity_negocio2">Negocios</string>
+    <string name="title_activity_negocio2">Negócios</string>
     <string name="Especificacoes">Especificações</string>
     <string name="ProdutoDetalhe">Detalhes do Produto</string>
     <string name="Registros">Especificações</string>
     <string name="RegistrosNome">Informe uma especificação deste Produto</string>
     <string name="Orcamento">Orçamento</string>
     <string name="OrcamentoNome">nome do Orçamento</string>
+    <string name="Grupos">Categorias</string>
 </resources>

@@ -15,7 +15,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
-
+import Enum.NegocioTipo;
 public class MainActivity extends AppCompatActivity {
 
     private Button btnTeste;
@@ -55,13 +55,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void CallGrupo(View v) {
         Intent intent = new Intent(this, GrupoActivity.class);
         startActivity(intent);
     }
     public void CallNegocios(View view){
         Intent intent = new Intent(this,NegocioActivity.class);
+        intent.putExtra("TIPO", NegocioTipo.Negocio);
+        startActivity(intent);
+    }
+
+    public void CallOrcamentos(View view){
+        Intent intent = new Intent(this,NegocioActivity.class);
+        intent.putExtra("TIPO", NegocioTipo.Orcamento);
         startActivity(intent);
     }
 
