@@ -57,6 +57,16 @@
         </activity>
         <activity android:name=".ProdutoActivityDetalhes" >
         </activity>
+        <activity
+            android:name=".MateriaisActivity"
+            android:label="@string/title_activity_materiais"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".MateriaisActivityForm"
+            android:label="@string/title_activity_materiais_activity_form"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

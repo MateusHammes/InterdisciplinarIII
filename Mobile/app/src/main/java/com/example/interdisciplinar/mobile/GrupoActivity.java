@@ -32,7 +32,7 @@ public class GrupoActivity extends AppCompatActivity {
     private ArrayAdapter<Grupo> adpGrupo;
     private GrupoDAO DAO = new GrupoDAO();
     public static String msn =null; //usado pra msn para Toast
-    private int ValorListView=0;
+    private int pageList=0;
     private boolean GoLoad=true;
     AlertDialog dlg;
 
@@ -206,14 +206,14 @@ public class GrupoActivity extends AppCompatActivity {
                 adpGrupo.add(gp);//converte object em Grupo
                 //grupoListView.addView(gp.getGru_vdescricao().tos);
             }
-            if(ValorListView==0)
+            if(pageList==0)
                 grupoListView.setAdapter(adpGrupo);
             else
                 adpGrupo.notifyDataSetChanged();
 
             if(lsGrupos.size()==15) {
                 GoLoad = true;
-                ValorListView++;
+                pageList++;
             }
 
         }
@@ -225,7 +225,7 @@ public class GrupoActivity extends AppCompatActivity {
         protected List<Grupo> doInBackground(String... params) {
             try{
 
-                return DAO.SelecionaGrupo(ValorListView);
+                return DAO.SelecionaGrupo(pageList);
             }catch (Exception e){
                 Log.e("CARREGA-GRUPOS",e.getMessage(),e);
             }
@@ -271,7 +271,7 @@ public class GrupoActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if(aBoolean){
-               // ValorListView=0;
+               // pageList=0;
               //  GoLoad=true;
              //   new CarregaRegistros().execute();
             }else{
@@ -303,7 +303,7 @@ public class GrupoActivity extends AppCompatActivity {
                 }else
                     msn="Registro salvo com Sucesso!";
                 adpGrupo.clear();
-                ValorListView =0;
+                pageList =0;
                 new CarregaRegistros().execute();
             } else {
                 Dialog.ShowAlert(GrupoActivity.this, "Erro", "Erro ao Inserir registro, Favor tente novamente");

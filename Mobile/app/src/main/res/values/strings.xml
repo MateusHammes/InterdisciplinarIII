@@ -29,4 +29,6 @@
     <string name="Orcamento">Orçamento</string>
     <string name="OrcamentoNome">nome do Orçamento</string>
     <string name="Grupos">Categorias</string>
+    <string name="title_activity_materiais">Materiais</string>
+    <string name="title_activity_materiais_activity_form">Materiais</string>
 </resources>
