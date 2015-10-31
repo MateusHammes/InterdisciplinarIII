@@ -13,5 +13,6 @@
     <mapping class="model.Pessoa"/>
     <mapping class="model.Produto"/>
     <mapping class="model.Registros"/>
+    <mapping class="model.ProdutoMaterial"/>
   </session-factory>
 </hibernate-configuration>

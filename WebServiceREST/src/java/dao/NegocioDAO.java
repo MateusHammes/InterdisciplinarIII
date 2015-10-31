@@ -62,9 +62,9 @@ public class NegocioDAO {
         return m;
     }
 
-    public List<Negocio> findAll() {
+    public List<Negocio> findAll(String tipo) {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Negocio> ls = session.createQuery("from Negocio").list();
+        List<Negocio> ls = session.createQuery("from Negocio where neg_ctipo = "+tipo+"").list();
         //session.close();
         return ls;
     }
