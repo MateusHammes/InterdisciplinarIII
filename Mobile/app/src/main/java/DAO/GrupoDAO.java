@@ -1,5 +1,6 @@
 package DAO;
 
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -14,13 +15,14 @@ import util.Connection;
 
 public class GrupoDAO {
 
-    public List<Grupo> SelecionaGrupo(){
+    public List<Grupo> SelecionaGrupo(int pagina){
         try {
-            String url = Connection.url.concat("grupos");
+            String url = Connection.url.concat("grupos/range/"+pagina);
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
             // Add the message converters to the restTemplate
+
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             Grupo[] arrayGrupo = rest.getForObject(url, Grupo[].class); //(url,Grupo.class,));
@@ -36,7 +38,9 @@ public class GrupoDAO {
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return "1".equals(rest.postForObject(url, grupo, String.class));
+        rest.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+
+        return rest.postForObject(url, grupo, String.class).equals("1");
     }
 
     public boolean Deletar(Grupo grupo){

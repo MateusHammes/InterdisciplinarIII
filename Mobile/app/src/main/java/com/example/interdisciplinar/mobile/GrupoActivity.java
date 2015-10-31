@@ -32,7 +32,9 @@ public class GrupoActivity extends AppCompatActivity {
     private ArrayAdapter<Grupo> adpGrupo;
     private GrupoDAO DAO = new GrupoDAO();
     public static String msn =null; //usado pra msn para Toast
-    private int ValorListView=1;
+    private int ValorListView=0;
+    private boolean GoLoad=true;
+    AlertDialog dlg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,15 @@ public class GrupoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grupo);
         grupoListView = (ListView) findViewById(R.id.grupoListView);
 
+
+
         adpGrupo = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.grupoBtnNovo);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 grupo = new Grupo();
-               GrupoForm();
+                GrupoForm();
             }
         });
 
@@ -76,7 +80,7 @@ public class GrupoActivity extends AppCompatActivity {
                         }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                         grupo = adpGrupo.getItem(position);
+                        grupo = adpGrupo.getItem(position);
                         GrupoForm();
                     }
                 }).setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -89,40 +93,30 @@ public class GrupoActivity extends AppCompatActivity {
         });
 
 
-        new AbsListView.OnScrollListener() {
+        grupoListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+
 
             }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                ////carrega mais registros
-
-                Toast t = Toast.makeText(GrupoActivity.this,"Deu Scrolll!!",Toast.LENGTH_SHORT);
-                t.show();
-               /* if (totalItemCount < currentTotalItems) {
-                    currentPage = firstItemPageIndex;
-                    currentTotalItems = totalItemCount;
-                    if (totalItemCount == 0) { loading = true; }
-                }
-
-                if (loading && (totalItemCount > currentTotalItems)) {
-                    loading = false;
-                    currentTotalItems = totalItemCount;
-                    currentPage++;
-                }
-
-                if (!loading && (totalItemCount - visibleItemCount) <=
-                        (firstVisibleItem + visibleThreshold)) {
-                    loadMoreListener.onLoadMore(currentPage + 1, totalItemCount);
-                    loading = true;
-                }*/
-                if(grupoListView.getLastVisiblePosition()==(adpGrupo.getCount()-1)){
+                Log.i("TOTAL!", "Total::: -- - -- " + totalItemCount+"");
+                if (GoLoad && grupoListView.getLastVisiblePosition() == (adpGrupo.getCount() - 1)) {
                     Log.e("AKI", "--- FINALZAUM -- da lista -- -");
+                    GoLoad = false;
+                    new CarregaRegistros().execute();
                 }
-           }
-        };
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("--ACAO--", "onPAUSEES");
+
     }
 
     @Override
@@ -136,7 +130,10 @@ public class GrupoActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("--ACAO--", "onRESUME");
-        new CarregaRegistros().execute();
+        if(GoLoad) {
+            GoLoad=false;
+            new CarregaRegistros().execute();
+        }
         if(msn!=null&& !msn.isEmpty()){
             Toast t = Toast.makeText(this,msn,Toast.LENGTH_SHORT);
             t.show();
@@ -152,6 +149,8 @@ public class GrupoActivity extends AppCompatActivity {
         final EditText txt = new EditText(this);
         if(grupo!=null)
             txt.setText(grupo.getGru_vdescricao());
+
+
         alert.setView(txt);
         alert.setCancelable(false);
 
@@ -162,13 +161,14 @@ public class GrupoActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-        AlertDialog dlg = alert.create();
+        dlg = alert.create();
         dlg.show();
 
         dlg.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (FuncoesExternas.Valida(txt)) {
+                    grupo.setGru_vdescricao(txt.getText().toString());
                     new Salvar().execute();
                     Dialog.ShowProgressDialog(GrupoActivity.this);
                 }
@@ -201,11 +201,21 @@ public class GrupoActivity extends AppCompatActivity {
 
     protected void AtualizaGrid(List<Grupo> lsGrupos){
         if(lsGrupos!=null) {
-            adpGrupo.clear();
+            ///   adpGrupo.clear();
             for (Grupo gp : lsGrupos) {
                 adpGrupo.add(gp);//converte object em Grupo
+                //grupoListView.addView(gp.getGru_vdescricao().tos);
             }
-            grupoListView.setAdapter(adpGrupo);
+            if(ValorListView==0)
+                grupoListView.setAdapter(adpGrupo);
+            else
+                adpGrupo.notifyDataSetChanged();
+
+            if(lsGrupos.size()==15) {
+                GoLoad = true;
+                ValorListView++;
+            }
+
         }
     }
 
@@ -214,7 +224,8 @@ public class GrupoActivity extends AppCompatActivity {
         @Override
         protected List<Grupo> doInBackground(String... params) {
             try{
-                return DAO.SelecionaGrupo();
+
+                return DAO.SelecionaGrupo(ValorListView);
             }catch (Exception e){
                 Log.e("CARREGA-GRUPOS",e.getMessage(),e);
             }
@@ -244,32 +255,41 @@ public class GrupoActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground (Grupo...params){
             try{
-                return DAO.Deletar(params[0]);
+                if(DAO.Deletar(params[0])){
+                    adpGrupo.remove(params[0]);
+                    adpGrupo.notifyDataSetChanged();
+                    return true;
+                }else
+                    Dialog.ShowAlert(GrupoActivity.this,"Deletar","Opss, Esta Categoria ja esta sendo utilizada por outros registros!");
             }catch (Exception e){
                 e.printStackTrace();
             }
             return false;
         }
 
-        @Override
+       /* @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if(aBoolean){
-                new CarregaRegistros().execute();
+               // ValorListView=0;
+              //  GoLoad=true;
+             //   new CarregaRegistros().execute();
             }else{
                 Dialog.ShowAlert(GrupoActivity.this,"Deletar","Opss, Esta Categoria ja esta sendo utilizada por outros registros!");
             }
-        }
+        }*/
     }
 
     private class Salvar extends AsyncTask<Grupo,Integer,Boolean>{
         @Override
         protected Boolean doInBackground(Grupo... params) {
             try {
-                Log.i("SALVA", "Chamo Mt."+ grupo.toString());
+                Log.i("SALVA", "VEIIOOOO");
+
                 return DAO.Salvar(grupo);
+
             }catch (Exception e){
-                Log.e("EROO", e.toString());
+                Log.e("EROO no SALVAAA", e.toString());
             }
             return false;
         }
@@ -278,14 +298,22 @@ public class GrupoActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
             if(salvo){
-                msn = grupo.getGru_codigo()!=0 ? "Registro editado com Sucesso!" : "Registro salvo com Sucesso!";
-                finish();
-            }
-            else {
+                if(grupo.getGru_codigo()!=0 ){
+                    msn = "Registro editado com Sucesso!";
+                }else
+                    msn="Registro salvo com Sucesso!";
+                adpGrupo.clear();
+                ValorListView =0;
+                new CarregaRegistros().execute();
+            } else {
                 Dialog.ShowAlert(GrupoActivity.this, "Erro", "Erro ao Inserir registro, Favor tente novamente");
-                Log.e("EROO", "NOA SSALVO");
+
             }
+            dlg.cancel();
             Dialog.CancelProgressDialog();
+            Toast t = Toast.makeText(GrupoActivity.this,msn,Toast.LENGTH_SHORT);
+            t.show();
+            msn = null;
         }
     }
 
