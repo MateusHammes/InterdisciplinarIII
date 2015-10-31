@@ -17,11 +17,11 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import DAO.NegocioDAO;
+import Enum.NegocioTipo;
 import model.Negocio;
 import util.DateUtil;
 import util.Dialog;
 import util.FuncoesExternas;
-import Enum.NegocioTipo;
 
 public class NegocioActivityForm extends AppCompatActivity {
 
@@ -137,14 +137,14 @@ public class NegocioActivityForm extends AppCompatActivity {
         EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
         EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
         EditText txtEndereço = (EditText)findViewById(R.id.negocioTxtClienteEndereco);
-        // EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
+         EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
         EditText txtdescricao = (EditText)findViewById(R.id.negocioTxtDescricao);
 
         negocio.setNeg_vnome(txtNome.getText().toString());
         negocio.setNeg_vcliente(txtCliente.getText().toString());
         negocio.setNeg_vdescricao(txtdescricao.getText().toString());
         negocio.setNeg_vendereco(txtEndereço.getText().toString());
-        //   negocio.setNeg_dprevisao(DateUtil.dateToString());
+        negocio.setNeg_dtermino(DateUtil.GetDate(txtDataPrevisao.getText().toString()));
     }
     //endregion
 
@@ -154,6 +154,7 @@ public class NegocioActivityForm extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Negocio... params) {
             try {
+                Log.i("Foi ate aki","NEgocios");
                 String id = DAO.Salvar(negocio);
                 if(!id.equals("0")) {///se for diferente de 0, salvou :)
                     negocio.setNeg_codigo(Integer.parseInt(id));

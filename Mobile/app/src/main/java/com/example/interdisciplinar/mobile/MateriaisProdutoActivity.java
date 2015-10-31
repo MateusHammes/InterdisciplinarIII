@@ -78,7 +78,7 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
                 new AlertDialog.Builder(MateriaisProdutoActivity.this)
                         .setTitle("Materiais do Produto")
                         .setMessage("Informe a quantidade de "+mtr.getMtr_vnome()+" que voce deseja reservar")
-                        .setPositiveButton(R.string.Salvar, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.Salvar, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if(FuncoesExternas.Valida(txt)) {
@@ -109,9 +109,9 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
     }
 
     protected void AtualizaGrid(List<Materiais> lsItens){
-        Materiais mtt = new Materiais();
+    /*    Materiais mtt = new Materiais();
         mtt.setMtr_vnome("TESTE MATERIAL");
-        lsItens.add(mtt);
+        lsItens.add(mtt);*/
         if(lsItens!=null) {
             for (Materiais mt : lsItens) {
                 adpMaterial.add(mt);//converte object em Grupo

@@ -26,5 +26,11 @@ public class DateUtil {
         return format.format(date);
     }
 
+    public static  Date GetDate(String Date){
+        int dia = Integer.parseInt(Date.split("/")[0]);
+        int mes = Integer.parseInt(Date.split("/")[1]);
+        int ano = Integer.parseInt(Date.split("/")[1]);
+        return GetDate(ano,mes,dia);
+    }
 
 }

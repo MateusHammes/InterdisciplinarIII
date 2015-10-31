@@ -33,17 +33,17 @@ public class RegistrosDAO {
     }
 
 
-    public String Salvar(Registros Registros){
+    public Boolean Salvar(Registros Registros){
         try {
             String url = Connection.url.concat("Registros/salvaRegistros"); ////"http://192.168.0.102:8080/WebServiceREST/service/Registross";
             RestTemplate rest = new RestTemplate();
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             rest.getMessageConverters().add(new StringHttpMessageConverter());
-            return rest.postForObject(url, Registros, String.class);
+            return rest.postForObject(url, Registros, String.class).equals("1");
         }catch (Exception e){
             Log.e("ERRO",e.toString());
         }
-        return "0";
+        return false;
     }
 
     public boolean Deletar(Registros Registros){
