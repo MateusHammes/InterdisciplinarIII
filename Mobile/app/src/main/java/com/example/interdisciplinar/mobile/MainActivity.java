@@ -70,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("TIPO", NegocioTipo.Orcamento);
         startActivity(intent);
     }
-
+    public void CallMateriais(View view){
+        Intent intent = new Intent(this,MateriaisActivity.class);
+        startActivity(intent);
+    }
       public void testaWeb(View view){
 
         Log.i("MOBILE","Entrou testaWeb");

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -18,8 +19,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import DAO.NegocioDAO;
-import model.Negocio;
 import Enum.NegocioTipo;
+import model.Negocio;
 
 public class NegocioActivity extends AppCompatActivity {
 
@@ -28,6 +29,8 @@ public class NegocioActivity extends AppCompatActivity {
     private ArrayAdapter<Negocio> adpNegocio;
     private ListView listView;
     public static String msn=null;
+    private int pageList=0;
+    private  boolean goLoad=true;
 
 
     @Override
@@ -60,6 +63,21 @@ public class NegocioActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(goLoad && listView.getLastVisiblePosition() == (adpNegocio.getCount() - 1)) {
+                    goLoad = false;
+                    new CarregaRegistros().execute();
+                }
+            }
+        });
+
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("TIPO")){
             char tipo =  bundle.getChar("TIPO");
@@ -75,7 +93,10 @@ public class NegocioActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new CarregaRegistros().execute();
+        if(goLoad) {
+            goLoad=false;
+            new CarregaRegistros().execute();
+        }
         if(msn!=null&& !msn.isEmpty()){
             Toast t = Toast.makeText(this,msn,Toast.LENGTH_SHORT);
             t.show();
@@ -117,6 +138,15 @@ public class NegocioActivity extends AppCompatActivity {
                 adpNegocio.add(item);//converte object em Grupo
             }
             listView.setAdapter(adpNegocio);
+            if(pageList==0)
+                listView.setAdapter(adpNegocio);
+            else
+                adpNegocio.notifyDataSetChanged();
+
+            if(lsItens.size()==15) {
+                goLoad = true;
+                pageList++;
+            }
         }
     }
 
