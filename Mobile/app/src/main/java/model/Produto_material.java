@@ -8,7 +8,7 @@ public class Produto_material {
 
     private Produto produto;
     private Materiais material;
-
+    private Negocio negocio;
 
     public Produto_material() {
     }
@@ -19,22 +19,6 @@ public class Produto_material {
 
     public void setPrm_iunidade(int prm_iunidade) {
         this.prm_iunidade = prm_iunidade;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    public Materiais getMateriais() {
-        return material;
-    }
-
-    public void setMateriais(Materiais materiais) {
-        this.material = materiais;
     }
 
     public int getPrm_iunidadeUtilizada() {
@@ -51,5 +35,29 @@ public class Produto_material {
 
     public void setPrm_nvalor(double prm_nvalor) {
         this.prm_nvalor = prm_nvalor;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public Materiais getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Materiais material) {
+        this.material = material;
+    }
+
+    public Negocio getNegocio() {
+        return negocio;
+    }
+
+    public void setNegocio(Negocio negocio) {
+        this.negocio = negocio;
     }
 }

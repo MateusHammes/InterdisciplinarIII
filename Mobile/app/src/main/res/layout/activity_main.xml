@@ -10,16 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnCallGrupo"
-        android:src="@android:drawable/ic_menu_sort_by_size"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="CallGrupo" />
-
-    <Button
+       <Button
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,6 +53,7 @@
         android:id="@+id/btnTeste"
         android:onClick="testaWeb"/>
 
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -75,6 +67,5 @@
         android:text="detalhes do produto"
         android:id="@+id/btnDetProduto"
         android:onClick="CallDetalheProduto" />
-
 
 </LinearLayout>

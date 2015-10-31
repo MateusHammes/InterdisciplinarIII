@@ -2,12 +2,14 @@ package com.example.interdisciplinar.mobile;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,9 +39,19 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         adpMateriais = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listViewMateriais = (ListView) findViewById(R.id.produtoDetalheListViewMaterial);
 
-        adpRegistros = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2);
+        adpRegistros = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listViewRegistros = (ListView) findViewById(R.id.produtoDetalheListViewEspecificacao);
 
+        ImageButton btnMaterial = (ImageButton)findViewById(R.id.produtoDetalhesBtnMateriais);
+        btnMaterial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProdutoActivityDetalhes.this,MateriaisProdutoActivity.class);
+                i.putExtra("NEGOCIO",produto.getNegocio());
+                i.putExtra("PRODUTO",produto);
+                startActivity(i);
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("NEGOCIO")){
@@ -65,6 +77,9 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             listViewMateriais.setAdapter(adpMateriais);
         }
     }
+
+
+
 
 
     public void NovoRegistro(View view){
