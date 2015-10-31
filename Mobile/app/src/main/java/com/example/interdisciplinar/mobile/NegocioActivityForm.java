@@ -103,6 +103,7 @@ public class NegocioActivityForm extends AppCompatActivity {
             if(FuncoesExternas.Valida(txtCliente)){
                 Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
                 t.show();
+                GetNegocio();
                 new Salvar().execute();
                 Dialog.ShowProgressDialog(NegocioActivityForm.this);
             }

@@ -31,4 +31,6 @@
     <string name="Grupos">Categorias</string>
     <string name="title_activity_materiais">Materiais</string>
     <string name="title_activity_materiais_activity_form">Materiais</string>
+    <string name="alertMessageOption">Qual operação você deseja realizar?</string>
+    <string name="alertTitleOption">Escolha um opção</string>
 </resources>

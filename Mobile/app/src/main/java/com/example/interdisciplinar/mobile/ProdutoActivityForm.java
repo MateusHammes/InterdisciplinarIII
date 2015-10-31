@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import DAO.ProdutoDAO;
 import model.Negocio;
@@ -61,12 +60,22 @@ public class ProdutoActivityForm extends AppCompatActivity {
     }
 
 
+    public void GetItem(){
+        EditText nome =(EditText)findViewById(R.id.produtoNome);
+        EditText descricao =(EditText)findViewById(R.id.produtoDescricao);
+        if(produto==null)
+            produto = new Produto();
+
+        produto.setPro_vnome(nome.getText().toString());
+        produto.setPro_vdescricao(descricao.getText().toString());
+    }
 
     public void SalvarProduto(View view){
         EditText txtNome = (EditText)findViewById(R.id.produtoNome);
         if(FuncoesExternas.Valida(txtNome)){
-            Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
-            t.show();
+            /*Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
+            t.show();*/
+            GetItem();
             new Salvar().execute();
             Dialog.ShowProgressDialog(ProdutoActivityForm.this);
         }
@@ -96,7 +105,7 @@ public class ProdutoActivityForm extends AppCompatActivity {
                 startActivity(i);
                 //NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
             }else
-                Dialog.ShowAlert(ProdutoActivityForm.this, "Erro", "Ops, houve um imprevisto, favor tente novamente!");
+              Dialog.ShowAlertError(ProdutoActivityForm.this);
             Dialog.CancelProgressDialog();
         }
     }

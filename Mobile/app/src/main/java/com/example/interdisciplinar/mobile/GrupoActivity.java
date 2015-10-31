@@ -69,8 +69,8 @@ public class GrupoActivity extends AppCompatActivity {
                 //  boolean deleta = Dialog.ShowDialog(GrupoActivity.this, "Deletar Grupo", "Você deseja deletar este Grupo?");
                 Log.i("Clickou", " -  Passou - ");
                 new AlertDialog.Builder(GrupoActivity.this)
-                        .setTitle("Deletar Grupo")
-                        .setMessage("Você deseja deletar este Grupo?")
+                        .setTitle(R.string.alertTitleOption)
+                        .setMessage(R.string.alertMessageOption)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
                             @Override
@@ -96,10 +96,7 @@ public class GrupoActivity extends AppCompatActivity {
         grupoListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 Log.i("TOTAL!", "Total::: -- - -- " + totalItemCount+"");

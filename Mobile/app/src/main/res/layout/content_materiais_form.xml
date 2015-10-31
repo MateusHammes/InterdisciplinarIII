@@ -31,7 +31,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtNomeMaterial"
+        android:id="@+id/materialTxtNome"
         android:hint="Informe o nome do Material" />
 
     <TextView
@@ -45,7 +45,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtValorMtr"
+        android:id="@+id/materialTxtValor"
         android:inputType="numberDecimal"
         android:hint="Valor Unitário" />
     <TextView
@@ -58,7 +58,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtEstoqueMtr"
+        android:id="@+id/materialTxtEstoque"
         android:inputType="numberDecimal"
         android:hint="Quantidade de Estoque" />
     <TextView
@@ -71,8 +71,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtDescricaoMtr"
+        android:id="@+id/materialTxtDescricao"
         android:hint="Descrição adicional" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/materialSpinner" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -85,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Cancelar"
-            android:id="@+id/btnCancelMtr"
+            android:id="@+id/materialBtnCancel"
             android:onClick="Cancelar"/>
 
         <Button
@@ -93,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Salvar"
-            android:id="@+id/btnSalvarMtr" />
+            android:id="@+id/materialBtnSalvar" />
 
     </LinearLayout>
 

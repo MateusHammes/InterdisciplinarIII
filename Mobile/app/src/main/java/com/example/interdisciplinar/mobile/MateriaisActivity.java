@@ -1,5 +1,8 @@
 package com.example.interdisciplinar.mobile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -15,6 +19,7 @@ import java.util.List;
 
 import DAO.MateriaisDAO;
 import model.Materiais;
+import util.Dialog;
 
 public class MateriaisActivity extends AppCompatActivity {
 
@@ -25,6 +30,7 @@ public class MateriaisActivity extends AppCompatActivity {
 
     private boolean GoLoad=true;
     private int pageList=0;
+    AlertDialog dlg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class MateriaisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_materiais);
         /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
-        materialListView = (ListView)findViewById(R.id.materiaisListView);
+        materialListView = (ListView) findViewById(R.id.materiaisListView);
 
         adpMaterial = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
@@ -60,9 +66,45 @@ public class MateriaisActivity extends AppCompatActivity {
                 }
             }
         });
+        materialListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
+                i.putExtra("MATERIAL", adpMaterial.getItem(position));
+                startActivity(i);
+            }
+        });
+        materialListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final Materiais mtr = adpMaterial.getItem(position);
 
+                new AlertDialog.Builder(MateriaisActivity.this)
+                        .setTitle(R.string.alertTitleOption)
+                        .setMessage(R.string.alertMessageOption)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new Delete().execute(mtr);
+                            }
+                        }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //material = mtr;
+                        Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
+                        i.putExtra("MATERIAL", mtr);
+                        startActivity(i);
+                    }
+                }).setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
+                return false;
+            }
+        });
     }
-
 
     @Override
     protected void onResume() {
@@ -115,6 +157,29 @@ public class MateriaisActivity extends AppCompatActivity {
         }
     }
 
+
+    private  class Delete extends  AsyncTask<Materiais, String, Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Materiais... params) {
+            if(DAO.Deletar(params[0])){
+                adpMaterial.remove(params[0]);
+                adpMaterial.notifyDataSetChanged();
+                return true;
+            }else
+                Dialog.ShowAlert(MateriaisActivity.this, "Deletar Material","Ops.. Este material ja esta sendo Utilizado por outros Produtos");
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean deleto) {
+            super.onPostExecute(deleto);
+           /* if(deleto){
+
+            }else{}*/
+            Dialog.CancelProgressDialog();
+        }
+    }
 
 
 

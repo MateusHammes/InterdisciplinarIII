@@ -33,6 +33,23 @@ public class GrupoDAO {
         return null;
     }
 
+    public List<Grupo> SelecionaTodosGrupo(){
+        try {
+            String url = Connection.url.concat("grupos");
+            RestTemplate rest = new RestTemplate();
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            rest.setMessageConverters(messageConverters);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            Grupo[] arrayGrupo = rest.getForObject(url, Grupo[].class); //(url,Grupo.class,));
+            return Arrays.asList(arrayGrupo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public boolean Salvar(Grupo grupo){
         String url = Connection.url.concat("grupos/salvaGrupo"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
         RestTemplate rest = new RestTemplate();
