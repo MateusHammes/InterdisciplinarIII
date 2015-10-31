@@ -1,4 +1,3 @@
-
 package recursos;
 
 import dao.NegocioDAO;
@@ -16,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import model.Grupo;
 import model.Negocio;
 
-
 @Path("negocios")
 public class NegociosResource {
 
@@ -24,30 +22,30 @@ public class NegociosResource {
     @Context
     private UriInfo context;
 
-  
     public NegociosResource() {
     }
 
-     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Negocio> findAll() {
-        return negocioDAO.findAll();
-    }
+//    @GET
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    @Path("{tipo}")
+//    public List<Negocio> findAll(@PathParam("tipo") String tipo) {
+//        return negocioDAO.findAll(tipo);
+//    }
 
-     @GET
+    @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}/{id2}")
     public List<Negocio> findRange(@PathParam("id") Integer id, @PathParam("id2") Integer id2) {
         return negocioDAO.findRange(id, id2);
     }
-    
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("{id}")
-    public Negocio findById(@PathParam("id") Integer id) {
 
-        return negocioDAO.findById(id);
-    }
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    @Path("{id}")
+//    public Negocio findById(@PathParam("id") Integer id) {
+//
+//        return negocioDAO.findById(id);
+//    }
 
     @POST
     @Path("salvaNegocio")
@@ -79,5 +77,5 @@ public class NegociosResource {
             return "0";
         }
     }
- 
+
 }
