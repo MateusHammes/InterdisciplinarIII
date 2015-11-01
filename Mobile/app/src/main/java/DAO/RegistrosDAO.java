@@ -16,14 +16,16 @@ import util.Connection;
 
 public class RegistrosDAO {
 
-    public List<Registros> SelecionaRegistros(){
+    public List<Registros> SelecionaRegistros(int idProduto){
         try {
-            String url = Connection.url.concat("Registros");
+            String url = Connection.url.concat("registros/"+idProduto);
+
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
             Registros[] arrayRegistros = rest.getForObject(url, Registros[].class); //(url,Registros.class,));
             return Arrays.asList(arrayRegistros);
         }catch (Exception e){
@@ -35,7 +37,7 @@ public class RegistrosDAO {
 
     public Boolean Salvar(Registros Registros){
         try {
-            String url = Connection.url.concat("Registros/salvaRegistros"); ////"http://192.168.0.102:8080/WebServiceREST/service/Registross";
+            String url = Connection.url.concat("registros/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/Registross";
             RestTemplate rest = new RestTemplate();
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             rest.getMessageConverters().add(new StringHttpMessageConverter());
@@ -47,7 +49,7 @@ public class RegistrosDAO {
     }
 
     public boolean Deletar(Registros Registros){
-        String url = Connection.url.concat("Registros/deleteRegistros");
+        String url = Connection.url.concat("registros/delete");
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());

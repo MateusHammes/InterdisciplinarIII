@@ -44,24 +44,34 @@ public class NegocioActivityForm extends AppCompatActivity {
         });
 
         Bundle bundle = getIntent().getExtras();
+
         if(bundle !=null){
             if(bundle.containsKey("NEGOCIO")){
                 negocio =(Negocio) bundle.getSerializable("NEGOCIO");
-            }
-
-            if(bundle.containsKey("TIPO")){
-                char tipo = bundle.getChar("TIPO");
+              //  Log.i("NEG Akiii","tenho"+negocio.getNeg_ctipo());
                 TextView txtHeader = (TextView)findViewById(R.id.negocioTxtHeader);
                 EditText txtNome = (EditText) findViewById(R.id.negocioTxtNome);
-                if(tipo == NegocioTipo.Orcamento) {
-                    negocio.setNeg_ctipo(NegocioTipo.Orcamento);
+                if(negocio.getNeg_ctipo()==NegocioTipo.Orcamento){
                     txtHeader.setText(R.string.Orcamento);
                     txtNome.setHint(R.string.OrcamentoNome);
-                }else
-                    negocio.setNeg_ctipo(NegocioTipo.Orcamento);
+                }
+                SetNegocio(negocio);
             }
-        }
+
+
+        if(bundle.containsKey("TIPO")){
+            char tipo = bundle.getChar("TIPO");
+            TextView txtHeader = (TextView)findViewById(R.id.negocioTxtHeader);
+            EditText txtNome = (EditText) findViewById(R.id.negocioTxtNome);
+            if(tipo == NegocioTipo.Orcamento) {
+                negocio.setNeg_ctipo(NegocioTipo.Orcamento);
+                txtHeader.setText(R.string.Orcamento);
+                txtNome.setHint(R.string.OrcamentoNome);
+            }else
+                negocio.setNeg_ctipo(NegocioTipo.Orcamento);
+        }}
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,14 +119,14 @@ public class NegocioActivityForm extends AppCompatActivity {
             }
     }
 
-    private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            String dt =  DateUtil.dateToString(year,monthOfYear,dayOfMonth);
-            txtDate.setText(dt);
-            // negocio.setNeg_dprevisao(date); //passo a data direto pro objeto
-        }
+private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        String dt =  DateUtil.dateToString(year,monthOfYear,dayOfMonth);
+        txtDate.setText(dt);
+        // negocio.setNeg_dprevisao(date); //passo a data direto pro objeto
     }
+}
 
     //region /Get e Set Valores
     private void SetNegocio(Negocio negocio){
@@ -129,7 +139,7 @@ public class NegocioActivityForm extends AppCompatActivity {
         txtNome.setText(negocio.getNeg_vnome());
         txtCliente.setText(negocio.getNeg_vcliente());
         txtEndereço.setText(negocio.getNeg_vendereco());
-        txtDataPrevisao.setText(DateUtil.dateToString(negocio.getNeg_dprevisao()));
+//        txtDataPrevisao.setText(DateUtil.dateToString(negocio.getNeg_dprevisao()));
         txtdescricao.setText(negocio.getNeg_vdescricao());
     }
 
@@ -137,52 +147,53 @@ public class NegocioActivityForm extends AppCompatActivity {
         EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
         EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
         EditText txtEndereço = (EditText)findViewById(R.id.negocioTxtClienteEndereco);
-         EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
+        EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
         EditText txtdescricao = (EditText)findViewById(R.id.negocioTxtDescricao);
 
         negocio.setNeg_vnome(txtNome.getText().toString());
         negocio.setNeg_vcliente(txtCliente.getText().toString());
         negocio.setNeg_vdescricao(txtdescricao.getText().toString());
         negocio.setNeg_vendereco(txtEndereço.getText().toString());
-        negocio.setNeg_dtermino(DateUtil.GetDate(txtDataPrevisao.getText().toString()));
+//        negocio.setNeg_dtermino(DateUtil.GetDate(txtDataPrevisao.getText().toString()));
     }
-    //endregion
+//endregion
 
 
-    //region salvar Assincrono
-    private class Salvar extends AsyncTask<Negocio, String, Boolean>{
-        @Override
-        protected Boolean doInBackground(Negocio... params) {
-            try {
-                Log.i("Foi ate aki","NEgocios");
-                String id = DAO.Salvar(negocio);
-                if(!id.equals("0")) {///se for diferente de 0, salvou :)
-                    negocio.setNeg_codigo(Integer.parseInt(id));
-                    return true;
-                }else
-                    return false;
-            }catch (Exception e){
-                Log.e("ERRO",e.toString());
-            }
-            return false;
+//region salvar Assincrono
+private class Salvar extends AsyncTask<Negocio, String, Boolean>{
+    @Override
+    protected Boolean doInBackground(Negocio... params) {
+        try {
+            Log.i("Foi ate aki","NEgocios");
+            String id = DAO.Salvar(negocio);
+            if(!id.equals("0")) {///se for diferente de 0, salvou :)
+                negocio.setNeg_codigo(Integer.parseInt(id));
+                return true;
+            }else
+                return false;
+        }catch (Exception e){
+            Log.e("ERRO",e.toString());
         }
-
-        @Override
-        protected void onPostExecute(Boolean salvo) {
-            super.onPostExecute(salvo);
-            if(salvo) {
-                finish();
-                Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetalhes.class);
-                i.putExtra("NEGOCiO",negocio);
-                startActivity(i);
-                NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
-            }else{
-                Dialog.ShowAlert(NegocioActivityForm.this,"Erro","Ops, houve um imprevisto, favor tente novamente!");
-            }
-            Dialog.CancelProgressDialog();
-        }
+        return false;
     }
-    //endregion
+
+    @Override
+    protected void onPostExecute(Boolean salvo) {
+        super.onPostExecute(salvo);
+        if(salvo) {
+
+            Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetalhes.class);
+            i.putExtra("NEGOCIO", negocio);
+            //finish();
+            startActivity(i);
+            NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
+        }else{
+            Dialog.ShowAlert(NegocioActivityForm.this,"Erro","Ops, houve um imprevisto, favor tente novamente!");
+        }
+        Dialog.CancelProgressDialog();
+    }
+}
+//endregion
 
 }
 

@@ -3,6 +3,7 @@ package com.example.interdisciplinar.mobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
 
     private Negocio negocio;
     private ArrayAdapter<Produto> adpItens;
-    private ListView listView;
+    private ListView listViewProdutos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +30,24 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
 
         adpItens = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
-        listView = (ListView) findViewById(R.id.negocioListView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewProdutos = (ListView) findViewById(R.id.negocioDetalhesListViewProdutos);
+        listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ///chama detalhes do produto
-                /*Produto pro = adpItens.getItem(position);
-                Intent i = new Intent(NegocioActivityDetahes.this, ProdutoActivity.class);
+                Produto pro = adpItens.getItem(position);
+                Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityDetalhes.class);
                 i.putExtra("PRODUTO",pro);
-                startActivity(i);*/
+                startActivity(i);
             }
         });
 
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("NEGOCIO")){
+            Log.i("Vai apresenta","PARAMETROSSSSS");
             negocio =(Negocio) bundle.getSerializable("NEGOCIO");
+            Log.i("Vai apresenta","O NEgsds");
             SetValues(negocio);
         }
     }
@@ -74,7 +77,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
 
     public void CallProdutoForm(View view){
         Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityForm.class);
-        i.putExtra("NEG_CODIGO", negocio.getNeg_codigo());
+        i.putExtra("NEGOCIO", negocio);
         startActivity(i);
     }
 
@@ -82,7 +85,6 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     private void SetValues(Negocio item){
 
         NumberFormat number = NumberFormat.getCurrencyInstance();
-
         TextView cliente = (TextView)findViewById(R.id.negocioDetailCliente);
         TextView nome = (TextView)findViewById(R.id.negocioDetailNome);
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
@@ -100,7 +102,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
             for (Produto prd:item.getLsProdutos()) {
                 adpItens.add(prd);
             }
-            listView.setAdapter(adpItens);
+            listViewProdutos.setAdapter(adpItens);
         }
 
     }

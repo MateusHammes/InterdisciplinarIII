@@ -22,8 +22,8 @@ public class MateriaisActivityForm extends AppCompatActivity {
 
     Materiais material = new Materiais();
     MateriaisDAO DAO = new MateriaisDAO();
-Spinner spnGrupos ;
-ArrayAdapter<Grupo>adpSpinnerGrupos;
+    Spinner spnGrupos ;
+    ArrayAdapter<Grupo>adpSpinnerGrupos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

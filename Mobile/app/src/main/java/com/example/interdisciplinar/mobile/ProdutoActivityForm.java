@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import DAO.ProdutoDAO;
@@ -16,8 +18,8 @@ import util.Dialog;
 import util.FuncoesExternas;
 
 public class ProdutoActivityForm extends AppCompatActivity {
-    private Produto produto;
-    private ProdutoDAO DAO;
+    private Produto produto = new Produto();
+    private ProdutoDAO DAO = new ProdutoDAO();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +28,23 @@ public class ProdutoActivityForm extends AppCompatActivity {
         produto = new Produto();
         Bundle bundle = getIntent().getExtras();
         try {
-            if (bundle != null && bundle.containsKey("NEG_CODIGO")) {
-                Negocio neg = new Negocio();
-                String id = String.valueOf(bundle.getBundle("NEG_CODIGO"));
-                neg.setNeg_codigo(Integer.parseInt(id));
+            if (bundle != null && bundle.containsKey("NEGOCIO")) {
+                Log.i("Tem negocio","comneg");
+                Negocio neg =(Negocio) bundle.getSerializable("NEGOCIO");
+               // Log.i("Tem negocio","BH"+neg.getNeg_codigo());
                 produto.setNegocio(neg);
             }
         }catch (Exception e){
             finish();
         }
+
+        Button btn = (Button)findViewById(R.id.produtoBtnSalvar);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               SalvarProduto();
+            }
+        });
     }
 
     @Override
@@ -70,25 +80,35 @@ public class ProdutoActivityForm extends AppCompatActivity {
         produto.setPro_vdescricao(descricao.getText().toString());
     }
 
-    public void SalvarProduto(View view){
+    public void SalvarProduto(){
         EditText txtNome = (EditText)findViewById(R.id.produtoNome);
         if(FuncoesExternas.Valida(txtNome)){
-            /*Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
-            t.show();*/
             GetItem();
-            new Salvar().execute();
+            Log.i("Vai ir", "Serio! com" + produto.getPro_codigo());
+           new SalvarProduto().execute();
             Dialog.ShowProgressDialog(ProdutoActivityForm.this);
+
+            /*
+            String id =  DAO.Salvar(produto);
+            Dialog.CancelProgressDialog();*/
+/*
+            Intent i = new Intent(ProdutoActivityForm.this, ProdutoActivityDetalhes.class);
+            i.putExtra("PRODUTO", produto);
+            startActivity(i);*/
+
         }
     }
 
 
 
     //region salvar Assincrono
-    private class Salvar extends AsyncTask<Produto, String, Boolean> {
+    private class SalvarProduto extends AsyncTask<Produto, String, Boolean> {
         @Override
         protected Boolean doInBackground(Produto... params) {
-           String id = DAO.Salvar(produto);
-            if(!id.isEmpty() && !id.equals("0")){
+            Log.i("Tamo aki","pra salva");
+            String id =  DAO.Salvar(produto);
+            Log.i("Return ID",id);
+            if(!id.equals("0")){
                 produto.setPro_codigo(Integer.parseInt(id));
                 return true;
             }else
@@ -99,7 +119,7 @@ public class ProdutoActivityForm extends AppCompatActivity {
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
             if(salvo) {
-                finish();
+               /// finish();
                 Intent i = new Intent(ProdutoActivityForm.this, ProdutoActivityDetalhes.class);
                 i.putExtra("PRODUTO",produto);
                 startActivity(i);

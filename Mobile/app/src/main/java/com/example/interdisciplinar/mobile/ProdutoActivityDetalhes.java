@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,6 +48,16 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         //region Materiais
         adpMateriais = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listViewMateriais = (ListView) findViewById(R.id.produtoDetalheListViewMaterial);
+
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null && bundle.containsKey("PRODUTO")){
+            Log.i("TEM PRODU","ALKI detalhes");
+            produto =(Produto) bundle.getSerializable("PRODUTO");
+            SetValues(produto);
+        }
+
+
 
         listViewMateriais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -143,11 +154,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             }
         });
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null && bundle.containsKey("NEGOCIO")){
-            produto =(Produto) bundle.getSerializable("NEGOCIO");
-            SetValues(produto);
-        }
+
     }
 
     @Override
@@ -202,8 +209,14 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (FuncoesExternas.Valida(input)) {
+                    registro.setRgs_vdescricao(input.getText().toString());
+                    registro.setProduto(produto);
+                    //Negocio neg = produto.getNegocio();
+                    Log.i("NEGO do PRoed", "Vai erra!!u N??");
+                    registro.setNegocio(produto.getNegocio());
                     new SalvaRegistro().execute();
                     Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
+
                 }
             }
         });
@@ -224,7 +237,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
 
         @Override
         protected List<Registros> doInBackground(Registros... params) {
-            return DAO.SelecionaRegistros();
+            return DAO.SelecionaRegistros(produto.getPro_codigo());
         }
 
         @Override
@@ -237,6 +250,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
     private class SalvaRegistro extends AsyncTask<Registros,String, Boolean> {
         @Override
         protected Boolean doInBackground(Registros... params) {
+            Log.i("Salva registo::?","vamos ver"+registro.getRgs_codigo());
             return DAO.Salvar(registro);
         }
 
@@ -244,6 +258,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if(aBoolean){
+                alert.cancel();
                 adpRegistros.clear();
                 new CarregaRegistros().execute();
             }else {

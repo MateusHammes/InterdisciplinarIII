@@ -75,7 +75,8 @@ public class GrupoActivity extends AppCompatActivity {
                         .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                new Delete().execute(gp);
+                                grupo=gp;
+                                new Delete().execute();
                             }
                         }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
                     @Override
@@ -252,29 +253,24 @@ public class GrupoActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground (Grupo...params){
             try{
-                if(DAO.Deletar(params[0])){
-                    adpGrupo.remove(params[0]);
-                    adpGrupo.notifyDataSetChanged();
-                    return true;
-                }else
-                    Dialog.ShowAlert(GrupoActivity.this,"Deletar","Opss, Esta Categoria ja esta sendo utilizada por outros registros!");
+                return DAO.Deletar(grupo);
             }catch (Exception e){
                 e.printStackTrace();
             }
             return false;
         }
 
-       /* @Override
+        @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if(aBoolean){
-               // pageList=0;
-              //  GoLoad=true;
-             //   new CarregaRegistros().execute();
+                pageList =0;
+                new CarregaRegistros().execute();
+                adpGrupo.clear();
             }else{
                 Dialog.ShowAlert(GrupoActivity.this,"Deletar","Opss, Esta Categoria ja esta sendo utilizada por outros registros!");
             }
-        }*/
+        }
     }
 
     private class Salvar extends AsyncTask<Grupo,Integer,Boolean>{
@@ -299,9 +295,10 @@ public class GrupoActivity extends AppCompatActivity {
                     msn = "Registro editado com Sucesso!";
                 }else
                     msn="Registro salvo com Sucesso!";
-                adpGrupo.clear();
+
                 pageList =0;
                 new CarregaRegistros().execute();
+                adpGrupo.clear();
             } else {
                 Dialog.ShowAlert(GrupoActivity.this, "Erro", "Erro ao Inserir registro, Favor tente novamente");
 

@@ -7,6 +7,7 @@ public class Registros {
     private int rgs_cstatus;
 
     private Produto produto;
+    private Negocio negocio;
 
     public Registros(){}
 
@@ -40,5 +41,18 @@ public class Registros {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public Negocio getNegocio() {
+        return negocio;
+    }
+
+    public void setNegocio(Negocio negocio) {
+        this.negocio = negocio;
+    }
+
+    @Override
+    public String toString() {
+        return getRgs_vdescricao();
     }
 }

@@ -80,7 +80,7 @@ public class NegocioActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("TIPO")){
-            char tipo =  bundle.getChar("TIPO");
+            int tipo =  bundle.getInt("TIPO");
             if(tipo== NegocioTipo.Orcamento){
                 TextView txtTitulo = (TextView)findViewById(R.id.negocioListagemTxtTitulo);
                 txtTitulo.setText(R.string.Orcamento);

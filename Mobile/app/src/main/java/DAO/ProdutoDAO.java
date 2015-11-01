@@ -1,5 +1,7 @@
 package DAO;
 
+import android.util.Log;
+
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -20,7 +22,6 @@ public class ProdutoDAO {
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
-            // Add the message converters to the restTemplate
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             Produto[] arrayProduto = rest.getForObject(url, Produto[].class); //(url,Produto.class,));
@@ -32,8 +33,10 @@ public class ProdutoDAO {
     }
 
     public String Salvar(Produto Produto){
-        String url = Connection.url.concat("Produtos/salvaProduto"); ////"http://192.168.0.102:8080/WebServiceREST/service/Produtos";
+        Log.i("veio Salva","Na DAO");
+        String url = Connection.url.concat("produtos/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/Produtos";
         RestTemplate rest = new RestTemplate();
+
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
         return rest.postForObject(url, Produto, String.class);
