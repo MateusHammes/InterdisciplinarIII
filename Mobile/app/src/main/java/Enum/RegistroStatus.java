@@ -1,6 +1,6 @@
 package Enum;
 
 public class RegistroStatus {
-    public static char completo = 'C';
-    public static  char aberto='A';
+    public static int completo = 1;
+    public static int aberto=0;
 }

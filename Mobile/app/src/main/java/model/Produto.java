@@ -8,7 +8,7 @@ public class Produto implements Serializable {
     private int pro_codigo;
     private String pro_vnome;
     private String pro_vdescricao;
-    private char pro_cstatus;
+    private int pro_cstatus;
 
     private Negocio negocio;
 
@@ -41,11 +41,11 @@ public class Produto implements Serializable {
         this.pro_vdescricao = pro_vdescricao;
     }
 
-    public char getPro_cstatus() {
+    public int getPro_cstatus() {
         return pro_cstatus;
     }
 
-    public void setPro_cstatus(char pro_cstatus) {
+    public void setPro_cstatus(int pro_cstatus) {
         this.pro_cstatus = pro_cstatus;
     }
 
@@ -57,12 +57,12 @@ public class Produto implements Serializable {
         this.negocio = negocio;
     }
 
-    public List<Produto_material> getLsProdutoMateriais() {
+    public List<Produto_material> getLsProdutoMaterial() {
         return lsProdutoMaterial;
     }
 
-    public void setLsProdutoMateriais(List<Produto_material> lsProdutoMateriais) {
-        this.lsProdutoMaterial = lsProdutoMateriais;
+    public void setLsProdutoMaterial(List<Produto_material> lsProdutoMaterial) {
+        this.lsProdutoMaterial = lsProdutoMaterial;
     }
 
     public List<Registros> getLsRegistros() {

@@ -4,7 +4,7 @@ package model;
 public class Registros {
     private int rgs_codigo;
     private String rgs_vdescricao;
-    private char rgs_cstatus;
+    private int rgs_cstatus;
 
     private Produto produto;
 
@@ -26,11 +26,11 @@ public class Registros {
         this.rgs_vdescricao = rgs_vdescricao;
     }
 
-    public char getRgs_cstatus() {
+    public int getRgs_cstatus() {
         return rgs_cstatus;
     }
 
-    public void setRgs_cstatus(char rgs_cstatus) {
+    public void setRgs_cstatus(int rgs_cstatus) {
         this.rgs_cstatus = rgs_cstatus;
     }
 

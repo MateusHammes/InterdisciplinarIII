@@ -2,7 +2,7 @@ package Enum;
 
 //enum do negocio
 public class NegocioTipo{
-    public static char Negocio = 'N';
-    public static char Orcamento = 'O';
+    public static int Negocio = 1;
+    public static int Orcamento = 0;
 }
 

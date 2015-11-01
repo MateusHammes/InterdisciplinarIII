@@ -11,13 +11,13 @@ public class Negocio implements Serializable {
 
     private String neg_vnome;
     private Date neg_dcadastro;
-    private char neg_cstatus;
+    private int neg_cstatus;
     private String neg_vcliente;
     private Date neg_dtermino;
     private  Date neg_dprevisao;
     private String neg_vendereco;
     private  String neg_vdescricao;
-    private char neg_ctipo;///define se é Negocio ou Orçamento
+    private int neg_ctipo;///define se é Negocio ou Orçamento
 
     private double neg_valorTotal;
     private double neg_valorAdquirido;
@@ -50,11 +50,11 @@ public class Negocio implements Serializable {
         this.neg_dcadastro = neg_dcadastro;
     }
 
-    public char getNeg_cstatus() {
+    public int getNeg_cstatus() {
         return neg_cstatus;
     }
 
-    public void setNeg_cstatus(char neg_cstatus) {
+    public void setNeg_cstatus(int neg_cstatus) {
         this.neg_cstatus = neg_cstatus;
     }
 
@@ -130,11 +130,11 @@ public class Negocio implements Serializable {
         this.neg_codigoParent = neg_codigoParent;
     }
 
-    public char getNeg_ctipo() {
+    public int getNeg_ctipo() {
         return neg_ctipo;
     }
 
-    public void setNeg_ctipo(char neg_ctipo) {
+    public void setNeg_ctipo(int neg_ctipo) {
         this.neg_ctipo = neg_ctipo;
     }
 

@@ -8,7 +8,7 @@ public class Materiais implements Serializable {
     private int mtr_codigo;
     private String mtr_vnome;
     private double mtr_nvalor;
-    private char mtr_cstatus;
+    private int mtr_cstatus;
     private String mtr_vdescricao;
     private int mtr_iestoque;
     private Grupo grupo;
@@ -40,11 +40,11 @@ public class Materiais implements Serializable {
         this.mtr_nvalor = mtr_nvalor;
     }
 
-    public char getMtr_cstatus() {
+    public int getMtr_cstatus() {
         return mtr_cstatus;
     }
 
-    public void setMtr_cstatus(char mtr_cstatus) {
+    public void setMtr_cstatus(int mtr_cstatus) {
         this.mtr_cstatus = mtr_cstatus;
     }
 

@@ -18,7 +18,7 @@ import util.Connection;
 
 public class NegocioDAO {
 
-    public List<Negocio>SelecionaNegocios(char tipo){
+    public List<Negocio>SelecionaNegocios(int tipo){
         try{
             String url = Connection.url.concat("negocios/tipo/"+tipo);
                 RestTemplate rest = new RestTemplate();

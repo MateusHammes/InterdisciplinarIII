@@ -168,8 +168,8 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             adpRegistros.addAll(produto.getLsRegistros());
             listViewRegistros.setAdapter(adpRegistros);
         }
-        if(produto.getLsProdutoMateriais()!=null) {
-            adpMateriais.addAll(produto.getLsProdutoMateriais());
+        if(produto.getLsRegistros()!=null) {
+            adpMateriais.addAll(produto.getLsProdutoMaterial());
             listViewMateriais.setAdapter(adpMateriais);
         }
     }
