@@ -10,28 +10,36 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 
-
 public class ProdutoMaterialDAO {
+
     private Session session;
-    
+
     public ProdutoMaterialDAO() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
 
-     public void update(ProdutoMaterial i) {
+    public void update(ProdutoMaterial i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.merge(i);
         t.commit();
         //session.close();
     }
-     
-      public void delete(ProdutoMaterial i) {
+
+    public void delete(ProdutoMaterial i) {
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         session.delete(i);
         t.commit();
         //session.close();
     }
-    
+
+    public ProdutoMaterial findById(int id) {
+
+        session = HibernateUtil.getSessionFactory().openSession();
+        ProdutoMaterial p = (ProdutoMaterial) session.createQuery("from ProdutoMaterial where pro_codigo = "+id+"");
+
+        return p;
+    }
+
 }
