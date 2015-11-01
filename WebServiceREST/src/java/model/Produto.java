@@ -34,7 +34,7 @@ public class Produto implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "pro_codigo")
     private int pro_codigo;
     private String pro_vnome;
-    private char pro_ctipo;
+    private int pro_ctipo;
     private String pro_vdescricao;
 
     @ManyToOne
@@ -67,13 +67,6 @@ public class Produto implements Serializable{
         this.pro_vnome = pro_vnome;
     }
 
-    public char getPro_ctipo() {
-        return pro_ctipo;
-    }
-
-    public void setPro_ctipo(char pro_ctipo) {
-        this.pro_ctipo = pro_ctipo;
-    }
 
     public String getPro_vdescricao() {
         return pro_vdescricao;
@@ -126,6 +119,22 @@ public class Produto implements Serializable{
             return false;
         }
         return true;
+    }
+
+    public int getPro_ctipo() {
+        return pro_ctipo;
+    }
+
+    public void setPro_ctipo(int pro_ctipo) {
+        this.pro_ctipo = pro_ctipo;
+    }
+
+    public List<Registros> getLsRegistros() {
+        return lsRegistros;
+    }
+
+    public void setLsRegistros(List<Registros> lsRegistros) {
+        this.lsRegistros = lsRegistros;
     }
 
 }

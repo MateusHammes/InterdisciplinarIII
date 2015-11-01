@@ -21,19 +21,18 @@ public class Negocio implements Serializable {
     @SequenceGenerator(name = "neg_codigo", sequenceName = "seq_neg_codigo")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "neg_codigo")
     private int neg_codigo;
-
-  
+ 
     @OneToMany
     @JoinColumn(name = "neg_parent")
     private List<Negocio> neg_parent;
     private String neg_vnome;
     private Date neg_dcadastro;
-    private char neg_cstatus;
+    private int neg_cstatus;
     private String neg_vcliente;
     private Date neg_dtermino;
     private String neg_vendereco;
     private String neg_vdescricao;
-    private char neg_ctipo;
+    private int neg_ctipo;
 
 //   @ManyToOne
 //    @JoinColumn(name = "pes_codigo", referencedColumnName = "pes_codigo")
@@ -73,13 +72,7 @@ public class Negocio implements Serializable {
         this.neg_dcadastro = neg_dcadastro;
     }
 
-    public char getNeg_cstatus() {
-        return neg_cstatus;
-    }
-
-    public void setNeg_cstatus(char neg_cstatus) {
-        this.neg_cstatus = neg_cstatus;
-    }
+ 
 
     public String getNeg_vcliente() {
         return neg_vcliente;
@@ -113,13 +106,22 @@ public class Negocio implements Serializable {
         this.neg_vdescricao = neg_vdescricao;
     }
 
-    public char getNeg_ctipo() {
+    public int getNeg_cstatus() {
+        return neg_cstatus;
+    }
+
+    public void setNeg_cstatus(int neg_cstatus) {
+        this.neg_cstatus = neg_cstatus;
+    }
+
+    public int getNeg_ctipo() {
         return neg_ctipo;
     }
 
-    public void setNeg_ctipo(char neg_ctipo) {
+    public void setNeg_ctipo(int neg_ctipo) {
         this.neg_ctipo = neg_ctipo;
     }
+
 
  
 
