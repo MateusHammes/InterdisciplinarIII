@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Pessoa {
+public class Pessoa implements Serializable{
     @Id
     @SequenceGenerator(name = "pes_codigo", sequenceName = "seq_pes_codigo")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "pes_codigo")

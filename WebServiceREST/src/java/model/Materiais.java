@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "materiais")
 @XmlRootElement
-public class Materiais {
+public class Materiais implements Serializable{
 
     @Id
     @SequenceGenerator(name = "mtr_codigo", sequenceName = "seq_mtr_codigo")
