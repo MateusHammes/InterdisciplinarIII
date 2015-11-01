@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,14 +27,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "produto")
 @XmlRootElement
-public class Produto {
+public class Produto implements Serializable{
 
     @Id
     @SequenceGenerator(name = "pro_codigo", sequenceName = "seq_pro_codigo")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "pro_codigo")
     private int pro_codigo;
     private String pro_vnome;
-    private char pro_ctipo;
+    private int pro_ctipo;
     private String pro_vdescricao;
 
     @ManyToOne
@@ -66,13 +67,6 @@ public class Produto {
         this.pro_vnome = pro_vnome;
     }
 
-    public char getPro_ctipo() {
-        return pro_ctipo;
-    }
-
-    public void setPro_ctipo(char pro_ctipo) {
-        this.pro_ctipo = pro_ctipo;
-    }
 
     public String getPro_vdescricao() {
         return pro_vdescricao;
@@ -125,6 +119,22 @@ public class Produto {
             return false;
         }
         return true;
+    }
+
+    public int getPro_ctipo() {
+        return pro_ctipo;
+    }
+
+    public void setPro_ctipo(int pro_ctipo) {
+        this.pro_ctipo = pro_ctipo;
+    }
+
+    public List<Registros> getLsRegistros() {
+        return lsRegistros;
+    }
+
+    public void setLsRegistros(List<Registros> lsRegistros) {
+        this.lsRegistros = lsRegistros;
     }
 
 }

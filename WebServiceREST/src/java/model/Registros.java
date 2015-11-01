@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,14 +23,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "registros")
 @XmlRootElement
-public class Registros {
+public class Registros implements Serializable{
 
     @Id
     @SequenceGenerator(name = "rgs_codigo", sequenceName = "seq_rgs_codigo")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "rgs_codigo")
     private int rgs_codigo;
     private String rgs_vdescricao;
-    private char rgs_cstatus;
+    private int rgs_cstatus;
 
     @ManyToOne
     @JoinColumn(name = "pro_codigo", referencedColumnName = "pro_codigo")
@@ -58,14 +59,6 @@ public class Registros {
         this.rgs_vdescricao = rgs_vdescricao;
     }
 
-    public char getRgs_cstatus() {
-        return rgs_cstatus;
-    }
-
-    public void setRgs_cstatus(char rgs_cstatus) {
-        this.rgs_cstatus = rgs_cstatus;
-    }
-
     public Produto getProduto() {
         return produto;
     }
@@ -87,6 +80,8 @@ public class Registros {
         return getRgs_vdescricao();
     }
 
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -107,6 +102,14 @@ public class Registros {
             return false;
         }
         return true;
+    }
+
+    public int getRgs_cstatus() {
+        return rgs_cstatus;
+    }
+
+    public void setRgs_cstatus(int rgs_cstatus) {
+        this.rgs_cstatus = rgs_cstatus;
     }
 
 }

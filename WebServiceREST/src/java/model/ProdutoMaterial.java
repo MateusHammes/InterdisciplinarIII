@@ -8,8 +8,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-
 @Entity
 @XmlRootElement
 public class ProdutoMaterial implements Serializable {
@@ -26,8 +24,8 @@ public class ProdutoMaterial implements Serializable {
     @ManyToOne
     @JoinColumn(name = "neg_codigo", referencedColumnName = "neg_codigo")
     private Negocio negocio;
-    
-   private int prm_iunidade;
+
+    private int prm_iunidade;
     private int prm_iunidadeUtilizada;
     private double prm_nvalor;
 
@@ -82,5 +80,4 @@ public class ProdutoMaterial implements Serializable {
         this.prm_nvalor = prm_nvalor;
     }
 
-    
 }
