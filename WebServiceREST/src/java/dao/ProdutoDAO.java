@@ -61,9 +61,10 @@ public class ProdutoDAO {
         return m;
     }
 
-    public List<Produto> findAll() {
+    //id -> id do Negocio
+    public List<Produto> findAll(int neg_codigo) {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Produto> ls = session.createQuery("from Produto").list();
+        List<Produto> ls = session.createQuery("from Produto where neg_codigo ="+neg_codigo+" ").list();
         //session.close();
         return ls;
     }

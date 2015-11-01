@@ -3,11 +3,8 @@ package recursos;
 
 import dao.RegistrosDAO;
 import java.util.List;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,14 +19,14 @@ public class RegistrosResource {
     RegistrosDAO registrosDAO = new RegistrosDAO();
 
 
- 
-    public RegistrosResource() {
+     public RegistrosResource() {
     }
 
     @GET
+    @Path("{id}") //id do Produto
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Registros> findAll() {
-        return registrosDAO.findAll();
+    public List<Registros> findAll(@PathParam("id")Integer id) {
+        return registrosDAO.findAll(id);
     }
 
     @GET

@@ -60,9 +60,10 @@ public class RegistrosDAO {
         return m;
     }
 
-    public List<Registros> findAll() {
+    //id => id do produto
+    public List<Registros> findAll(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Registros> ls = session.createQuery("from Registros").list();
+        List<Registros> ls = session.createQuery("from Registros where pro_codigo = "+id+"").list();
         //session.close();
         return ls;
     }

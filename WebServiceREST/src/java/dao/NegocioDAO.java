@@ -69,11 +69,11 @@ public class NegocioDAO {
         return ls;
     }
 
-    public List<Negocio> findRange(int id, int id2) {
+    public List<Negocio> findRange(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
         Query q = session.createQuery(" from Negocio order by neg_vnome");
         q.setMaxResults(15);//(id2-(id+1));   total maximo de registros que o metodo pode retornar
-        q.setFirstResult(id);
+        q.setFirstResult(id*15);
         return q.list();
     }
 }

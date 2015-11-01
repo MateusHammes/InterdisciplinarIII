@@ -34,11 +34,17 @@ public class ProdutoMaterialDAO {
         //session.close();
     }
 
-    public ProdutoMaterial findById(int id) {
-
+    
+    //id= id do produto
+    public ProdutoMaterial findAll(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
         ProdutoMaterial p = (ProdutoMaterial) session.createQuery("from ProdutoMaterial where pro_codigo = "+id+"");
-
+        return p;
+    }
+    
+    public ProdutoMaterial findById(int id) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        ProdutoMaterial p = (ProdutoMaterial) session.createQuery("from ProdutoMaterial where pro_codigo = "+id+"");
         return p;
     }
 

@@ -63,12 +63,12 @@ public class ProdutoMaterialResource {
         }
     }
 
+    
     @GET
-    @Path("{id}")
+    @Path("{id}")///id do Produto
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ProdutoMaterial Seleciona(@PathParam("id") Integer id) {
-
-        return prodMterialDAO.findById(id);
+    public ProdutoMaterial findAll(@PathParam("id") Integer id) {
+        return prodMterialDAO.findAll(id);
 
     }
 
