@@ -1,6 +1,6 @@
 package util;
 
 public class Connection {
-public static String url="http://192.168.0.110:8080/WebServiceREST/service/";
+public static String url="http://192.168.0.109:8080/WebServiceREST/service/";//http://192.168.0.109:8080/WebServiceREST/service/
 
 }

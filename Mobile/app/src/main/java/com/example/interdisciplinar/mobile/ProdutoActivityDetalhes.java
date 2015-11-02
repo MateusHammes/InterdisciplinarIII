@@ -45,10 +45,6 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto_detalhes);
 
-        //region Materiais
-        adpMateriais = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        listViewMateriais = (ListView) findViewById(R.id.produtoDetalheListViewMaterial);
-
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("PRODUTO")){
@@ -58,6 +54,31 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         }
 
 
+        //region Materiais
+        adpMateriais = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        listViewMateriais = (ListView) findViewById(R.id.produtoDetalheListViewMaterial);
+        //endregion
+
+        //region Registros
+        adpRegistros = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        listViewRegistros = (ListView) findViewById(R.id.produtoDetalheListViewEspecificacao);
+        //endregion
+
+        ImageButton btnMaterial = (ImageButton)findViewById(R.id.produtoDetalhesBtnMateriais);
+        btnMaterial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProdutoActivityDetalhes.this, MateriaisProdutoActivity.class);
+                i.putExtra("NEGOCIO", produto.getNegocio());
+                i.putExtra("PRODUTO", produto);
+                startActivity(i);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         listViewMateriais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -68,21 +89,12 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 final EditText txt = new EditText(ProdutoActivityDetalhes.this);
                 dialog.setView(txt);
                 dialog.setTitle("Unidades do Material");
-                dialog.setMessage("Informe quantas unidades voce ja de " + prm.getMaterial().getMtr_vnome());
+                dialog.setMessage("Informe quantas unidades voce ja utilizou de " + prm.getMaterial().getMtr_vnome());
                 dialog.setNegativeButton(R.string.Salvar, null);
                 dialog.setNeutralButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int unidUsadas =Integer.parseInt(txt.getText().toString());
-                        if(FuncoesExternas.Valida(txt))
-                            if(unidUsadas>0 && unidUsadas < prm.getPrm_iunidade()){
-                                produtMaterial =prm;
-                                produtMaterial.setPrm_iunidade(prm.getPrm_iunidade()-unidUsadas);
-                                produtMaterial.setPrm_iunidadeUtilizada(prm.getPrm_iunidadeUtilizada() + unidUsadas);
-                                Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
-                                new SalvaProdutoMaterial().execute();
-                            }else
-                                txt.setError("O quantidade deve ser menor que "+prm.getPrm_iunidade()+" e maior que 0");
+
                     }
                 }).show();
 
@@ -92,18 +104,21 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // edita registro
-
+                        int unidUsadas = Integer.parseInt(txt.getText().toString());
+                        if (FuncoesExternas.Valida(txt))
+                            if (unidUsadas > 0 && unidUsadas < prm.getPrm_iunidade()) {
+                                produtMaterial = prm;
+                                produtMaterial.setPrm_iunidade(prm.getPrm_iunidade() - unidUsadas);
+                                produtMaterial.setPrm_iunidadeUtilizada(prm.getPrm_iunidadeUtilizada() + unidUsadas);
+                                Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
+                                new SalvaProdutoMaterial().execute();
+                            } else
+                                txt.setError("O quantidade deve ser menor que " + prm.getPrm_iunidade() + " e maior que 0");
                         Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
                     }
                 });
             }
         });
-        //endregion
-
-        //region Registros
-
-        adpRegistros = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        listViewRegistros = (ListView) findViewById(R.id.produtoDetalheListViewEspecificacao);
 
         listViewRegistros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -112,55 +127,68 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoActivityDetalhes.this);
                 if(reg.getRgs_cstatus()== RegistroStatus.aberto) {
                     dialog.setTitle("Deseja completar esta Especificaçao?");
-                    dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());
                     dialog.setNegativeButton("Completar", null);
-                    dialog.setNeutralButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
+/*                    dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());*/
+                    /* dialog.setNeutralButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
-                    }).show();
+                    }).show();*/
                 }else{
                     // new AlertDialog.Builder(ProdutoActivityDetalhes.this)
                     dialog.setTitle("Deseja abrir esta Especificaçao?");
-                    dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());
                     dialog.setNegativeButton("abrir", null);
-                    dialog.setNeutralButton(R.string.Cancelar, null).show();
                 }
+                dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());
+
+                dialog.setPositiveButton(R.string.Editar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final  EditText txt = new EditText(ProdutoActivityDetalhes.this);
+                        //   AlertDialog alertEdit;
+                        txt.setText(reg.getRgs_vdescricao());
+                        AlertDialog.Builder dialogEdit = new AlertDialog.Builder(ProdutoActivityDetalhes.this);
+                        dialogEdit.setTitle(R.string.EditarEspecificacao);
+                        dialogEdit.setView(txt);
+                        dialogEdit.setNeutralButton(R.string.Cancelar, null);
+                        dialogEdit.setNegativeButton(R.string.Salvar, null);
+
+                        alert = dialogEdit.create();
+                        alert.show();
+                        alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(FuncoesExternas.Valida(txt)) {
+                                    registro = reg;
+                                    registro.setRgs_vdescricao(txt.getText().toString());
+                                    new SalvaRegistro().execute();
+                                    Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
+                                }
+                            }
+                        });
+                    }
+                });
+                dialog.setNeutralButton(R.string.Cancelar, null).show();
+
 
                 alert = dialog.create();
                 alert.show();
                 alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // edita registro
-
+                        registro = reg;
+                        if(reg.getRgs_cstatus()== RegistroStatus.aberto)
+                            registro.setRgs_cstatus(RegistroStatus.completo);
+                        else
+                            registro.setRgs_cstatus(RegistroStatus.aberto);
+                        new SalvaRegistro().execute();
                         Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
                     }
                 });
 
             }
         });
-
-        //endregion
-
-        ImageButton btnMaterial = (ImageButton)findViewById(R.id.produtoDetalhesBtnMateriais);
-        btnMaterial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ProdutoActivityDetalhes.this,MateriaisProdutoActivity.class);
-                i.putExtra("NEGOCIO",produto.getNegocio());
-                i.putExtra("PRODUTO",produto);
-                startActivity(i);
-            }
-        });
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new CarregaRegistros().execute();
+        new CarregaMaterial().execute();
         new CarregaRegistros().execute();
     }
 
@@ -180,10 +208,6 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             listViewMateriais.setAdapter(adpMateriais);
         }
     }
-
-
-
-
 
     public void NovoRegistro(View view){
         registro = new Registros();
@@ -214,6 +238,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                     //Negocio neg = produto.getNegocio();
                     Log.i("NEGO do PRoed", "Vai erra!!u N??");
                     registro.setNegocio(produto.getNegocio());
+                    registro.setRgs_cstatus(RegistroStatus.aberto);
                     new SalvaRegistro().execute();
                     Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
 
@@ -222,14 +247,12 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         });
     }
 
-
-
     private void ListaRegistros(List<Registros>lsRegistros){
         if(lsRegistros!=null) {
-            for (Registros rg : lsRegistros) {
+            adpRegistros.clear();
+            for (Registros rg : lsRegistros)
                 adpRegistros.add(rg);//converte object em Grupo
-                listViewRegistros.setAdapter(adpRegistros);
-            }
+            listViewRegistros.setAdapter(adpRegistros);
         }
     }
 
@@ -243,6 +266,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Registros> lsRegistros) {
             super.onPostExecute(lsRegistros);
+            adpRegistros.clear();
             ListaRegistros(lsRegistros);
         }
     }
