@@ -32,9 +32,9 @@ public class NegociosResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("range/{id2}")
-    public List<Negocio> findRange(@PathParam("id") Integer id) {
-        return negocioDAO.findRange(id);
+    @Path("tipo/{tipo}/{idRange}")
+    public List<Negocio> findRange(@PathParam("tipo") Integer tipo,@PathParam("idRange") Integer idRange ) {
+        return negocioDAO.findRange(tipo, idRange);
     }
 
     @GET

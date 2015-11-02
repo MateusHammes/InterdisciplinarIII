@@ -26,16 +26,16 @@ public class produtosResource {
         return produtoDAO.findAll(id);
     }
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("{id}")
-    public Produto findById(@PathParam("id") Integer id) {
-
-        return produtoDAO.findById(id);
-    }
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    @Path("{id}")
+//    public Produto findById(@PathParam("id") Integer id) {
+//
+//        return produtoDAO.findById(id);
+//    }
 
     @POST
-    @Path("salvaProduto")
+    @Path("salva")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Produto p) {
 
@@ -43,6 +43,7 @@ public class produtosResource {
 
             if (p.getPro_codigo() == 0) {
                 produtoDAO.insert(p);
+                
             } else {
                 produtoDAO.update(p);
             }
@@ -53,7 +54,7 @@ public class produtosResource {
     }
 
     @POST
-    @Path("deleteProduto")
+    @Path("delete")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String delete(Produto p) {
         try {

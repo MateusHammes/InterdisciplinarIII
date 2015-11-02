@@ -1,4 +1,3 @@
-
 package recursos;
 
 import dao.MateriaisDAO;
@@ -12,7 +11,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import model.Materiais;
 
-
 @Path("/materiais")
 public class MateriaisResource {
 
@@ -21,7 +19,7 @@ public class MateriaisResource {
     public MateriaisResource() {
     }
 
-   @GET
+    @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Materiais> findAll() {
         return materiaisDAO.findAll();
