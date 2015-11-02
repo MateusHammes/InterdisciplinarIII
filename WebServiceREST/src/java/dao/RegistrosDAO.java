@@ -16,8 +16,9 @@ import util.HibernateUtil;
  * @author mateus
  */
 public class RegistrosDAO {
+
     private Session session;
-    
+
     public RegistrosDAO() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
@@ -61,9 +62,18 @@ public class RegistrosDAO {
     }
 
     //id => id do produto
-    public List<Registros> findAll(int id) {
+    public List<Registros> findAll(int neg_id, int pro_id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Registros> ls = session.createQuery("from Registros where pro_codigo = "+id+"").list();
+        String sql = "";
+        if (neg_id != 0) {
+            sql += " and neg_codigo = " + neg_id + "";
+        }
+
+        if (pro_id != 0) {
+            sql += " and pro_codigo = " + pro_id + "";
+        }
+
+        List<Registros> ls = session.createQuery("from Registros where 1=1").list();
         //session.close();
         return ls;
     }
