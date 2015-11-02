@@ -16,6 +16,14 @@ import util.Connection;
 public class ProdutoMaterialDAO {
 
     public boolean Salvar(Produto_material Pmaterial){
+        String url = Connection.url.concat("produtoMaterial/salva");
+        RestTemplate rest = new RestTemplate();
+        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        rest.getMessageConverters().add(new StringHttpMessageConverter());
+        return "1".equals(rest.postForObject(url, Pmaterial, String.class));
+    }
+
+    public boolean Editar(Produto_material Pmaterial){
         String url = Connection.url.concat("produtoMaterial/edita");
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -23,9 +31,9 @@ public class ProdutoMaterialDAO {
         return "1".equals(rest.postForObject(url, Pmaterial, String.class));
     }
 
-    public List<Produto_material> Seleciona(int codigo){
+    public List<Produto_material> Seleciona(int neg_codigo,  int pro_codigo){
         try {
-            String url = Connection.url.concat("produtoMaterial/"+codigo);
+            String url = Connection.url.concat("produtoMaterial/"+neg_codigo+"/"+pro_codigo);
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
@@ -38,4 +46,6 @@ public class ProdutoMaterialDAO {
         }
         return null;
     }
+
+
 }

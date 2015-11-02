@@ -16,9 +16,9 @@ import util.Connection;
 
 public class ProdutoDAO {
 
-    public List<Produto> SelecionaProduto(){
+    public List<Produto> SelecionaProduto(int neg_id){
         try {
-            String url = Connection.url.concat("Produtos");
+            String url = Connection.url.concat("produtos/"+neg_id);
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
@@ -43,7 +43,7 @@ public class ProdutoDAO {
     }
 
     public boolean Deletar(Produto Produto){
-        String url = Connection.url.concat("Produtos/deleteProduto");
+        String url = Connection.url.concat("produtos/delete");
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());

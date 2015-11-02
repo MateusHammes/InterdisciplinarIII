@@ -15,7 +15,7 @@ import util.Connection;
 public class MateriaisDAO {
     public List<Materiais> SelecionaMateriais(){
         try {
-            String url = Connection.url.concat("Materiais");
+            String url = Connection.url.concat("materiais");
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
@@ -31,7 +31,7 @@ public class MateriaisDAO {
     }
 
     public boolean Salvar(Materiais Materiais){
-        String url = Connection.url.concat("Materiais/salvaMateriais"); ////"http://192.168.0.102:8080/WebServiceREST/service/Materiais";
+        String url = Connection.url.concat("materiais/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/Materiais";
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
@@ -39,7 +39,7 @@ public class MateriaisDAO {
     }
 
     public boolean Deletar(Materiais Materiais){
-        String url = Connection.url.concat("Materiais/deleteMateriais");
+        String url = Connection.url.concat("materiais/delete");
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());

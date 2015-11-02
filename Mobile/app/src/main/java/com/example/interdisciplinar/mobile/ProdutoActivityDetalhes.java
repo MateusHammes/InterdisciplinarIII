@@ -114,7 +114,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                                 // produtMaterial.setPrm_iunidade(prm.getPrm_iunidade() - unidUsadas);
                                 produtMaterial.setPrm_iunidadeUtilizada(prm.getPrm_iunidadeUtilizada() + unidUsadas);
                                 Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
-                                new SalvaProdutoMaterial().execute();
+                                new EditaProdutoMaterial().execute();
                             } else
                                 txt.setError("O quantidade deve ser menor que " + prm.getPrm_iunidade() + " e maior que 0");
                         Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
@@ -264,7 +264,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
 
         @Override
         protected List<Registros> doInBackground(Registros... params) {
-            return DAO.SelecionaRegistros(produto.getPro_codigo());
+            return DAO.SelecionaRegistros(produto.getNegocio().getNeg_codigo(), produto.getPro_codigo());
         }
 
         @Override
@@ -310,13 +310,33 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         ProdutoMaterialDAO pmDAO  =new ProdutoMaterialDAO();
         @Override
         protected List<Produto_material> doInBackground(Produto_material... params) {
-            return pmDAO.Seleciona(produto.getPro_codigo());
+            return pmDAO.Seleciona(produto.getNegocio().getNeg_codigo(), produto.getPro_codigo());
         }
 
         @Override
         protected void onPostExecute(List<Produto_material> lsProdutoMaterial) {
             super.onPostExecute(lsProdutoMaterial);
             ListaProdutoMaterial(lsProdutoMaterial);
+        }
+    }
+
+    private class EditaProdutoMaterial extends AsyncTask<Produto_material, String, Boolean>{
+        ProdutoMaterialDAO prmDAO = new ProdutoMaterialDAO();
+        @Override
+        protected Boolean doInBackground(Produto_material... params) {
+            return prmDAO.Editar(produtMaterial);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean salvo) {
+            super.onPostExecute(salvo);
+            if(salvo){
+                new CarregaMaterial().execute();
+                adpMateriais.clear();
+            }else{
+                Dialog.ShowAlert(ProdutoActivityDetalhes.this,"Material do Produto","Ops.. Não foi posivel Editar, favor tente novamente!");
+            }
+            Dialog.CancelProgressDialog();
         }
     }
 
@@ -339,6 +359,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             Dialog.CancelProgressDialog();
         }
     }
+
 
 }
 

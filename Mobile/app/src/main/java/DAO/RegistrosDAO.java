@@ -16,9 +16,9 @@ import util.Connection;
 
 public class RegistrosDAO {
 
-    public List<Registros> SelecionaRegistros(int idProduto){
+    public List<Registros> SelecionaRegistros( int neg_id, int idProduto){
         try {
-            String url = Connection.url.concat("registros/"+idProduto);
+            String url = Connection.url.concat("registros/"+neg_id+"/"+idProduto);
 
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();

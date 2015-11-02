@@ -18,22 +18,21 @@ import util.Connection;
 
 public class NegocioDAO {
 
-    public List<Negocio>SelecionaNegocios(int tipo){
+    public List<Negocio>SelecionaNegocios(int tipo, int page){
         try{
-            String url = Connection.url.concat("negocios/tipo/"+tipo);
-                RestTemplate rest = new RestTemplate();
+            String url = Connection.url.concat("negocios/tipo/"+tipo+"/"+page);
+            RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
             // Add the message converters to the restTemplate
-
-          /*  Map<String, String> params = new HashMap<>();
+            /*  Map<String, String> params = new HashMap<>();
             params.put("tipo", String.valueOf(tipo));*/
 
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
             return Arrays.asList(rest.getForObject(url, Negocio[].class));
-          //  return Arrays.asList(rest.getForObject(url, Negocio[].class));
+            //  return Arrays.asList(rest.getForObject(url, Negocio[].class));
         }catch (Exception e){
             e.printStackTrace();
         }

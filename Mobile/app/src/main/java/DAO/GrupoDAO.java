@@ -51,7 +51,7 @@ public class GrupoDAO {
 
 
     public boolean Salvar(Grupo grupo){
-        String url = Connection.url.concat("grupos/salvaGrupo"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
+        String url = Connection.url.concat("grupos/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
@@ -61,7 +61,7 @@ public class GrupoDAO {
     }
 
     public boolean Deletar(Grupo grupo){
-        String url = Connection.url.concat("grupos/deleteGrupo");
+        String url = Connection.url.concat("grupos/delete");
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
