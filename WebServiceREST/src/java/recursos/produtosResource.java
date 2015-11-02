@@ -21,8 +21,9 @@ public class produtosResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Produto> findAll() {
-        return produtoDAO.findAll();
+    @Path("{id}")//-> id do negocio
+    public List<Produto> findAll(@PathParam("id") Integer id) {
+        return produtoDAO.findAll(id);
     }
 
     @GET
@@ -45,7 +46,7 @@ public class produtosResource {
             } else {
                 produtoDAO.update(p);
             }
-            return ""+p.getPro_codigo();
+            return "" + p.getPro_codigo();
         } catch (Exception e) {
             return "0";
         }
@@ -62,7 +63,5 @@ public class produtosResource {
             return "0";
         }
     }
-    
-    
 
 }
