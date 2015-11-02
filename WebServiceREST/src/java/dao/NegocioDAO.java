@@ -69,7 +69,7 @@ public class NegocioDAO {
         return ls;
     }
 
-    public List<Negocio> findRange(String tipo, int id) {
+    public List<Negocio> findRange(int tipo, int id) {
         session = HibernateUtil.getSessionFactory().openSession();
         Query q = session.createQuery(" from Negocio where neg_ctipo = " + tipo + " order by neg_vnome");
         q.setMaxResults(15);//(id2-(id+1));   total maximo de registros que o metodo pode retornar
