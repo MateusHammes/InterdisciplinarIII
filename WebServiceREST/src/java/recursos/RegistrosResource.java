@@ -31,14 +31,14 @@ public class RegistrosResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("{id}")
+    @Path("{id}") //
     public Registros findById(@PathParam("id") Integer id) {
 
         return registrosDAO.findById(id);
     }
 
     @POST
-    @Path("salvaRegistros")
+    @Path("salva")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Registros r) {
 
@@ -57,7 +57,7 @@ public class RegistrosResource {
     }
 
     @POST
-    @Path("deleteRegistros")
+    @Path("delete")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String delete(Registros r) {
         try {

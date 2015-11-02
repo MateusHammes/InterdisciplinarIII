@@ -57,6 +57,11 @@ public class produtosResource {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String delete(Produto p) {
         try {
+
+            ProdutoMaterialResource PMR = new ProdutoMaterialResource();
+
+            PMR.DevolveMateriais(p.getPro_codigo(), p.getNegocio().getNeg_codigo());
+
             produtoDAO.delete(p);
             return "1";
         } catch (Exception e) {
