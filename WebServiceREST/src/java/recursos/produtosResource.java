@@ -68,6 +68,6 @@ public class produtosResource {
         } catch (Exception e) {
             return "0";
         }
-    }
+   }
 
 }
