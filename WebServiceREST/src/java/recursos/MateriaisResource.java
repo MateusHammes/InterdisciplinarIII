@@ -36,7 +36,7 @@ public class MateriaisResource {
     }
 
     @POST
-    @Path("salvaMateriais")
+    @Path("salva")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Materiais m) {
 
@@ -55,7 +55,7 @@ public class MateriaisResource {
     }
 
     @POST
-    @Path("deleteMateriais")
+    @Path("delete")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String delete(Materiais m) {
         try {
@@ -65,4 +65,8 @@ public class MateriaisResource {
             return "0";
         }
     }
+    
+    
+   
+    
 }

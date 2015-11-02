@@ -19,7 +19,6 @@ import model.Negocio;
 public class NegociosResource {
 
     NegocioDAO negocioDAO = new NegocioDAO();
- 
 
     public NegociosResource() {
     }
@@ -47,7 +46,7 @@ public class NegociosResource {
     }
 
     @POST
-    @Path("salvaNegocio")
+    @Path("salva")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Negocio n) {
 
@@ -58,7 +57,7 @@ public class NegociosResource {
             } else {
                 negocioDAO.update(n);
             }
-            return "1";
+            return n.getNeg_codigo() + "";///é necessario o Id pois ele vai pros detahes
 
         } catch (Exception e) {
             return "0";
@@ -66,10 +65,12 @@ public class NegociosResource {
     }
 
     @POST
-    @Path("deleteNegocio")
+    @Path("delete")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String delete(Negocio n) {
         try {
+            ProdutoMaterialResource PRM = new ProdutoMaterialResource();
+            PRM.DevolveMateriais(0, n.getNeg_codigo());
             negocioDAO.delete(n);
             return "1";
         } catch (Exception e) {
