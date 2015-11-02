@@ -16,6 +16,7 @@ import java.text.NumberFormat;
 
 import model.Negocio;
 import model.Produto;
+import util.DateUtil;
 
 public class NegocioActivityDetalhes extends AppCompatActivity {
 
@@ -90,12 +91,18 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
         TextView valorT = (TextView)findViewById(R.id.negocioDetailValorAdquirido);
         TextView valorAd = (TextView)findViewById(R.id.negocioDetailValorTotal);
+        TextView criacao = (TextView)findViewById(R.id.negocioDetalhesDataCriacao);
+        TextView termino = (TextView)findViewById(R.id.negocioDetalhesDataTermino);
+        TextView expectativa = (TextView)findViewById(R.id.negocioDetalhesDataExpectativa);
 
         nome.setText(item.getNeg_vnome());
         cliente.setText(item.getNeg_vcliente());
         endereco.setText(item.getNeg_vendereco());
         valorT.setText(number.format(item.getNeg_valorTotal()));
         valorAd.setText(number.format(item.getNeg_valorTotal()));
+        criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
+        termino.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
+        expectativa.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
 
         if(item.getLsProdutos()!=null) {   //faz listagem dos produtos do negocio
             adpItens.clear();

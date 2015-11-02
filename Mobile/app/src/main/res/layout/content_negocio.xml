@@ -14,14 +14,14 @@
     android:orientation="vertical">
 
 
-    <TextView
+   <!-- <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/title_activity_negocio"
         android:id="@+id/negocioListagemTxtTitulo"
         android:layout_gravity="center_horizontal"
-        android:gravity="center" />
+        android:gravity="center" />-->
 
     <EditText
         android:layout_width="match_parent"

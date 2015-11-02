@@ -1,6 +1,8 @@
 package model;
 
-public class Produto_material {
+import java.io.Serializable;
+
+public class Produto_material implements Serializable {
 
     private int prm_iunidade;
     private int prm_iunidadeUtilizada;
@@ -59,5 +61,10 @@ public class Produto_material {
 
     public void setNegocio(Negocio negocio) {
         this.negocio = negocio;
+    }
+
+    @Override
+    public String toString() {
+        return getMaterial().getMtr_vnome()+ " - "+(getPrm_iunidade()+getPrm_iunidadeUtilizada())+" Unidades";
     }
 }

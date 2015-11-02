@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -85,11 +86,11 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Produto_material prm = adpMateriais.getItem(position);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoActivityDetalhes.this);
-
                 final EditText txt = new EditText(ProdutoActivityDetalhes.this);
+                txt.setInputType(InputType.TYPE_CLASS_NUMBER);
                 dialog.setView(txt);
                 dialog.setTitle("Unidades do Material");
-                dialog.setMessage("Informe quantas unidades voce ja utilizou de " + prm.getMaterial().getMtr_vnome());
+                dialog.setMessage("Informe quantas unidades você já utilizou de " + prm.getMaterial().getMtr_vnome());
                 dialog.setNegativeButton(R.string.Salvar, null);
                 dialog.setNeutralButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
                     @Override
@@ -104,17 +105,20 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // edita registro
-                        int unidUsadas = Integer.parseInt(txt.getText().toString());
-                        if (FuncoesExternas.Valida(txt))
-                            if (unidUsadas > 0 && unidUsadas < prm.getPrm_iunidade()) {
+
+                        if (FuncoesExternas.Valida(txt)){
+                            int unidUsadas = Integer.parseInt(txt.getText().toString());
+                            if (unidUsadas > 0 ) {///&& unidUsadas < prm.getPrm_iunidade()
                                 produtMaterial = prm;
-                                produtMaterial.setPrm_iunidade(prm.getPrm_iunidade() - unidUsadas);
+                                //   int  unidReservadas
+                                // produtMaterial.setPrm_iunidade(prm.getPrm_iunidade() - unidUsadas);
                                 produtMaterial.setPrm_iunidadeUtilizada(prm.getPrm_iunidadeUtilizada() + unidUsadas);
                                 Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
                                 new SalvaProdutoMaterial().execute();
                             } else
                                 txt.setError("O quantidade deve ser menor que " + prm.getPrm_iunidade() + " e maior que 0");
                         Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
+                        }
                     }
                 });
             }

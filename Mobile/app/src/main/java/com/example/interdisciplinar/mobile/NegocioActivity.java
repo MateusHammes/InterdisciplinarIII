@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -82,8 +81,8 @@ public class NegocioActivity extends AppCompatActivity {
         if(bundle!=null && bundle.containsKey("TIPO")){
             int tipo =  bundle.getInt("TIPO");
             if(tipo== NegocioTipo.Orcamento){
-                TextView txtTitulo = (TextView)findViewById(R.id.negocioListagemTxtTitulo);
-                txtTitulo.setText(R.string.Orcamento);
+             //   TextView txtTitulo = (TextView)findViewById(R.id.negocioListagemTxtTitulo);
+               // txtTitulo.setText(R.string.Orcamento);
                 negocio.setNeg_ctipo(NegocioTipo.Orcamento);
             }else
                 negocio.setNeg_ctipo(NegocioTipo.Negocio);
