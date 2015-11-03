@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.List;
+import model.Materiais;
 import model.Produto;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -62,10 +63,11 @@ public class ProdutoDAO {
     }
 
     //id -> id do Negocio
-    public List<Produto> findAll(int neg_codigo) {
+    public List<Produto> findAll(int negocio) {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Produto> ls = session.createQuery("from Produto where neg_codigo ="+neg_codigo+" ").list();
+        List<Produto> ls = session.createQuery("from Produto where neg_codigo = "+negocio).list();
         //session.close();
         return ls;
     }
+    
 }
