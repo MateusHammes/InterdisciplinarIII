@@ -25,7 +25,7 @@ public class produtosResource {
     public List<Produto> findAll(@PathParam("id") Integer id) {
         return produtoDAO.findAll(id);
     }
-
+//
 //    @GET
 //    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 //    @Path("{id}")
@@ -38,7 +38,7 @@ public class produtosResource {
     @Path("salva")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Produto p) {
-
+        System.out.println("Produto: "+p.getPro_codigo());
         try {
 
             if (p.getPro_codigo() == 0) {
@@ -47,6 +47,7 @@ public class produtosResource {
             } else {
                 produtoDAO.update(p);
             }
+            
             return "" + p.getPro_codigo();
         } catch (Exception e) {
             return "0";
