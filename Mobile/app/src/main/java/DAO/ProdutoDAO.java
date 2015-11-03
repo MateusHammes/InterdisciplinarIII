@@ -33,13 +33,18 @@ public class ProdutoDAO {
     }
 
     public String Salvar(Produto Produto){
-        Log.i("veio Salva","Na DAO");
-        String url = Connection.url.concat("produtos/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/Produtos";
-        RestTemplate rest = new RestTemplate();
+        try {
+            Log.i("veio Salva", "Na DAO");
+            String url = Connection.url.concat("produtos/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/Produtos";
+            RestTemplate rest = new RestTemplate();
 
-        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return rest.postForObject(url, Produto, String.class);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            rest.getMessageConverters().add(new StringHttpMessageConverter());
+            return rest.postForObject(url, Produto, String.class);
+        }catch (Exception e){
+            Log.e("ERRORORO",e.toString());
+            return "0";
+        }
     }
 
     public boolean Deletar(Produto Produto){

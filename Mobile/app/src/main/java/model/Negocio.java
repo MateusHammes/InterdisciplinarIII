@@ -14,7 +14,7 @@ public class Negocio implements Serializable {
     private int neg_cstatus;
     private String neg_vcliente;
     private Date neg_dtermino;
-    private  Date neg_dprevisao;
+   // private  Date neg_dprevisao;
     private String neg_vendereco;
     private  String neg_vdescricao;
     private int neg_ctipo;///define se é Negocio ou Orçamento
@@ -75,13 +75,6 @@ public class Negocio implements Serializable {
         this.neg_dtermino = neg_dtermino;
     }
 
-    public Date getNeg_dprevisao() {
-        return neg_dprevisao;
-    }
-
-    public void setNeg_dprevisao(Date neg_dprevisao) {
-        this.neg_dprevisao = neg_dprevisao;
-    }
 
     public String getNeg_vendereco() {
         return neg_vendereco;

@@ -28,6 +28,9 @@ public class NegocioDAO {
             /*  Map<String, String> params = new HashMap<>();
             params.put("tipo", String.valueOf(tipo));*/
 
+            Log.i("---BUSCO--","TIPO - "+tipo);
+
+
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
@@ -39,6 +42,25 @@ public class NegocioDAO {
         return null;
     }
 
+    public Negocio SelecionaNegocio (int neg_id){
+        try{
+            String url = Connection.url.concat("negocios/"+neg_id);
+            RestTemplate rest = new RestTemplate();
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            Log.i("---BUSCO--","TIPO - "+neg_id);
+            rest.setMessageConverters(messageConverters);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            return rest.getForObject(url, Negocio.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
     public String Salvar(Negocio item){
         String url = Connection.url.concat("negocios/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
 
@@ -46,7 +68,7 @@ public class NegocioDAO {
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
         rest.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        Log.i("VAI??", "So falta agora!");
+        Log.i("VAI??", "So falta agora! ->"+item.getNeg_ctipo());
         return rest.postForObject(url, item, String.class);
     }
 

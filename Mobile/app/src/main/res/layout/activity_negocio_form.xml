@@ -71,7 +71,7 @@
                     android:id="@+id/negocioTxtClienteEndereco"
                     android:hint="Local" />
 
-                <TextView
+              <!--  <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -85,7 +85,7 @@
                     android:inputType="date"
                     android:ems="10"
                     android:id="@+id/negocioTxtDataPrevisao"
-                    android:hint="Previsão de Início" />
+                    android:hint="Previsão de Início" />-->
 
                 <TextView
                     android:layout_width="wrap_content"

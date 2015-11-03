@@ -1,6 +1,7 @@
 package com.example.interdisciplinar.mobile;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,15 +14,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
+import java.util.List;
 
+import DAO.NegocioDAO;
+import DAO.ProdutoDAO;
 import model.Negocio;
 import model.Produto;
-import util.DateUtil;
 
 public class NegocioActivityDetalhes extends AppCompatActivity {
 
     private Negocio negocio;
-    private ArrayAdapter<Produto> adpItens;
+    private ArrayAdapter<Produto> adpProdutos;
     private ListView listViewProdutos;
 
     @Override
@@ -29,14 +32,14 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_negocio_detalhes);
 
-        adpItens = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        adpProdutos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
         listViewProdutos = (ListView) findViewById(R.id.negocioDetalhesListViewProdutos);
         listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ///chama detalhes do produto
-                Produto pro = adpItens.getItem(position);
+                Produto pro = adpProdutos.getItem(position);
                 Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityDetalhes.class);
                 i.putExtra("PRODUTO",pro);
                 startActivity(i);
@@ -51,6 +54,12 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
             Log.i("Vai apresenta","O NEgsds");
             SetValues(negocio);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new CarregaProdutos().execute();
     }
 
     @Override
@@ -100,22 +109,58 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         endereco.setText(item.getNeg_vendereco());
         valorT.setText(number.format(item.getNeg_valorTotal()));
         valorAd.setText(number.format(item.getNeg_valorTotal()));
-        criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
+       /* criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
         termino.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
         expectativa.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
-
+*/
+        Log.e("Tem produt----","???");
         if(item.getLsProdutos()!=null) {   //faz listagem dos produtos do negocio
-            adpItens.clear();
+            Log.e("Tem produtosss","aki");
+            adpProdutos.clear();
             for (Produto prd:item.getLsProdutos()) {
-                adpItens.add(prd);
+                adpProdutos.add(prd);
             }
-            listViewProdutos.setAdapter(adpItens);
+            listViewProdutos.setAdapter(adpProdutos);
         }
-
     }
 
 
 
     //endregion
+
+    private class CarregaProdutos extends AsyncTask<Produto, String, List<Produto>>{
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        @Override
+        protected List<Produto> doInBackground(Produto... params) {
+            return produtoDAO.SelecionaProduto(negocio.getNeg_codigo());
+        }
+
+        @Override
+        protected void onPostExecute(List<Produto> lsProdutos) {
+            super.onPostExecute(lsProdutos);
+            adpProdutos.clear();
+            if(lsProdutos!=null){
+                for(Produto p: lsProdutos){
+                    adpProdutos.add(p);
+                }
+                listViewProdutos.setAdapter(adpProdutos);
+            }
+
+        }
+    }
+
+private  class CarregaNegocio extends  AsyncTask<Negocio, String, Negocio>{
+NegocioDAO DAO = new NegocioDAO();
+    @Override
+    protected Negocio doInBackground(Negocio... params) {
+        return DAO.SelecionaNegocio(negocio.getNeg_codigo());
+    }
+
+    @Override
+    protected void onPostExecute(Negocio Negocio) {
+        super.onPostExecute(Negocio);
+        SetValues(Negocio);
+    }
+}
 
 }

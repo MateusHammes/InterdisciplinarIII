@@ -22,8 +22,11 @@ public class DateUtil {
     }
 
     public static String dateToString(Date date){
-        DateFormat format=DateFormat.getDateInstance(DateFormat.SHORT);
-        return format.format(date);
+        if(date!=null) {
+            DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+            return format.format(date);
+        }else
+            return "";
     }
 
     public static  Date GetDate(String Date){

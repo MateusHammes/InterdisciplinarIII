@@ -33,7 +33,7 @@ public class NegocioActivityForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_negocio_form);
-
+/*
         txtDate =(EditText) findViewById(R.id.negocioTxtDataPrevisao);
         txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -41,14 +41,14 @@ public class NegocioActivityForm extends AppCompatActivity {
                 if (hasFocus)
                     ShowCalendar();
             }
-        });
+        });*/
 
         Bundle bundle = getIntent().getExtras();
 
         if(bundle !=null){
             if(bundle.containsKey("NEGOCIO")){
                 negocio =(Negocio) bundle.getSerializable("NEGOCIO");
-              //  Log.i("NEG Akiii","tenho"+negocio.getNeg_ctipo());
+               // Log.i("NEG Akiii","tenho->"+negocio.getNeg_ctipo());
                 TextView txtHeader = (TextView)findViewById(R.id.negocioTxtHeader);
                 EditText txtNome = (EditText) findViewById(R.id.negocioTxtNome);
                 if(negocio.getNeg_ctipo()==NegocioTipo.Orcamento){
@@ -59,7 +59,7 @@ public class NegocioActivityForm extends AppCompatActivity {
             }
 
 
-        if(bundle.containsKey("TIPO")){
+        /*if(bundle.containsKey("TIPO")){
             char tipo = bundle.getChar("TIPO");
             TextView txtHeader = (TextView)findViewById(R.id.negocioTxtHeader);
             EditText txtNome = (EditText) findViewById(R.id.negocioTxtNome);
@@ -69,7 +69,10 @@ public class NegocioActivityForm extends AppCompatActivity {
                 txtNome.setHint(R.string.OrcamentoNome);
             }else
                 negocio.setNeg_ctipo(NegocioTipo.Orcamento);
-        }}
+
+            Log.i("TIPO",negocio.getNeg_ctipo()+"");
+        }*/
+        }
     }
 
 
@@ -133,7 +136,7 @@ private class SelecionaDateListener implements DatePickerDialog.OnDateSetListene
         EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
         EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
         EditText txtEndereço = (EditText)findViewById(R.id.negocioTxtClienteEndereco);
-        EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
+      ////  EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
         EditText txtdescricao = (EditText)findViewById(R.id.negocioTxtDescricao);
 
         txtNome.setText(negocio.getNeg_vnome());
@@ -147,7 +150,7 @@ private class SelecionaDateListener implements DatePickerDialog.OnDateSetListene
         EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
         EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
         EditText txtEndereço = (EditText)findViewById(R.id.negocioTxtClienteEndereco);
-        EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
+       // EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
         EditText txtdescricao = (EditText)findViewById(R.id.negocioTxtDescricao);
 
         negocio.setNeg_vnome(txtNome.getText().toString());
@@ -164,7 +167,12 @@ private class Salvar extends AsyncTask<Negocio, String, Boolean>{
     @Override
     protected Boolean doInBackground(Negocio... params) {
         try {
-            Log.i("Foi ate aki","NEgocios");
+            Log.i("Foi ate aki","NEgocios"+negocio.getNeg_ctipo());
+            Calendar c = Calendar.getInstance();
+            if(negocio.getNeg_codigo()==0) {
+                negocio.setNeg_dcadastro(c.getTime());
+                Log.i("DATE","PEGO a aDAtaA");
+            }
             String id = DAO.Salvar(negocio);
             if(!id.equals("0")) {///se for diferente de 0, salvou :)
                 negocio.setNeg_codigo(Integer.parseInt(id));
@@ -181,7 +189,6 @@ private class Salvar extends AsyncTask<Negocio, String, Boolean>{
     protected void onPostExecute(Boolean salvo) {
         super.onPostExecute(salvo);
         if(salvo) {
-
             Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetalhes.class);
             i.putExtra("NEGOCIO", negocio);
             //finish();

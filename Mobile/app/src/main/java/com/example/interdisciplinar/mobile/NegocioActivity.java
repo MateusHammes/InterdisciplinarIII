@@ -1,10 +1,13 @@
 package com.example.interdisciplinar.mobile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +33,7 @@ public class NegocioActivity extends AppCompatActivity {
     public static String msn=null;
     private int pageList=0;
     private  boolean goLoad=true;
+    private AlertDialog dlg;
 
 
     @Override
@@ -45,6 +49,7 @@ public class NegocioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NegocioActivity.this, NegocioActivityForm.class);
+                intent.putExtra("NEGOCIO",negocio);
                 startActivity(intent);
             }
         });
@@ -54,11 +59,31 @@ public class NegocioActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.negocioListView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Negocio neg= adpNegocio.getItem(position);
-                Intent i = new Intent(NegocioActivity.this, NegocioActivityForm.class);
-                i.putExtra("NEGOCIO",neg);
-                startActivity(i);
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                final int posicao = position;
+                AlertDialog.Builder ldg = new AlertDialog.Builder(NegocioActivity.this);
+                ldg.setTitle("Escolha uma Opçao");
+                ldg.setMessage("O que voce deseja realizar");
+                ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Negocio neg = adpNegocio.getItem(posicao);
+                        Intent i = new Intent(NegocioActivity.this, NegocioActivityForm.class);
+                        i.putExtra("NEGOCIO", neg);
+                        startActivity(i);
+                    }
+                });
+                ldg.setNeutralButton("Detalhes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Negocio neg = adpNegocio.getItem(posicao);
+                        Intent i = new Intent(NegocioActivity.this, NegocioActivityDetalhes.class);
+                        i.putExtra("NEGOCIO", neg);
+                        startActivity(i);
+                    }
+                });
+                ldg.setPositiveButton(R.string.Cancelar, null);
+                ldg.show();
             }
         });
 
@@ -81,8 +106,9 @@ public class NegocioActivity extends AppCompatActivity {
         if(bundle!=null && bundle.containsKey("TIPO")){
             int tipo =  bundle.getInt("TIPO");
             if(tipo== NegocioTipo.Orcamento){
-             //   TextView txtTitulo = (TextView)findViewById(R.id.negocioListagemTxtTitulo);
-               // txtTitulo.setText(R.string.Orcamento);
+                //   TextView txtTitulo = (TextView)findViewById(R.id.negocioListagemTxtTitulo);
+                // txtTitulo.setText(R.string.Orcamento);
+                Log.i("TIPO","ORCAMENTO");
                 negocio.setNeg_ctipo(NegocioTipo.Orcamento);
             }else
                 negocio.setNeg_ctipo(NegocioTipo.Negocio);
@@ -153,7 +179,7 @@ public class NegocioActivity extends AppCompatActivity {
         ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
         @Override
         protected List<Negocio> doInBackground(String... params) {
-            return DAO.SelecionaNegocios(negocio.getNeg_ctipo());
+            return DAO.SelecionaNegocios(negocio.getNeg_ctipo(), pageList);
         }
 
         @Override
