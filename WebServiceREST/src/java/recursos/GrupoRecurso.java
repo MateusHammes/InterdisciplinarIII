@@ -17,8 +17,7 @@ import model.Grupo;
 public class GrupoRecurso {
 
     GrupoDAO grupoDAO = new GrupoDAO();
-    @Context
-    private UriInfo context;
+
 
     public GrupoRecurso() {
     }
@@ -45,7 +44,7 @@ public class GrupoRecurso {
     }
 
     @POST
-    @Path("salvaGrupo")
+    @Path("salva")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Grupo g) {
         try {
@@ -62,7 +61,7 @@ public class GrupoRecurso {
     }
 
     @POST
-    @Path("deleteGrupo")
+    @Path("delete")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String delete(Grupo g) {
         try {

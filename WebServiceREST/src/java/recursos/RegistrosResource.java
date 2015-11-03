@@ -23,19 +23,28 @@ public class RegistrosResource {
     }
 
     @GET
-    @Path("{id}") //id do Produto
+    @Path("{neg_id}/{prod_id}") //id do Produto
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Registros> findAll(@PathParam("id")Integer id) {
-        return registrosDAO.findAll(id);
+    public List<Registros> findAll(@PathParam("neg_id")Integer neg_id,@PathParam("prod_id")Integer prod_id) {
+        return registrosDAO.findAll(neg_id,prod_id);
     }
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("{id}") //
-    public Registros findById(@PathParam("id") Integer id) {
-
-        return registrosDAO.findById(id);
-    }
+//    
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    @Path("{id}")
+//    public Registros findById(@PathParam("id") Integer id) {
+//
+//        return registrosDAO.findById(id);
+//    }
+    
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    @Path("{id}") //
+//    public List<Registros> findByIdProduto(@PathParam("id") Integer id) {
+//
+//        return registrosDAO.findByIdProd(id);
+//    }
 
     @POST
     @Path("salva")

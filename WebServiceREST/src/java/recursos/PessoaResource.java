@@ -40,7 +40,7 @@ public class PessoaResource {
     }
 
     @POST
-    @Path("salvaPessoa")
+    @Path("salva")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Pessoa p) {
 

@@ -25,27 +25,29 @@ public class produtosResource {
     public List<Produto> findAll(@PathParam("id") Integer id) {
         return produtoDAO.findAll(id);
     }
-
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("{id}")
-    public Produto findById(@PathParam("id") Integer id) {
-
-        return produtoDAO.findById(id);
-    }
+//
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+//    @Path("{id}")
+//    public Produto findById(@PathParam("id") Integer id) {
+//
+//        return produtoDAO.findById(id);
+//    }
 
     @POST
-    @Path("salvaProduto")
+    @Path("salva")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String insert(Produto p) {
-
+        System.out.println("Produto: "+p.getPro_codigo());
         try {
 
             if (p.getPro_codigo() == 0) {
                 produtoDAO.insert(p);
+                
             } else {
                 produtoDAO.update(p);
             }
+            
             return "" + p.getPro_codigo();
         } catch (Exception e) {
             return "0";
@@ -53,7 +55,7 @@ public class produtosResource {
     }
 
     @POST
-    @Path("deleteProduto")
+    @Path("delete")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public String delete(Produto p) {
         try {
@@ -67,6 +69,6 @@ public class produtosResource {
         } catch (Exception e) {
             return "0";
         }
-    }
+   }
 
 }
