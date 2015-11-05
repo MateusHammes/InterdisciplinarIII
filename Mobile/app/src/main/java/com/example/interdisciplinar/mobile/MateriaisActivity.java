@@ -27,8 +27,7 @@ public class MateriaisActivity extends AppCompatActivity {
     private Materiais material = new Materiais() ;
     private ArrayAdapter<Materiais> adpMaterial;
     private MateriaisDAO DAO = new MateriaisDAO();
-
-    private boolean GoLoad=true;
+    public static boolean GoLoad=true;
     private int pageList=0;
     AlertDialog dlg;
 
@@ -36,36 +35,23 @@ public class MateriaisActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materiais);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
-        materialListView = (ListView) findViewById(R.id.materiaisListView);
 
+        materialListView = (ListView) findViewById(R.id.materialListView);
         adpMaterial = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.materiaisBtnFab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.materialBtnNovo);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             /*   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-
+                Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
+                startActivity(i);
             }
         });
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        materialListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (GoLoad && materialListView.getLastVisiblePosition() == (adpMaterial.getCount() - 1)) {
-                    GoLoad = false;
-                    new CarregaRegistros().execute();
-                }
-            }
-        });
         materialListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,6 +90,20 @@ public class MateriaisActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        materialListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (GoLoad && materialListView.getLastVisiblePosition() == (adpMaterial.getCount() - 1)) {
+                    GoLoad = false;
+                    new CarregaRegistros().execute();
+                }
+            }
+        });
     }
 
     @Override
@@ -114,12 +114,8 @@ public class MateriaisActivity extends AppCompatActivity {
             GoLoad=false;
             new CarregaRegistros().execute();
         }
-        /*if(msn!=null&& !msn.isEmpty()){
-            Toast t = Toast.makeText(this,msn,Toast.LENGTH_SHORT);
-            t.show();
-            msn = null;
-        }*/
     }
+
 
     protected void AtualizaGrid(List<Materiais> lsItens){
         if(lsItens!=null) {
@@ -130,19 +126,15 @@ public class MateriaisActivity extends AppCompatActivity {
                 materialListView.setAdapter(adpMaterial);
             else
                 adpMaterial.notifyDataSetChanged();
-
             if(lsItens.size()==15) {
                 GoLoad = true;
                 pageList++;
             }
-
         }
     }
 
-
-
-    private class CarregaRegistros extends AsyncTask<Materiais, String, List<Materiais>>{
-        ProgressBar pg = (ProgressBar) findViewById(R.id.materiaisProgressBar);
+    private class CarregaRegistros extends AsyncTask<Materiais, String, List<Materiais>> {
+        ProgressBar pg = (ProgressBar) findViewById(R.id.materialProgressBar);
 
         @Override
         protected List<Materiais> doInBackground(Materiais... params) {
@@ -157,7 +149,6 @@ public class MateriaisActivity extends AppCompatActivity {
         }
     }
 
-
     private  class Delete extends  AsyncTask<Materiais, String, Boolean>{
 
         @Override
@@ -167,7 +158,7 @@ public class MateriaisActivity extends AppCompatActivity {
                 adpMaterial.notifyDataSetChanged();
                 return true;
             }else
-                Dialog.ShowAlert(MateriaisActivity.this, "Deletar Material","Ops.. Este material ja esta sendo Utilizado por outros Produtos");
+                Dialog.ShowAlert(MateriaisActivity.this, "Deletar Material", "Ops.. Este material ja esta sendo Utilizado por outros Produtos");
             return false;
         }
 
@@ -180,8 +171,4 @@ public class MateriaisActivity extends AppCompatActivity {
             Dialog.CancelProgressDialog();
         }
     }
-
-
-
-
 }

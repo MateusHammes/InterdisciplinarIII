@@ -40,11 +40,10 @@ public class GrupoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grupo);
+
         grupoListView = (ListView) findViewById(R.id.grupoListView);
-
-
-
         adpGrupo = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.grupoBtnNovo);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

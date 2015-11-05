@@ -60,7 +60,7 @@
         <activity
             android:name=".MateriaisActivity"
             android:label="@string/title_activity_materiais"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".MateriaisActivityForm"

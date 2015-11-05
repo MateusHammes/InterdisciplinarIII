@@ -53,7 +53,7 @@ public class Dialog {
             }
         });
         dialog.show();
-          return bool;
+        return bool;
     }
 
     public static  void ShowProgressDialog(Context ctx){
@@ -66,6 +66,10 @@ public class Dialog {
     }
 
     public static void CancelProgressDialog(){
-        PD.cancel();
+        try {
+            PD.cancel();
+        }catch (Exception e){
+            Log.e("errro",e.toString());
+        }
     }
 }

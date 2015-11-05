@@ -2,8 +2,8 @@
     <string name="app_name">Mobile</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_grupo">Grupos</string>
-    <string name="title_activity_activity_grupo_form">Grupo</string>
+    <string name="title_activity_grupo">Categorias</string>
+    <string name="title_activity_activity_grupo_form">Categoria</string>
     <string name="GrupoNome">Nome</string>
     <string name="grupoNomeHint">Nome do Grupo</string>
     <string name="Salvar">Salvar</string>

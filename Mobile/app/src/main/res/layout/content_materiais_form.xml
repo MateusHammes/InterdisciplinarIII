@@ -21,87 +21,106 @@
         android:id="@+id/textView5"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nome"
-        android:id="@+id/txtNomeMaterial"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/materialTxtNome"
-        android:hint="Informe o nome do Material" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Valor"
-        android:id="@+id/txtValorMtr"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/materialTxtValor"
-        android:inputType="numberDecimal"
-        android:hint="Valor Unitário" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Estoque"
-        android:id="@+id/txtEstoqueMtr"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/materialTxtEstoque"
-        android:inputType="numberDecimal"
-        android:hint="Quantidade de Estoque" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Descriçao"
-        android:id="@+id/txtDescricaoMtr"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/materialTxtDescricao"
-        android:hint="Descrição adicional" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/materialSpinner" />
-
-    <LinearLayout
-        android:orientation="horizontal"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp">
+        android:id="@+id/scrollView5" >
 
-        <Button
-            style="@style/btnCancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Cancelar"
-            android:id="@+id/materialBtnCancel"
-            android:onClick="Cancelar"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            style="@style/btnSalvar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Salvar"
-            android:id="@+id/materialBtnSalvar" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome"
+                android:id="@+id/txtNomeMaterial"
+                />
 
-    </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/materialTxtNome"
+                android:hint="Informe o nome do Material" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valor"
+                android:id="@+id/txtValorMtr"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/materialTxtValor"
+                android:inputType="numberDecimal"
+                android:hint="Valor Unitário" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estoque"
+                android:id="@+id/txtEstoqueMtr"
+              />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/materialTxtEstoque"
+                android:inputType="numberDecimal"
+                android:hint="Quantidade de Estoque" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descriçao"
+                android:id="@+id/txtDescricaoMtr"
+                 />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/materialTxtDescricao"
+                android:hint="Descrição adicional" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/title_activity_activity_grupo_form"
+                android:id="@+id/textView8" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/materialGruopoSpinner" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="70dp">
+
+                <Button
+                    style="@style/btnCancelar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Cancelar"
+                    android:id="@+id/materialBtnCancel"
+                    android:onClick="Cancelar"/>
+
+                <Button
+                    style="@style/btnSalvar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Salvar"
+                    android:id="@+id/materialBtnSalvar" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

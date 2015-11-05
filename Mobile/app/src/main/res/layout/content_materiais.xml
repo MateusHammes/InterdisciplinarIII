@@ -9,30 +9,25 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_materiais"
     tools:context="com.example.interdisciplinar.mobile.MateriaisActivity"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/materiaisTxtPesquisar"
+        android:id="@+id/materialTxtPesquisar"
+        android:layout_gravity="center_horizontal"
         android:hint="Pesquisar" />
 
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/grupoListView"
-        android:layout_below="@+id/materiaisListView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/materialListView"
+        android:layout_gravity="center_horizontal" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/materiaisProgressBar"
-        android:layout_gravity="center" />
-
+        android:id="@+id/materialProgressBar" />
 </LinearLayout>
