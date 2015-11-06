@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -20,6 +21,7 @@ import DAO.NegocioDAO;
 import DAO.ProdutoDAO;
 import model.Negocio;
 import model.Produto;
+import util.DateUtil;
 
 public class NegocioActivityDetalhes extends AppCompatActivity {
 
@@ -102,17 +104,14 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         TextView valorAd = (TextView)findViewById(R.id.negocioDetailValorTotal);
         TextView criacao = (TextView)findViewById(R.id.negocioDetalhesDataCriacao);
         TextView termino = (TextView)findViewById(R.id.negocioDetalhesDataTermino);
-        TextView expectativa = (TextView)findViewById(R.id.negocioDetalhesDataExpectativa);
 
         nome.setText(item.getNeg_vnome());
         cliente.setText(item.getNeg_vcliente());
         endereco.setText(item.getNeg_vendereco());
         valorT.setText(number.format(item.getNeg_valorTotal()));
         valorAd.setText(number.format(item.getNeg_valorTotal()));
-       /* criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
+        criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
         termino.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
-        expectativa.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
-*/
         Log.e("Tem produt----","???");
         if(item.getLsProdutos()!=null) {   //faz listagem dos produtos do negocio
             Log.e("Tem produtosss","aki");
@@ -130,6 +129,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
 
     private class CarregaProdutos extends AsyncTask<Produto, String, List<Produto>>{
         ProdutoDAO produtoDAO = new ProdutoDAO();
+        ProgressBar pgProduto = (ProgressBar) findViewById(R.id.negocioDetalhesProgressBarProduto);
         @Override
         protected List<Produto> doInBackground(Produto... params) {
             return produtoDAO.SelecionaProduto(negocio.getNeg_codigo());
@@ -145,22 +145,22 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
                 }
                 listViewProdutos.setAdapter(adpProdutos);
             }
-
+            pgProduto.setVisibility(View.GONE);
         }
     }
 
-private  class CarregaNegocio extends  AsyncTask<Negocio, String, Negocio>{
-NegocioDAO DAO = new NegocioDAO();
-    @Override
-    protected Negocio doInBackground(Negocio... params) {
-        return DAO.SelecionaNegocio(negocio.getNeg_codigo());
-    }
+    private  class CarregaNegocio extends  AsyncTask<Negocio, String, Negocio>{
+        NegocioDAO DAO = new NegocioDAO();
+        @Override
+        protected Negocio doInBackground(Negocio... params) {
+            return DAO.SelecionaNegocio(negocio.getNeg_codigo());
+        }
 
-    @Override
-    protected void onPostExecute(Negocio Negocio) {
-        super.onPostExecute(Negocio);
-        SetValues(Negocio);
+        @Override
+        protected void onPostExecute(Negocio Negocio) {
+            super.onPostExecute(Negocio);
+            SetValues(Negocio);
+        }
     }
-}
 
 }

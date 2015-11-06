@@ -203,14 +203,14 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         nome.setText(produto.getPro_vnome());
         descricao.setText(produto.getPro_vdescricao());
 
-        if(produto.getLsRegistros()!=null){
+        /*if(produto.getLsRegistros()!=null){
             adpRegistros.addAll(produto.getLsRegistros());
             listViewRegistros.setAdapter(adpRegistros);
         }
         if(produto.getLsRegistros()!=null) {
             adpMateriais.addAll(produto.getLsProdutoMaterial());
             listViewMateriais.setAdapter(adpMateriais);
-        }
+        }*/
     }
 
     public void NovoRegistro(View view){
@@ -241,7 +241,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                     registro.setProduto(produto);
                     //Negocio neg = produto.getNegocio();
                     Log.i("NEGO do PRoed", "Vai erra!!u N??");
-                    registro.setNegocio(produto.getNegocio());
+                   /// registro.setNegocio(produto.getNegocio());
                     registro.setRgs_cstatus(RegistroStatus.aberto);
                     new SalvaRegistro().execute();
                     Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
@@ -264,7 +264,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
 
         @Override
         protected List<Registros> doInBackground(Registros... params) {
-            return DAO.SelecionaRegistros(produto.getNegocio().getNeg_codigo(), produto.getPro_codigo());
+            return DAO.SelecionaRegistros(produto.getPro_codigo());
         }
 
         @Override
@@ -310,7 +310,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         ProdutoMaterialDAO pmDAO  =new ProdutoMaterialDAO();
         @Override
         protected List<Produto_material> doInBackground(Produto_material... params) {
-            return pmDAO.Seleciona(produto.getNegocio().getNeg_codigo(), produto.getPro_codigo());
+            return pmDAO.Seleciona(produto.getPro_codigo());
         }
 
         @Override

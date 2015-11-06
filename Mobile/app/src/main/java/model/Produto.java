@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Produto implements Serializable {
 
@@ -12,9 +11,9 @@ public class Produto implements Serializable {
 
     private Negocio negocio;
 
-    private List<Produto_material> lsProdutoMaterial;
+  /*  private List<Produto_material> lsProdutoMaterial;
     private List<Registros> lsRegistros;
-
+*/
     public Produto (){}
 
     public int getPro_codigo() {
@@ -57,7 +56,7 @@ public class Produto implements Serializable {
         this.negocio = negocio;
     }
 
-    public List<Produto_material> getLsProdutoMaterial() {
+  /*  public List<Produto_material> getLsProdutoMaterial() {
         return lsProdutoMaterial;
     }
 
@@ -72,7 +71,7 @@ public class Produto implements Serializable {
     public void setLsRegistros(List<Registros> lsRegistros) {
         this.lsRegistros = lsRegistros;
     }
-
+*/
     @Override
     public String toString() {
         return getPro_vnome();

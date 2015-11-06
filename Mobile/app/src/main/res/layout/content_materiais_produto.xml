@@ -14,16 +14,24 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
+        style="@style/TxtHeaderList"
+        android:text="TEVvdshadd"
+        android:id="@+id/textView27"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/Materiais"
-        android:id="@+id/textView27" />
+        android:layout_width="match_parent" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/materialProdutoTxtPesquisar"
+        android:hint="@string/Pesquisar" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/produtoMaterialListView" />
+        android:id="@+id/materialProdutoListView" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

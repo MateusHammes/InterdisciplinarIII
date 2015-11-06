@@ -22,7 +22,6 @@ public class GrupoDAO {
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
             // Add the message converters to the restTemplate
-
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             Grupo[] arrayGrupo = rest.getForObject(url, Grupo[].class); //(url,Grupo.class,));

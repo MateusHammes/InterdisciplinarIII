@@ -41,7 +41,7 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_materiais_produto);
 
 
-        materialListView = (ListView) findViewById(R.id.produtoMaterialListView);
+        materialListView = (ListView) findViewById(R.id.materialProdutoListView);
         adpMaterial = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         materialListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -60,10 +60,10 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
-            if(bundle.containsKey("NEGOCIO")){
+           /* if(bundle.containsKey("NEGOCIO")){
                 Negocio neg =(Negocio) bundle.getSerializable("CODIGO");
-                prm.setNegocio(neg);
-            }
+              ///  prm.setNegocio(neg);
+            }*/
             if(bundle.containsKey("PRODUTO")){
                 Produto pro =(Produto) bundle.getSerializable("PRO_CODIGO");
                 prm.setProduto(pro);

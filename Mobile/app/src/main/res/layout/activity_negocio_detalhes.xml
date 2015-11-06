@@ -89,21 +89,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Expectativa de Término"
-                android:id="@+id/textView29"
-                style="@style/labelDetails" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/negocioDetalhesDataExpectativa" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Data de Término"
                 android:id="@+id/textView26"
                 style="@style/labelDetails" />
@@ -137,6 +122,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/negocioDetalhesListViewProdutos" />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/negocioDetalhesProgressBarProduto"
+                android:layout_gravity="center" />
 
             <TextView
                 style="@style/labelDetails"

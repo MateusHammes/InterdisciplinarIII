@@ -117,6 +117,10 @@ public class NegocioActivityForm extends AppCompatActivity {
                 Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
                 t.show();
                 GetNegocio();
+
+                if(negocio.getNeg_codigo()==0)
+                    negocio.setNeg_dcadastro(DateUtil.GetDate());
+
                 new Salvar().execute();
                 Dialog.ShowProgressDialog(NegocioActivityForm.this);
             }

@@ -52,9 +52,7 @@ public class MateriaisActivityForm extends AppCompatActivity {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetItem();
-                Dialog.ShowProgressDialog(MateriaisActivityForm.this);
-                new Salvar().execute();
+                SalvarItem();
             }
         });
         Button btnCancel = (Button)findViewById(R.id.materialBtnCancel);
@@ -92,6 +90,7 @@ public class MateriaisActivityForm extends AppCompatActivity {
                 spnGrupos.setSelection(adpGrupos.getPosition(mtr.getGrupo()));
             }else
                 grupo = material.getGrupo();
+
         EditText txtNome = (EditText)findViewById(R.id.materialTxtNome);
         EditText txtvalor= (EditText)findViewById(R.id.materialTxtValor);
         EditText txtEstoque = (EditText)findViewById(R.id.materialTxtEstoque);
@@ -102,11 +101,10 @@ public class MateriaisActivityForm extends AppCompatActivity {
         txtvalor.setText(""+DecimalFormat.getInstance().format(mtr.getMtr_nvalor()));
     }
 
-    public void SalvarItem(View view){
+    private void SalvarItem(){
         EditText txtNome = (EditText)findViewById(R.id.materialTxtNome);
         EditText txtvalor= (EditText)findViewById(R.id.materialTxtValor);
         EditText txtEstoque = (EditText)findViewById(R.id.materialTxtEstoque);
-
 
         if(FuncoesExternas.Valida(txtNome))
             if(FuncoesExternas.Valida(txtvalor))

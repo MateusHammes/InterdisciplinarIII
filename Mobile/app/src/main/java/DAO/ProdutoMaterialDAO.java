@@ -31,9 +31,9 @@ public class ProdutoMaterialDAO {
         return "1".equals(rest.postForObject(url, Pmaterial, String.class));
     }
 
-    public List<Produto_material> Seleciona(int neg_codigo,  int pro_codigo){
+    public List<Produto_material> Seleciona(int pro_codigo){
         try {
-            String url = Connection.url.concat("produtoMaterial/"+neg_codigo+"/"+pro_codigo);
+            String url = Connection.url.concat("produtoMaterial/"+pro_codigo);
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());

@@ -10,7 +10,7 @@ public class Produto_material implements Serializable {
 
     private Produto produto;
     private Materiais material;
-    private Negocio negocio;
+   /// private Negocio negocio;
 
     public Produto_material() {
     }
@@ -55,14 +55,14 @@ public class Produto_material implements Serializable {
         this.material = material;
     }
 
-    public Negocio getNegocio() {
+   /* public Negocio getNegocio() {
         return negocio;
     }
 
     public void setNegocio(Negocio negocio) {
         this.negocio = negocio;
     }
-
+*/
     @Override
     public String toString() {
         return getMaterial().getMtr_vnome()+ " - "+(getPrm_iunidade()+getPrm_iunidadeUtilizada())+" Unidades";
