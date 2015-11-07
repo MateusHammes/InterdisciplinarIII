@@ -38,6 +38,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
     private ArrayAdapter<Registros> adpRegistros;
     private ListView listViewRegistros;
     AlertDialog alert;
+    AlertDialog alertM;
 
 
 
@@ -70,7 +71,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ProdutoActivityDetalhes.this, MateriaisProdutoActivity.class);
-                i.putExtra("NEGOCIO", produto.getNegocio());
+                //   i.putExtra("NEGOCIO", produto.getNegocio());
                 i.putExtra("PRODUTO", produto);
                 startActivity(i);
             }
@@ -99,12 +100,12 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                     }
                 }).show();
 
-                alert = dialog.create();
-                alert.show();
-                alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                alertM = dialog.create();
+                alertM.show();
+                alertM.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // edita registro
+                        // edita produto amrterial
 
                         if (FuncoesExternas.Valida(txt)){
                             int unidUsadas = Integer.parseInt(txt.getText().toString());
@@ -117,7 +118,6 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                                 new EditaProdutoMaterial().execute();
                             } else
                                 txt.setError("O quantidade deve ser menor que " + prm.getPrm_iunidade() + " e maior que 0");
-                        Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
                         }
                     }
                 });
@@ -241,7 +241,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                     registro.setProduto(produto);
                     //Negocio neg = produto.getNegocio();
                     Log.i("NEGO do PRoed", "Vai erra!!u N??");
-                   /// registro.setNegocio(produto.getNegocio());
+                    /// registro.setNegocio(produto.getNegocio());
                     registro.setRgs_cstatus(RegistroStatus.aberto);
                     new SalvaRegistro().execute();
                     Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);

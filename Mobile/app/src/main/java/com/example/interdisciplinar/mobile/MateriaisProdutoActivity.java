@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
     private Produto_material prm = new Produto_material();
     private ArrayAdapter<Materiais> adpMaterial;
     private MateriaisDAO DAO = new MateriaisDAO();
+    private Produto produto = new Produto();
 
     private boolean GoLoad=true;
     private int pageList=0;
@@ -64,8 +66,10 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
               ///  prm.setNegocio(neg);
             }*/
             if(bundle.containsKey("PRODUTO")){
-                Produto pro =(Produto) bundle.getSerializable("PRO_CODIGO");
+                Produto pro =(Produto) bundle.getSerializable("PRODUTO");
                 prm.setProduto(pro);
+                produto = pro;
+               /// Log.i("Tamo co produto", pro.getPro_codigo()+" -<- id");
             }
         }
 
@@ -97,6 +101,8 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
                                 prm.setPrm_iunidade(unidades);
                                 prm.setMaterial(mtr);
                                 prm.setPrm_nvalor(mtr.getMtr_nvalor());
+                                prm.setProduto(produto);
+                                Log.i("foi salva vo", produto.getPro_codigo()+"");
                                 Dialog.ShowProgressDialog(MateriaisProdutoActivity.this);
                                 new Salva().execute();
                             }else
@@ -162,6 +168,8 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
         ProdutoMaterialDAO pmDAO = new ProdutoMaterialDAO();
         @Override
         protected Boolean doInBackground(Produto_material... params) {
+            if(prm!=null)
+                Log.i("Sava mat. numeor",""+prm.toString());
             return pmDAO.Salvar(prm);
         }
 
