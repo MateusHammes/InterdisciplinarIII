@@ -8,6 +8,7 @@ public class Produto implements Serializable {
     private String pro_vnome;
     private String pro_vdescricao;
     private int pro_cstatus;
+    private int pro_ctipo;
 
     private Negocio negocio;
 
@@ -72,6 +73,15 @@ public class Produto implements Serializable {
         this.lsRegistros = lsRegistros;
     }
 */
+
+    public int getPro_ctipo() {
+        return pro_ctipo;
+    }
+
+    public void setPro_ctipo(int pro_ctipo) {
+        this.pro_ctipo = pro_ctipo;
+    }
+
     @Override
     public String toString() {
         return getPro_vnome();

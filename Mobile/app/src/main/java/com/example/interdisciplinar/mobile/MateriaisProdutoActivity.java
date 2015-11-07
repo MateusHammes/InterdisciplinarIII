@@ -19,7 +19,6 @@ import java.util.List;
 import DAO.MateriaisDAO;
 import DAO.ProdutoMaterialDAO;
 import model.Materiais;
-import model.Negocio;
 import model.Produto;
 import model.Produto_material;
 import util.Dialog;

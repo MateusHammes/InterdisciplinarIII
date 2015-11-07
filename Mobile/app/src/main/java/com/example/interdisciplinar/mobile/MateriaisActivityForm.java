@@ -110,8 +110,8 @@ public class MateriaisActivityForm extends AppCompatActivity {
             if(FuncoesExternas.Valida(txtvalor))
                 if(FuncoesExternas.Valida(txtEstoque)){
                     GetItem();
-                    new Salvar().execute();
                     Dialog.ShowProgressDialog(MateriaisActivityForm.this);
+                    new Salvar().execute();
                 }
     }
 
@@ -183,11 +183,15 @@ public class MateriaisActivityForm extends AppCompatActivity {
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
             if(salvo){
-                MateriaisActivity.GoLoad  =true;
+                MateriaisActivity.GoLoad = true;
+                if(material.getMtr_codigo()!=0)
+                    MateriaisActivity.ClearList=true;
+                Dialog.CancelProgressDialog();
                 finish();
-            }else
+            }else {
                 Dialog.ShowAlertError(MateriaisActivityForm.this);
-            Dialog.CancelProgressDialog();
+                Dialog.CancelProgressDialog();
+            }
         }
     }
     private class CarregaGrupos extends AsyncTask<Grupo, String, List<Grupo>>{

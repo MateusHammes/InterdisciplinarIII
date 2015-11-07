@@ -25,9 +25,10 @@ public class MateriaisActivity extends AppCompatActivity {
 
     private ListView materialListView;
     private Materiais material = new Materiais() ;
-    private ArrayAdapter<Materiais> adpMaterial;
+    public static ArrayAdapter<Materiais> adpMaterial;
     private MateriaisDAO DAO = new MateriaisDAO();
     public static boolean GoLoad=true;
+    public static boolean ClearList=false;
     private int pageList=0;
     AlertDialog dlg;
 
@@ -110,6 +111,11 @@ public class MateriaisActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("--ACAO--", "onRESUME");
+        if(ClearList){
+            adpMaterial.clear();
+            materialListView.setAdapter(adpMaterial);
+        }
+
         if(GoLoad) {
             GoLoad=false;
             new CarregaRegistros().execute();

@@ -57,12 +57,16 @@ public class Dialog {
     }
 
     public static  void ShowProgressDialog(Context ctx){
-        PD = new ProgressDialog(ctx);
-        PD.setTitle("Salvando...");
-        PD.setIndeterminate(true);
-        PD.setCancelable(false);
-        PD.setMessage("Por favor, espere um momento");
-        PD.show();
+        try {
+            PD = new ProgressDialog(ctx);
+            PD.setTitle("Salvando...");
+            PD.setIndeterminate(true);
+            PD.setCancelable(false);
+            PD.setMessage("Por favor, espere um momento");
+            PD.show();
+        }catch (Exception e){
+            Log.e("Erro no dialog", e.toString());
+        }
     }
 
     public static void CancelProgressDialog(){

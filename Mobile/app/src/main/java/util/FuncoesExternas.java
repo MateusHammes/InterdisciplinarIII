@@ -10,7 +10,7 @@ import java.text.NumberFormat;
 
 public class FuncoesExternas {
 
-    public static boolean Valida( EditText txt){
+    public static boolean Valida(EditText txt){
         boolean var=true;
         if(txt.getText().toString().trim().isEmpty()) {
             var = false;
