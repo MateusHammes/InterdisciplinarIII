@@ -136,7 +136,7 @@
                 android:id="@+id/textView22"
                 android:textStyle="bold" />
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -156,7 +156,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="... "
                     android:id="@+id/negocioDetailValorAdquirido" />
-            </LinearLayout>
+            </LinearLayout>-->
 
             <LinearLayout
                 android:orientation="horizontal"

@@ -69,10 +69,16 @@
                     android:src="@android:drawable/ic_menu_add" />
             </LinearLayout>
 
-            <ListView
+            <ScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/produtoDetalheListViewMaterial" />
+                android:layout_height="100dp"
+                android:id="@+id/scrollView6" >
+
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:id="@+id/produtoDetalheListViewMaterial" />
+            </ScrollView>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -93,10 +99,16 @@
 
             </LinearLayout>
 
-            <ListView
+            <ScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/produtoDetalheListViewEspecificacao" />
+                android:layout_height="100dp"
+                android:id="@+id/scrollView7" >
+
+                <ListView
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:id="@+id/produtoDetalheListViewEspecificacao" />
+            </ScrollView>
 
             <ProgressBar
                 style="?android:attr/progressBarStyleLarge"

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -76,54 +77,43 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Button btnHome =(Button) findViewById(R.id.produtoDetalhesBtnHome);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProdutoActivityDetalhes.this, MainActivity.class);
+                Log.i("Fecho","Homee");
+                finish();
+                startActivity(i);
+            }
+        });
+        Button btnNegocio =(Button) findViewById(R.id.produtoDetalhesBtnNegocio);
+        btnNegocio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Fecho","Fechou");
+                // Intent i = new Intent(ProdutoActivityDetalhes.this, MainActivity.class);
+                finish();
+                //startActivity(i);
+            }
+        });
+
+
+
+        listViewMateriais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EditaValorMaterial(position);
+            }
+        });
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        listViewMateriais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Produto_material prm = adpMateriais.getItem(position);
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoActivityDetalhes.this);
-                final EditText txt = new EditText(ProdutoActivityDetalhes.this);
-                txt.setInputType(InputType.TYPE_CLASS_NUMBER);
-                dialog.setView(txt);
-                dialog.setTitle("Unidades do Material");
-                dialog.setMessage("Informe quantas unidades você já utilizou de " + prm.getMaterial().getMtr_vnome());
-                dialog.setNegativeButton(R.string.Salvar, null);
-                dialog.setNeutralButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).show();
-
-                alertM = dialog.create();
-                alertM.show();
-                alertM.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // edita produto amrterial
-
-                        if (FuncoesExternas.Valida(txt)){
-                            int unidUsadas = Integer.parseInt(txt.getText().toString());
-                            if (unidUsadas > 0 ) {///&& unidUsadas < prm.getPrm_iunidade()
-                                produtMaterial = prm;
-                                //   int  unidReservadas
-                                // produtMaterial.setPrm_iunidade(prm.getPrm_iunidade() - unidUsadas);
-                                produtMaterial.setPrm_iunidadeUtilizada(prm.getPrm_iunidadeUtilizada() + unidUsadas);
-                                Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
-                                new EditaProdutoMaterial().execute();
-                            } else
-                                txt.setError("O quantidade deve ser menor que " + prm.getPrm_iunidade() + " e maior que 0");
-                        }
-                    }
-                });
-            }
-        });
-
         listViewRegistros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -194,6 +184,44 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         });
         new CarregaMaterial().execute();
         new CarregaRegistros().execute();
+    }
+
+    private void EditaValorMaterial(int position){
+        final Produto_material prm = adpMateriais.getItem(position);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoActivityDetalhes.this);
+        final EditText txt = new EditText(ProdutoActivityDetalhes.this);
+        txt.setInputType(InputType.TYPE_CLASS_NUMBER);
+        dialog.setView(txt);
+        dialog.setTitle("Unidades do Material");
+        dialog.setMessage("Informe quantas unidades você já utilizou de " + prm.getMaterial().getMtr_vnome());
+        dialog.setNegativeButton(R.string.Salvar, null);
+        dialog.setNeutralButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertM = dialog.create();
+        alertM.show();
+        alertM.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // edita produto amrterial
+                if (FuncoesExternas.Valida(txt)) {
+                    int unidUsadas = Integer.parseInt(txt.getText().toString());
+                    if (unidUsadas > 0) {///&& unidUsadas < prm.getPrm_iunidade()
+                        produtMaterial = prm;
+                        //   int  unidReservadas
+                        // produtMaterial.setPrm_iunidade(prm.getPrm_iunidade() - unidUsadas);
+                        produtMaterial.setPrm_iunidadeUtilizada(prm.getPrm_iunidadeUtilizada() + unidUsadas);
+                        Dialog.ShowProgressDialog(ProdutoActivityDetalhes.this);
+                        new EditaProdutoMaterial().execute();
+                    } else
+                        txt.setError("O quantidade deve ser menor que " + prm.getPrm_iunidade() + " e maior que 0");
+                }
+            }
+        });
     }
 
     private void SetValues(Produto produto){
@@ -331,6 +359,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
             if(salvo){
+                alertM.cancel();
                 new CarregaMaterial().execute();
                 adpMateriais.clear();
             }else{
@@ -351,6 +380,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
             if(salvo){
+                alertM.cancel();
                 new CarregaMaterial().execute();
                 adpMateriais.clear();
             }else{
@@ -359,6 +389,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             Dialog.CancelProgressDialog();
         }
     }
+
 
 
 }

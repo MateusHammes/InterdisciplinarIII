@@ -24,7 +24,7 @@ import model.Produto;
 import util.DateUtil;
 
 public class NegocioActivityDetalhes extends AppCompatActivity {
-
+    NegocioDAO DAO = new NegocioDAO();
     private Negocio negocio;
     private ArrayAdapter<Produto> adpProdutos;
     private ListView listViewProdutos;
@@ -150,7 +150,6 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     }
 
     private  class CarregaNegocio extends  AsyncTask<Negocio, String, Negocio>{
-        NegocioDAO DAO = new NegocioDAO();
         @Override
         protected Negocio doInBackground(Negocio... params) {
             return DAO.SelecionaNegocio(negocio.getNeg_codigo());
@@ -162,5 +161,24 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
             SetValues(Negocio);
         }
     }
+
+
+    private class PegaValorTotal extends AsyncTask<String, String, Double >{
+
+        @Override
+        protected Double doInBackground(String... params) {
+            return DAO.SelecionaValorTotal(negocio.getNeg_codigo());
+        }
+
+        @Override
+        protected void onPostExecute(Double aDouble) {
+            super.onPostExecute(aDouble);
+            TextView txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
+            NumberFormat mbf = NumberFormat.getCurrencyInstance();
+            txt.setText(mbf.format(aDouble));
+
+        }
+    }
+
 
 }
