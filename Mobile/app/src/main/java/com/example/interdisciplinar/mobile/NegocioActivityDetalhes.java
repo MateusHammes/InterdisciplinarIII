@@ -62,6 +62,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         new CarregaProdutos().execute();
+        new PegaValorTotal().execute();
     }
 
     @Override
@@ -96,20 +97,15 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     //region Get e Set Values
     private void SetValues(Negocio item){
 
-        NumberFormat number = NumberFormat.getCurrencyInstance();
         TextView cliente = (TextView)findViewById(R.id.negocioDetailCliente);
         TextView nome = (TextView)findViewById(R.id.negocioDetailNome);
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
-        TextView valorT = (TextView)findViewById(R.id.negocioDetailValorAdquirido);
-        TextView valorAd = (TextView)findViewById(R.id.negocioDetailValorTotal);
         TextView criacao = (TextView)findViewById(R.id.negocioDetalhesDataCriacao);
         TextView termino = (TextView)findViewById(R.id.negocioDetalhesDataTermino);
 
         nome.setText(item.getNeg_vnome());
         cliente.setText(item.getNeg_vcliente());
         endereco.setText(item.getNeg_vendereco());
-        valorT.setText(number.format(item.getNeg_valorTotal()));
-        valorAd.setText(number.format(item.getNeg_valorTotal()));
         criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
         termino.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
         Log.e("Tem produt----","???");
@@ -164,10 +160,10 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
 
 
     private class PegaValorTotal extends AsyncTask<String, String, Double >{
-
+        ProdutoDAO produtoDAO = new ProdutoDAO();
         @Override
         protected Double doInBackground(String... params) {
-            return DAO.SelecionaValorTotal(negocio.getNeg_codigo());
+            return produtoDAO.SelecionaValorTotal(negocio.getNeg_codigo());
         }
 
         @Override

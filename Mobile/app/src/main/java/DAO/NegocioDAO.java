@@ -80,21 +80,6 @@ public class NegocioDAO {
         return rest.postForObject(url, item, String.class).equals("1");
     }
 
-    public Double SelecionaValorTotal (int neg_id){
-        try{
-            String url = Connection.url.concat("/total/"+neg_id);
-            RestTemplate rest = new RestTemplate();
-            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-            messageConverters.add(new MappingJackson2HttpMessageConverter());
-            Log.i("---BUSCO--","TIPO - "+neg_id);
-            rest.setMessageConverters(messageConverters);
-            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-            return rest.getForObject(url, Double.class);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 }
