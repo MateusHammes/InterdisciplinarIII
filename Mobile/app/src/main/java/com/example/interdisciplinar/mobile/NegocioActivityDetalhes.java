@@ -1,5 +1,7 @@
 package com.example.interdisciplinar.mobile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -40,11 +43,56 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ///chama detalhes do produto
-                Produto pro = adpProdutos.getItem(position);
-                Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityDetalhes.class);
-                i.putExtra("PRODUTO",pro);
-                startActivity(i);
+                /*AlertDialog.Builder dialog = new AlertDialog.Builder(NegocioActivityDetalhes.this);
+                dialog.setTitle(R.string.tituloOpcao);
+                dialog.setMessage(R.string.mensagemOpcao);
+
+                dialog.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Produto pro = adpProdutos.getItem(posicao);
+                        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityForm.class);
+                        i.putExtra("PRODUTO", pro);
+                        startActivity(i);
+                    }
+                });
+                dialog.setNeutralButton(R.string.Detalhes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Produto pro = adpProdutos.getItem(posicao);
+                        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityDetalhes.class);
+                        i.putExtra("PRODUTO", pro);
+                        startActivity(i);
+                    }
+                });
+                dialog.setPositiveButton(R.string.Cancelar,null);
+                dialog.show();*/
+
+                final int posicao = position;
+                AlertDialog.Builder ldg = new AlertDialog.Builder(NegocioActivityDetalhes.this);
+                ldg.setTitle(R.string.tituloOpcao);
+                ldg.setMessage(R.string.mensagemOpcao);
+                ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Produto pro = adpProdutos.getItem(posicao);
+                        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityForm.class);
+                        i.putExtra("PRODUTO", pro);
+                        startActivity(i);
+                    }
+                });
+                ldg.setNeutralButton("Detalhes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Produto pro = adpProdutos.getItem(posicao);
+                        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityDetalhes.class);
+                        i.putExtra("PRODUTO", pro);
+                        startActivity(i);
+                    }
+                });
+                ldg.setPositiveButton(R.string.Cancelar, null);
+                ldg.show();
+
             }
         });
 
@@ -62,6 +110,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         new CarregaProdutos().execute();
+        new PegaValorTotal().execute();
     }
 
     @Override
@@ -96,20 +145,15 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     //region Get e Set Values
     private void SetValues(Negocio item){
 
-        NumberFormat number = NumberFormat.getCurrencyInstance();
         TextView cliente = (TextView)findViewById(R.id.negocioDetailCliente);
         TextView nome = (TextView)findViewById(R.id.negocioDetailNome);
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
-        TextView valorT = (TextView)findViewById(R.id.negocioDetailValorAdquirido);
-        TextView valorAd = (TextView)findViewById(R.id.negocioDetailValorTotal);
         TextView criacao = (TextView)findViewById(R.id.negocioDetalhesDataCriacao);
         TextView termino = (TextView)findViewById(R.id.negocioDetalhesDataTermino);
 
         nome.setText(item.getNeg_vnome());
         cliente.setText(item.getNeg_vcliente());
         endereco.setText(item.getNeg_vendereco());
-        valorT.setText(number.format(item.getNeg_valorTotal()));
-        valorAd.setText(number.format(item.getNeg_valorTotal()));
         criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
         termino.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
         Log.e("Tem produt----","???");
@@ -163,19 +207,21 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     }
 
 
-    private class PegaValorTotal extends AsyncTask<String, String, Double >{
-
+    private class PegaValorTotal extends AsyncTask<String, String, String >{
+        ProdutoDAO produtoDAO = new ProdutoDAO();
         @Override
-        protected Double doInBackground(String... params) {
-            return DAO.SelecionaValorTotal(negocio.getNeg_codigo());
+        protected String doInBackground(String... params) {
+            return produtoDAO.SelecionaValorTotal(negocio.getNeg_codigo());
         }
 
         @Override
-        protected void onPostExecute(Double aDouble) {
-            super.onPostExecute(aDouble);
+        protected void onPostExecute(String valor) {
+            super.onPostExecute(valor);
             TextView txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
             NumberFormat mbf = NumberFormat.getCurrencyInstance();
-            txt.setText(mbf.format(aDouble));
+            Log.i("Valor", "TOTALLL = " + valor);
+            if(!valor.isEmpty())
+                txt.setText(DecimalFormat.getInstance().format(Double.parseDouble(valor)));
 
         }
     }

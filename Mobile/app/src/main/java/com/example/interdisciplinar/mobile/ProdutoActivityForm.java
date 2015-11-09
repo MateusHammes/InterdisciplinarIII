@@ -28,11 +28,16 @@ public class ProdutoActivityForm extends AppCompatActivity {
         produto = new Produto();
         Bundle bundle = getIntent().getExtras();
         try {
-            if (bundle != null && bundle.containsKey("NEGOCIO")) {
-                Log.i("Tem negocio","comneg");
-                Negocio neg =(Negocio) bundle.getSerializable("NEGOCIO");
-               // Log.i("Tem negocio","BH"+neg.getNeg_codigo());
-                produto.setNegocio(neg);
+            if (bundle != null){
+                if(bundle.containsKey("NEGOCIO")) {
+                    Log.i("Tem negocio","comneg");
+                    Negocio neg =(Negocio) bundle.getSerializable("NEGOCIO");
+                    produto.setNegocio(neg);
+                }
+                if(bundle.containsKey("PRODUTO")){
+                    produto= (Produto)bundle.getSerializable("PRODUTO");
+                    SetItem(produto);
+                }
             }
         }catch (Exception e){
             finish();
@@ -42,7 +47,7 @@ public class ProdutoActivityForm extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               SalvarProduto();
+                SalvarProduto();
             }
         });
     }
@@ -69,6 +74,14 @@ public class ProdutoActivityForm extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void SetItem(Produto p){
+        EditText nome =(EditText)findViewById(R.id.produtoNome);
+        EditText descricao =(EditText)findViewById(R.id.produtoDescricao);
+        if(p!=null && p.getPro_codigo() > 0){
+            nome.setText(p.getPro_vnome());
+            descricao.setText(p.getPro_vdescricao());
+        }
+    }
 
     public void GetItem(){
         EditText nome =(EditText)findViewById(R.id.produtoNome);
@@ -85,17 +98,8 @@ public class ProdutoActivityForm extends AppCompatActivity {
         if(FuncoesExternas.Valida(txtNome)){
             GetItem();
             Log.i("Vai ir", "Serio! com" + produto.getPro_codigo());
-           new SalvarProduto().execute();
+            new SalvarProduto().execute();
             Dialog.ShowProgressDialog(ProdutoActivityForm.this);
-
-            /*
-            String id =  DAO.Salvar(produto);
-            Dialog.CancelProgressDialog();*/
-/*
-            Intent i = new Intent(ProdutoActivityForm.this, ProdutoActivityDetalhes.class);
-            i.putExtra("PRODUTO", produto);
-            startActivity(i);*/
-
         }
     }
 
@@ -119,17 +123,15 @@ public class ProdutoActivityForm extends AppCompatActivity {
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
             if(salvo) {
-               /// finish();
                 Intent i = new Intent(ProdutoActivityForm.this, ProdutoActivityDetalhes.class);
                 i.putExtra("PRODUTO",produto);
                 startActivity(i);
-                //NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
+                finish();
             }else
-              Dialog.ShowAlertError(ProdutoActivityForm.this);
+                Dialog.ShowAlertError(ProdutoActivityForm.this);
             Dialog.CancelProgressDialog();
         }
     }
     //endregion
-
 
 }

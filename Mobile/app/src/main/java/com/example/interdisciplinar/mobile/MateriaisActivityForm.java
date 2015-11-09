@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.text.DecimalFormat;
@@ -26,6 +27,7 @@ public class MateriaisActivityForm extends AppCompatActivity {
     private Spinner spnGrupos ;
     private ArrayAdapter<Grupo>adpGrupos;
     private Grupo grupo = null;
+    private ProgressBar pgg = null;
     //private EditText valor;
     //private NumberFormat formatMoeda = NumberFormat.getCurrencyInstance();
 
@@ -37,8 +39,10 @@ public class MateriaisActivityForm extends AppCompatActivity {
 
         spnGrupos  =(Spinner)findViewById(R.id.materialGruopoSpinner);
         adpGrupos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        spnGrupos.setAdapter(adpGrupos);
+                spnGrupos.setAdapter(adpGrupos);
 
+        pgg = (ProgressBar)findViewById(R.id.materialProgressBarGrupos);
+        pgg.setVisibility(View.VISIBLE);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("MATERIAL")){
             material =(Materiais) bundle.getSerializable("MATERIAL");
@@ -83,13 +87,13 @@ public class MateriaisActivityForm extends AppCompatActivity {
 
 
     public void SetItem(Materiais mtr){
-        if(material.getGrupo()!=null)
+      /*  if(material.getGrupo()!=null)
             if(adpGrupos.getCount()>0) {
                 adpGrupos.add(mtr.getGrupo());
                 adpGrupos.notifyDataSetChanged();
                 spnGrupos.setSelection(adpGrupos.getPosition(mtr.getGrupo()));
             }else
-                grupo = material.getGrupo();
+                grupo = material.getGrupo();*/
 
         EditText txtNome = (EditText)findViewById(R.id.materialTxtNome);
         EditText txtvalor= (EditText)findViewById(R.id.materialTxtValor);
@@ -213,6 +217,7 @@ public class MateriaisActivityForm extends AppCompatActivity {
                     spnGrupos.setSelection(adpGrupos.getPosition(grupo));
 
             }
+            pgg.setVisibility(View.GONE);
         }
     }
 

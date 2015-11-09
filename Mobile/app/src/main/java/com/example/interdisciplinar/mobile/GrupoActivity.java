@@ -68,8 +68,8 @@ public class GrupoActivity extends AppCompatActivity {
                 //  boolean deleta = Dialog.ShowDialog(GrupoActivity.this, "Deletar Grupo", "Você deseja deletar este Grupo?");
                 Log.i("Clickou", " -  Passou - ");
                 new AlertDialog.Builder(GrupoActivity.this)
-                        .setTitle(R.string.alertTitleOption)
-                        .setMessage(R.string.alertMessageOption)
+                        .setTitle(R.string.tituloOpcao)
+                        .setMessage(R.string.mensagemOpcao)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
                             @Override

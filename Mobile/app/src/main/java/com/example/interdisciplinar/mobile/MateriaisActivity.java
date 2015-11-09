@@ -67,8 +67,8 @@ public class MateriaisActivity extends AppCompatActivity {
                 final Materiais mtr = adpMaterial.getItem(position);
 
                 new AlertDialog.Builder(MateriaisActivity.this)
-                        .setTitle(R.string.alertTitleOption)
-                        .setMessage(R.string.alertMessageOption)
+                        .setTitle(R.string.tituloOpcao)
+                        .setMessage(R.string.mensagemOpcao)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
                             @Override

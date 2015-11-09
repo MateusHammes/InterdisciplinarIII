@@ -42,7 +42,7 @@ public class ProdutoDAO {
             rest.getMessageConverters().add(new StringHttpMessageConverter());
             return rest.postForObject(url, Produto, String.class);
         }catch (Exception e){
-            Log.e("ERRORORO",e.toString());
+            Log.e("ERRORORO", e.toString());
             return "0";
         }
     }
@@ -55,4 +55,20 @@ public class ProdutoDAO {
         return rest.postForObject(url, Produto, String.class).equals("1");
     }
 
+    public String SelecionaValorTotal (int neg_id){
+        try{
+            String url = Connection.url.concat("produtos/total/"+neg_id);
+            RestTemplate rest = new RestTemplate();
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            Log.i("---BUSCO--","TIPO Neg - "+neg_id);
+            rest.setMessageConverters(messageConverters);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            return rest.getForObject(url, Double.class).toString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

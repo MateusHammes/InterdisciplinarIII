@@ -31,8 +31,10 @@
     <string name="title_activity_materiais">Materiais</string>
     <string name="title_activity_materiais_activity_form">Materiais</string>
     <string name="alertMessageOption">Qual operação você deseja realizar?</string>
-    <string name="alertTitleOption">Escolha um opção</string>
     <string name="title_activity_materiais_produto">Materiais do Produto</string>
     <string name="Editar">Editar</string>
     <string name="EditarEspecificacao">Editar Especificação</string>
+    <string name="tituloOpcao">Escolha uma opção</string>
+    <string name="mensagemOpcao">O que você deseja?</string>
+    <string name="Detalhes">Detalhes</string>
 </resources>

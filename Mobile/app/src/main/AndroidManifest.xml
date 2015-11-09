@@ -55,7 +55,8 @@
             android:label="@string/title_activity_negocio_activity_details"
             android:parentActivityName=".NegocioActivity" >
         </activity>
-        <activity android:name=".ProdutoActivityDetalhes" >
+        <activity android:name=".ProdutoActivityDetalhes"
+            android:label="@string/title_activity_produto">
         </activity>
         <activity
             android:name=".MateriaisActivity"

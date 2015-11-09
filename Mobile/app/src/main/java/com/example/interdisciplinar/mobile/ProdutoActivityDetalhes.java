@@ -48,7 +48,6 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto_detalhes);
 
-
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("PRODUTO")){
             Log.i("TEM PRODU","ALKI detalhes");
@@ -135,7 +134,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 }
                 dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());
 
-                dialog.setPositiveButton(R.string.Editar, new DialogInterface.OnClickListener() {
+                dialog.setNeutralButton(R.string.Editar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final  EditText txt = new EditText(ProdutoActivityDetalhes.this);
@@ -162,8 +161,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                         });
                     }
                 });
-                dialog.setNeutralButton(R.string.Cancelar, null).show();
-
+                dialog.setPositiveButton(R.string.Cancelar, null).show();
 
                 alert = dialog.create();
                 alert.show();

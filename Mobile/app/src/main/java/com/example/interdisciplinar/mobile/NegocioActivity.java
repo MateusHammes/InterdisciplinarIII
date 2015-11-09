@@ -59,11 +59,11 @@ public class NegocioActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.negocioListView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view,  int position, long id) {
                 final int posicao = position;
                 AlertDialog.Builder ldg = new AlertDialog.Builder(NegocioActivity.this);
-                ldg.setTitle("Escolha uma Opçao");
-                ldg.setMessage("O que voce deseja realizar");
+                ldg.setTitle(R.string.tituloOpcao);
+                ldg.setMessage(R.string.mensagemOpcao);
                 ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
