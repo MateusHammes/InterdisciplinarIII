@@ -114,7 +114,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
                     if (unidUsadas > 0) {///&& unidUsadas < prm.getPrm_iunidade()
                         prm = produtMaterial;
 
-                        prm.setPrm_iunidadeUtilizada(produtMaterial.getPrm_iunidadeUtilizada() + unidUsadas);
+                        prm.setPrm_iunidadeUtilizada(unidUsadas);
                         Dialog.ShowProgressDialog(ProdutoMaterialActivity.this);
                         new EditaProdutoMaterial().execute();
                     } else

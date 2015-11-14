@@ -32,7 +32,8 @@ public class NegocioActivity extends AppCompatActivity {
     private ListView listView;
     public static String msn=null;
     private int pageList=0;
-    private  boolean goLoad=true;
+    public static boolean goLoad=true;
+    public static boolean clearList=false;
     private AlertDialog dlg;
 
 
@@ -118,6 +119,11 @@ public class NegocioActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(clearList) {
+            adpNegocio.clear();
+            pageList=0;
+            goLoad=true;
+        }
         if(goLoad) {
             goLoad=false;
             new CarregaRegistros().execute();

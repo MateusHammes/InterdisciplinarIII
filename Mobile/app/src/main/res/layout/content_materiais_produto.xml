@@ -20,7 +20,7 @@
 
         <TextView
             style="@style/txtHeader"
-            android:text="TEVvdshadd"
+            android:text="@string/Materiais"
             android:id="@+id/textView27"
             android:layout_height="wrap_content"
             android:layout_width="match_parent" />

@@ -83,6 +83,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.interdisciplinar.mobile.ProdutoActivityDetalhes" />
         </activity>
+        <activity
+            android:name=".ProdutoRegistroActivity"
+            android:label="@string/title_activity_produto_registro"
+            android:parentActivityName=".ProdutoActivityDetalhes"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.interdisciplinar.mobile.ProdutoActivityDetalhes" />
+        </activity>
     </application>
 
 </manifest>

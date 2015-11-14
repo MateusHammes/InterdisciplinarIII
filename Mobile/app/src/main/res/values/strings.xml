@@ -38,4 +38,7 @@
     <string name="mensagemOpcao">O que você deseja?</string>
     <string name="Detalhes">Detalhes</string>
     <string name="title_activity_produto_material">Materiais</string>
+    <string name="title_activity_produto_registro">Especificaçoes</string>
+    <string name="Abrir">Abrir</string>
+    <string name="Completar">Completar</string>
 </resources>

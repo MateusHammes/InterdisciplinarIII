@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,27 +51,6 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         }
 
 
-        //region Materiais
-      //  adpMateriais = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-       // listViewMateriais = (ListView) findViewById(R.id.produtoDetalheListViewMaterial);
-        //endregion
-
-        //region Registros
-        adpRegistros = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        listViewRegistros = (ListView) findViewById(R.id.produtoDetalheListViewEspecificacao);
-        //endregion
-
-      /*  ImageButton btnMaterial = (ImageButton)findViewById(R.id.produtoDetalhesBtnMateriais);
-        btnMaterial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ProdutoActivityDetalhes.this, MateriaisProdutoActivity.class);
-                //   i.putExtra("NEGOCIO", produto.getNegocio());
-                i.putExtra("PRODUTO", produto);
-                startActivity(i);
-            }
-        });*/
-
         Button btnHome =(Button) findViewById(R.id.produtoDetalhesBtnHome);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +65,8 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         btnNegocio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Fecho","Fechou");
-                // Intent i = new Intent(ProdutoActivityDetalhes.this, MainActivity.class);
+                Log.i("Fecho", "Fechou");
                 finish();
-                //startActivity(i);
             }
         });
 
@@ -105,6 +81,15 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             }
         });
 
+        Button btnRegistro = (Button)findViewById(R.id.produtoDetalhesBtnRegistros);
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProdutoActivityDetalhes.this, ProdutoRegistroActivity.class);
+                i.putExtra("PRODUTO", produto);
+                startActivity(i);
+            }
+        });
 
 
     }
@@ -112,7 +97,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        listViewRegistros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      /*  listViewRegistros.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Registros reg = adpRegistros.getItem(position);
@@ -120,12 +105,12 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 if (reg.getRgs_cstatus() == RegistroStatus.aberto) {
                     dialog.setTitle("Deseja completar esta Especificaçao?");
                     dialog.setNegativeButton("Completar", null);
-/*                    dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());*/
-                    /* dialog.setNeutralButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
+*//*                    dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());*//*
+                    *//* dialog.setNeutralButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
-                    }).show();*/
+                    }).show();*//*
                 } else {
                     // new AlertDialog.Builder(ProdutoActivityDetalhes.this)
                     dialog.setTitle("Deseja abrir esta Especificaçao?");
@@ -179,7 +164,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
 
             }
         });
-        new CarregaRegistros().execute();
+        new CarregaRegistros().execute();*/
     }
 
    /* private void EditaValorMaterial(int position){
@@ -333,8 +318,8 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             super.onPostExecute(salvo);
             if(salvo){
                 alertM.cancel();
-              //  new CarregaMaterial().execute();
-             //   adpMateriais.clear();
+                //  new CarregaMaterial().execute();
+                //   adpMateriais.clear();
             }else{
                 Dialog.ShowAlert(ProdutoActivityDetalhes.this,"Material do Produto","Ops.. Não foi posivel salvar, favor tente novamente!");
             }

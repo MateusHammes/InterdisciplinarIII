@@ -39,7 +39,7 @@ public class MateriaisActivityForm extends AppCompatActivity {
 
         spnGrupos  =(Spinner)findViewById(R.id.materialGruopoSpinner);
         adpGrupos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-                spnGrupos.setAdapter(adpGrupos);
+        spnGrupos.setAdapter(adpGrupos);
 
         pgg = (ProgressBar)findViewById(R.id.materialProgressBarGrupos);
         pgg.setVisibility(View.VISIBLE);
@@ -121,57 +121,7 @@ public class MateriaisActivityForm extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        //final NumberFormat formatMoeda = NumberFormat.getCurrencyInstance();
         super.onResume();
-        // valor =(EditText)findViewById(R.id.materialTxtValor);
-        ///        valor.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-        /*  valor.addTextChangedListener(new TextWatcher() {
-
-            boolean update = false;
-            String current="";
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    if (update) {
-                        update = false;
-                        return;
-                    }
-
-                    update = true;
-                    Log.i("----diffe---", "S:"+s.toString()+"  formm.:?"+current+" - "+s.equals(current) );
-                    if (!s.equals(current)) {
-                        valor.removeTextChangedListener(this);
-                        String valorString = valor.getText().toString().replace("R$","").replace(",",".");
-                        double parsed = Double.parseDouble(valorString);
-                        String formatted = NumberFormat.getCurrencyInstance().format((parsed / 100));
-                        Log.i("Formatado", formatted);
-                        current = formatted;
-                        //  double valorM = Double.parseDouble(valorString.toString());
-                        //  valor.setText("");
-                        //valor.setText(""+formatMoeda.format(valorM));
-                        valor.setText(formatted.toString());
-                        valor.setSelection(formatted.length());
-                        valor.addTextChangedListener(this);
-                        // valor.setSelection(valorString.toString().length()+2);
-                    }
-                } catch (Exception e) {
-                    Log.e("ROROROROR", e.toString());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-
-            }
-        });*/
-
     }
 
 

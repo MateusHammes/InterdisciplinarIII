@@ -33,18 +33,8 @@ public class NegocioActivityForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_negocio_form);
-/*
-        txtDate =(EditText) findViewById(R.id.negocioTxtDataPrevisao);
-        txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                    ShowCalendar();
-            }
-        });*/
 
         Bundle bundle = getIntent().getExtras();
-
         if(bundle !=null){
             if(bundle.containsKey("NEGOCIO")){
                 negocio =(Negocio) bundle.getSerializable("NEGOCIO");
@@ -57,24 +47,14 @@ public class NegocioActivityForm extends AppCompatActivity {
                 }
                 SetNegocio(negocio);
             }
-
-
-        /*if(bundle.containsKey("TIPO")){
-            char tipo = bundle.getChar("TIPO");
-            TextView txtHeader = (TextView)findViewById(R.id.negocioTxtHeader);
-            EditText txtNome = (EditText) findViewById(R.id.negocioTxtNome);
-            if(tipo == NegocioTipo.Orcamento) {
-                negocio.setNeg_ctipo(NegocioTipo.Orcamento);
-                txtHeader.setText(R.string.Orcamento);
-                txtNome.setHint(R.string.OrcamentoNome);
-            }else
-                negocio.setNeg_ctipo(NegocioTipo.Orcamento);
-
-            Log.i("TIPO",negocio.getNeg_ctipo()+"");
-        }*/
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -195,11 +175,18 @@ private class Salvar extends AsyncTask<Negocio, String, Boolean>{
         if(salvo) {
             Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetalhes.class);
             i.putExtra("NEGOCIO", negocio);
-            //finish();
             startActivity(i);
-            NegocioActivity.msn = negocio.getNeg_codigo()!=0?"Registro editado com Sucesso!":"Registro inserido com Sucesso!";
+
+            if(negocio.getNeg_codigo()!=0) {
+                NegocioActivity.msn ="Registro editado com Sucesso!";
+                NegocioActivity.clearList = true;
+            }else{
+                NegocioActivity.msn = "Registro inserido com Sucesso!";
+
+            }
+            finish();
         }else{
-            Dialog.ShowAlert(NegocioActivityForm.this,"Erro","Ops, houve um imprevisto, favor tente novamente!");
+            Dialog.ShowAlert(NegocioActivityForm.this, "Erro", "Ops, houve um imprevisto, favor tente novamente!");
         }
         Dialog.CancelProgressDialog();
     }

@@ -1,5 +1,6 @@
 package model;
 
+import Enum.RegistroStatus;
 
 public class Registros {
     private int rgs_codigo;
@@ -53,6 +54,6 @@ public class Registros {
 */
     @Override
     public String toString() {
-        return getRgs_vdescricao();
+        return getRgs_vdescricao()+" Status: "+(getRgs_cstatus()== RegistroStatus.aberto ? "Aberto": "Completo" );
     }
 }

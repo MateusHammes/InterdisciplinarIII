@@ -65,6 +65,6 @@ public class Produto_material implements Serializable {
 */
     @Override
     public String toString() {
-        return getMaterial().getMtr_vnome()+ " - "+(getPrm_iunidade()+getPrm_iunidadeUtilizada())+" Unidades";
+        return getMaterial().getMtr_vnome()+ " - und. Reservadas: "+getPrm_iunidade()+"   unid. Utilizadas:"+ getPrm_iunidadeUtilizada();
     }
 }

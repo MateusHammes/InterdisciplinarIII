@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="wrap_content" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -18,8 +18,8 @@
 
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/scrollView4" >
 
         <LinearLayout
@@ -61,7 +61,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/Materiais"
                     android:id="@+id/produtoDetalhesMaterialBtn"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:layout_marginBottom="15dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -69,30 +70,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    style="@style/TxtHeaderList"
-                    android:text="Especificacões"
-                    android:id="@+id/textView16" />
-
-                <ImageButton
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/produtoDetalheBtnRegistro"
-                    android:src="@android:drawable/ic_menu_add"
-                    android:onClick="NovoRegistro"/>
-
+                    android:text="@string/Especificacoes"
+                    android:id="@+id/produtoDetalhesBtnRegistros"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="15dp" />
             </LinearLayout>
-
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:id="@+id/scrollView7" >
-
-                <ListView
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    android:id="@+id/produtoDetalheListViewEspecificacao" />
-            </ScrollView>
 
             <ProgressBar
                 style="?android:attr/progressBarStyleLarge"
