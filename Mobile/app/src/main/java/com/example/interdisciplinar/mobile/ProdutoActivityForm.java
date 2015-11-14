@@ -50,6 +50,13 @@ public class ProdutoActivityForm extends AppCompatActivity {
                 SalvarProduto();
             }
         });
+        Button cancel = (Button)findViewById(R.id.produtoBtnCancelar);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -73,6 +80,7 @@ public class ProdutoActivityForm extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
     private void SetItem(Produto p){
         EditText nome =(EditText)findViewById(R.id.produtoNome);

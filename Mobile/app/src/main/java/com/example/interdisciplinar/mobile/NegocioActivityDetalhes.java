@@ -1,7 +1,5 @@
 package com.example.interdisciplinar.mobile;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,68 +8,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.List;
 
 import DAO.NegocioDAO;
 import DAO.ProdutoDAO;
 import model.Negocio;
-import model.Produto;
 import util.DateUtil;
 
 public class NegocioActivityDetalhes extends AppCompatActivity {
     NegocioDAO DAO = new NegocioDAO();
     private Negocio negocio;
-    private ArrayAdapter<Produto> adpProdutos;
-    private ListView listViewProdutos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_negocio_detalhes);
-
-        adpProdutos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-
-        listViewProdutos = (ListView) findViewById(R.id.negocioDetalhesListViewProdutos);
-        listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                final int posicao = position;
-                AlertDialog.Builder ldg = new AlertDialog.Builder(NegocioActivityDetalhes.this);
-                ldg.setTitle(R.string.tituloOpcao);
-                ldg.setMessage(R.string.mensagemOpcao);
-                ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Produto pro = adpProdutos.getItem(posicao);
-                        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityForm.class);
-                        i.putExtra("PRODUTO", pro);
-                        startActivity(i);
-                    }
-                });
-                ldg.setNeutralButton("Detalhes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Produto pro = adpProdutos.getItem(posicao);
-                        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityDetalhes.class);
-                        i.putExtra("PRODUTO", pro);
-                        startActivity(i);
-                    }
-                });
-                ldg.setPositiveButton(R.string.Cancelar, null);
-                ldg.show();
-
-            }
-        });
-
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("NEGOCIO")){
@@ -85,8 +40,17 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new CarregaProdutos().execute();
+        ///  new CarregaProdutos().execute();
         new PegaValorTotal().execute();
+        Button btnProduto = (Button)findViewById(R.id.negocioProdutoBtnIndex);
+        btnProduto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(NegocioActivityDetalhes.this,ProdutoActivity.class);
+                i.putExtra("NEGOCIO",negocio);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -132,42 +96,12 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         endereco.setText(item.getNeg_vendereco());
         criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
         termino.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
-        Log.e("Tem produt----","???");
-        if(item.getLsProdutos()!=null) {   //faz listagem dos produtos do negocio
-            Log.e("Tem produtosss","aki");
-            adpProdutos.clear();
-            for (Produto prd:item.getLsProdutos()) {
-                adpProdutos.add(prd);
-            }
-            listViewProdutos.setAdapter(adpProdutos);
-        }
     }
 
 
 
     //endregion
 
-    private class CarregaProdutos extends AsyncTask<Produto, String, List<Produto>>{
-        ProdutoDAO produtoDAO = new ProdutoDAO();
-        ProgressBar pgProduto = (ProgressBar) findViewById(R.id.negocioDetalhesProgressBarProduto);
-        @Override
-        protected List<Produto> doInBackground(Produto... params) {
-            return produtoDAO.SelecionaProduto(negocio.getNeg_codigo());
-        }
-
-        @Override
-        protected void onPostExecute(List<Produto> lsProdutos) {
-            super.onPostExecute(lsProdutos);
-            adpProdutos.clear();
-            if(lsProdutos!=null){
-                for(Produto p: lsProdutos){
-                    adpProdutos.add(p);
-                }
-                listViewProdutos.setAdapter(adpProdutos);
-            }
-            pgProduto.setVisibility(View.GONE);
-        }
-    }
 
     private  class CarregaNegocio extends  AsyncTask<Negocio, String, Negocio>{
         @Override
@@ -201,6 +135,5 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
 
         }
     }
-
 
 }

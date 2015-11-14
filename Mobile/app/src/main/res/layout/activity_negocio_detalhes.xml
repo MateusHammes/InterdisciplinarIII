@@ -19,8 +19,8 @@
         android:textColor="#000" />
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/scrollView3" >
 
         <LinearLayout
@@ -105,30 +105,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/TxtHeaderList"
-                    android:text="Produtos"
-                    android:id="@+id/textView21"/>
-
-                <ImageButton
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/NegocioBtnNovoProduto"
-                    android:src="@android:drawable/ic_menu_add"
-                    android:onClick="CallProdutoForm"/>
+                    android:text="Produtos"
+                    android:id="@+id/negocioProdutoBtnIndex"
+                    android:layout_weight="1" />
+
             </LinearLayout>
-
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/negocioDetalhesListViewProdutos" />
-
-            <ProgressBar
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/negocioDetalhesProgressBarProduto"
-                android:layout_gravity="center" />
 
             <TextView
                 style="@style/labelDetails"
@@ -161,7 +145,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     style="@style/labelDetails"

@@ -41,11 +41,6 @@
             android:parentActivityName=".NegocioActivity" >
         </activity>
         <activity
-            android:name=".ProdutoActivity"
-            android:label="@string/title_activity_produto"
-            android:parentActivityName=".MainActivity" >
-        </activity>
-        <activity
             android:name=".ProdutoActivityForm"
             android:label="@string/title_activity_produto_activity_form"
             android:parentActivityName=".ProdutoActivity" >
@@ -55,13 +50,14 @@
             android:label="@string/title_activity_negocio_activity_details"
             android:parentActivityName=".NegocioActivity" >
         </activity>
-        <activity android:name=".ProdutoActivityDetalhes"
-            android:label="@string/title_activity_produto">
+        <activity
+            android:name=".ProdutoActivityDetalhes"
+            android:label="@string/title_activity_produto" >
         </activity>
         <activity
             android:name=".MateriaisActivity"
             android:label="@string/title_activity_materiais"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
             android:name=".MateriaisActivityForm"
@@ -71,6 +67,11 @@
         <activity
             android:name=".MateriaisProdutoActivity"
             android:label="@string/title_activity_materiais_produto"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ProdutoActivity"
+            android:label="@string/title_activity_produto"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
