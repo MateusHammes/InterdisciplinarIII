@@ -74,6 +74,15 @@
             android:label="@string/title_activity_produto"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".ProdutoMaterialActivity"
+            android:label="@string/title_activity_produto_material"
+            android:parentActivityName=".ProdutoActivityDetalhes"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.interdisciplinar.mobile.ProdutoActivityDetalhes" />
+        </activity>
     </application>
 
 </manifest>

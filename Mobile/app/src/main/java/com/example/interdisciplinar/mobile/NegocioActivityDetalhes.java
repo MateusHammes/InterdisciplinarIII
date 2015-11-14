@@ -18,6 +18,7 @@ import DAO.NegocioDAO;
 import DAO.ProdutoDAO;
 import model.Negocio;
 import util.DateUtil;
+import Enum.NegocioTipo;
 
 public class NegocioActivityDetalhes extends AppCompatActivity {
     NegocioDAO DAO = new NegocioDAO();
@@ -85,6 +86,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     //region Get e Set Values
     private void SetValues(Negocio item){
 
+
         TextView cliente = (TextView)findViewById(R.id.negocioDetailCliente);
         TextView nome = (TextView)findViewById(R.id.negocioDetailNome);
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
@@ -96,6 +98,11 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         endereco.setText(item.getNeg_vendereco());
         criacao.setText(DateUtil.dateToString(negocio.getNeg_dcadastro()));
         termino.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
+
+        if(item.getNeg_ctipo() == NegocioTipo.Orcamento){
+            TextView header  = (TextView) findViewById(R.id.negocioDetalhesTxtHeader);
+            header.setText(R.string.Orcamento);
+        }
     }
 
 

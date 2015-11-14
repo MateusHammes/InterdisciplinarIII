@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,8 +32,6 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
     private Registros registro;
     private RegistrosDAO DAO =new RegistrosDAO();
     private Produto_material produtMaterial = new Produto_material();
-    private ArrayAdapter<Produto_material> adpMateriais;
-    private ListView listViewMateriais;
     private ArrayAdapter<Registros> adpRegistros;
     private ListView listViewRegistros;
     AlertDialog alert;
@@ -57,8 +53,8 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
 
 
         //region Materiais
-        adpMateriais = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        listViewMateriais = (ListView) findViewById(R.id.produtoDetalheListViewMaterial);
+      //  adpMateriais = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+       // listViewMateriais = (ListView) findViewById(R.id.produtoDetalheListViewMaterial);
         //endregion
 
         //region Registros
@@ -66,7 +62,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         listViewRegistros = (ListView) findViewById(R.id.produtoDetalheListViewEspecificacao);
         //endregion
 
-        ImageButton btnMaterial = (ImageButton)findViewById(R.id.produtoDetalhesBtnMateriais);
+      /*  ImageButton btnMaterial = (ImageButton)findViewById(R.id.produtoDetalhesBtnMateriais);
         btnMaterial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +71,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 i.putExtra("PRODUTO", produto);
                 startActivity(i);
             }
-        });
+        });*/
 
         Button btnHome =(Button) findViewById(R.id.produtoDetalhesBtnHome);
         btnHome.setOnClickListener(new View.OnClickListener() {
@@ -99,13 +95,16 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
         });
 
 
-
-        listViewMateriais.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Button btnMaterial  =(Button)findViewById(R.id.produtoDetalhesMaterialBtn);
+        btnMaterial.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EditaValorMaterial(position);
+            public void onClick(View v) {
+                Intent i = new Intent(ProdutoActivityDetalhes.this, ProdutoMaterialActivity.class);
+                i.putExtra("PRODUTO", produto);
+                startActivity(i);
             }
         });
+
 
 
     }
@@ -118,7 +117,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Registros reg = adpRegistros.getItem(position);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoActivityDetalhes.this);
-                if(reg.getRgs_cstatus()== RegistroStatus.aberto) {
+                if (reg.getRgs_cstatus() == RegistroStatus.aberto) {
                     dialog.setTitle("Deseja completar esta Especificaçao?");
                     dialog.setNegativeButton("Completar", null);
 /*                    dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());*/
@@ -127,7 +126,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                         }
                     }).show();*/
-                }else{
+                } else {
                     // new AlertDialog.Builder(ProdutoActivityDetalhes.this)
                     dialog.setTitle("Deseja abrir esta Especificaçao?");
                     dialog.setNegativeButton("abrir", null);
@@ -137,7 +136,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 dialog.setNeutralButton(R.string.Editar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        final  EditText txt = new EditText(ProdutoActivityDetalhes.this);
+                        final EditText txt = new EditText(ProdutoActivityDetalhes.this);
                         //   AlertDialog alertEdit;
                         txt.setText(reg.getRgs_vdescricao());
                         AlertDialog.Builder dialogEdit = new AlertDialog.Builder(ProdutoActivityDetalhes.this);
@@ -151,7 +150,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                         alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(FuncoesExternas.Valida(txt)) {
+                                if (FuncoesExternas.Valida(txt)) {
                                     registro = reg;
                                     registro.setRgs_vdescricao(txt.getText().toString());
                                     new SalvaRegistro().execute();
@@ -169,7 +168,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         registro = reg;
-                        if(reg.getRgs_cstatus()== RegistroStatus.aberto)
+                        if (reg.getRgs_cstatus() == RegistroStatus.aberto)
                             registro.setRgs_cstatus(RegistroStatus.completo);
                         else
                             registro.setRgs_cstatus(RegistroStatus.aberto);
@@ -180,11 +179,10 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
 
             }
         });
-        new CarregaMaterial().execute();
         new CarregaRegistros().execute();
     }
 
-    private void EditaValorMaterial(int position){
+   /* private void EditaValorMaterial(int position){
         final Produto_material prm = adpMateriais.getItem(position);
         AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoActivityDetalhes.this);
         final EditText txt = new EditText(ProdutoActivityDetalhes.this);
@@ -220,7 +218,7 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 
     private void SetValues(Produto produto){
         TextView nome = (TextView)findViewById(R.id.produtoDetalheNome);
@@ -323,50 +321,6 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
     }
 
 
-    private void ListaProdutoMaterial(List<Produto_material> lsItens){
-        if(lsItens!=null){
-            for (Produto_material prm : lsItens){
-                adpMateriais.add(prm);
-            }
-            listViewMateriais.setAdapter(adpMateriais);
-        }
-    }
-
-    private class CarregaMaterial extends AsyncTask<Produto_material, String, List<Produto_material>>{
-        ProdutoMaterialDAO pmDAO  =new ProdutoMaterialDAO();
-        @Override
-        protected List<Produto_material> doInBackground(Produto_material... params) {
-            return pmDAO.Seleciona(produto.getPro_codigo());
-        }
-
-        @Override
-        protected void onPostExecute(List<Produto_material> lsProdutoMaterial) {
-            super.onPostExecute(lsProdutoMaterial);
-            ListaProdutoMaterial(lsProdutoMaterial);
-        }
-    }
-
-    private class EditaProdutoMaterial extends AsyncTask<Produto_material, String, Boolean>{
-        ProdutoMaterialDAO prmDAO = new ProdutoMaterialDAO();
-        @Override
-        protected Boolean doInBackground(Produto_material... params) {
-            return prmDAO.Editar(produtMaterial);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean salvo) {
-            super.onPostExecute(salvo);
-            if(salvo){
-                alertM.cancel();
-                new CarregaMaterial().execute();
-                adpMateriais.clear();
-            }else{
-                Dialog.ShowAlert(ProdutoActivityDetalhes.this,"Material do Produto","Ops.. Não foi posivel Editar, favor tente novamente!");
-            }
-            Dialog.CancelProgressDialog();
-        }
-    }
-
     private class SalvaProdutoMaterial extends AsyncTask<Produto_material, String, Boolean>{
         ProdutoMaterialDAO prmDAO = new ProdutoMaterialDAO();
         @Override
@@ -379,8 +333,8 @@ public class ProdutoActivityDetalhes extends AppCompatActivity {
             super.onPostExecute(salvo);
             if(salvo){
                 alertM.cancel();
-                new CarregaMaterial().execute();
-                adpMateriais.clear();
+              //  new CarregaMaterial().execute();
+             //   adpMateriais.clear();
             }else{
                 Dialog.ShowAlert(ProdutoActivityDetalhes.this,"Material do Produto","Ops.. Não foi posivel salvar, favor tente novamente!");
             }

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Detalhes do negócio"
-        android:id="@+id/textView14"
+        android:id="@+id/negocioDetalhesTxtHeader"
         android:gravity="center"
         android:textColor="#000" />
 

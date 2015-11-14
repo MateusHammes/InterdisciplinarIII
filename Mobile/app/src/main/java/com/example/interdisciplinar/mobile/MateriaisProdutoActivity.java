@@ -69,7 +69,6 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
                 Produto pro =(Produto) bundle.getSerializable("PRODUTO");
                 prm.setProduto(pro);
                 produto = pro;
-               /// Log.i("Tamo co produto", pro.getPro_codigo()+" -<- id");
             }
         }
 

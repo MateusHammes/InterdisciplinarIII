@@ -56,30 +56,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/TxtHeaderList"
-                    android:text="@string/Materiais"
-                    android:id="@+id/textView13"
-                    android:layout_weight="2"
-                    />
-
-                <ImageButton
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/produtoDetalhesBtnMateriais"
-                    android:src="@android:drawable/ic_menu_add" />
+                    android:text="@string/Materiais"
+                    android:id="@+id/produtoDetalhesMaterialBtn"
+                    android:layout_weight="1" />
             </LinearLayout>
-
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:id="@+id/scrollView6" >
-
-                <ListView
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    android:id="@+id/produtoDetalheListViewMaterial" />
-            </ScrollView>
 
             <LinearLayout
                 android:orientation="horizontal"

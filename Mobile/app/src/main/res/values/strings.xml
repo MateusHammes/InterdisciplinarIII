@@ -37,4 +37,5 @@
     <string name="tituloOpcao">Escolha uma opção</string>
     <string name="mensagemOpcao">O que você deseja?</string>
     <string name="Detalhes">Detalhes</string>
+    <string name="title_activity_produto_material">Materiais</string>
 </resources>

@@ -36,8 +36,6 @@ public class MateriaisActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materiais);
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
 
         materialListView = (ListView) findViewById(R.id.materialListView);
         adpMaterial = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
@@ -50,45 +48,43 @@ public class MateriaisActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         materialListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
-                i.putExtra("MATERIAL", adpMaterial.getItem(position));
-                startActivity(i);
+                    Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
+                    i.putExtra("MATERIAL", adpMaterial.getItem(position));
+                    startActivity(i);
             }
         });
         materialListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final Materiais mtr = adpMaterial.getItem(position);
-
-                new AlertDialog.Builder(MateriaisActivity.this)
-                        .setTitle(R.string.tituloOpcao)
-                        .setMessage(R.string.mensagemOpcao)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                new Delete().execute(mtr);
-                            }
-                        }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //material = mtr;
-                        Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
-                        i.putExtra("MATERIAL", mtr);
-                        startActivity(i);
-                    }
-                }).setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).show();
-                return false;
+                    final Materiais mtr = adpMaterial.getItem(position);
+                    new AlertDialog.Builder(MateriaisActivity.this)
+                            .setTitle(R.string.tituloOpcao)
+                            .setMessage(R.string.mensagemOpcao)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    new Delete().execute(mtr);
+                                }
+                            }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //material = mtr;
+                            Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
+                            i.putExtra("MATERIAL", mtr);
+                            startActivity(i);
+                        }
+                    }).setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).show();
+                    return false;
             }
         });
 
@@ -171,10 +167,8 @@ public class MateriaisActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean deleto) {
             super.onPostExecute(deleto);
-           /* if(deleto){
-
-            }else{}*/
             Dialog.CancelProgressDialog();
         }
     }
+
 }
