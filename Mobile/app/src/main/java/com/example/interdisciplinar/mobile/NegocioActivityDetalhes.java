@@ -43,30 +43,6 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         listViewProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*AlertDialog.Builder dialog = new AlertDialog.Builder(NegocioActivityDetalhes.this);
-                dialog.setTitle(R.string.tituloOpcao);
-                dialog.setMessage(R.string.mensagemOpcao);
-
-                dialog.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Produto pro = adpProdutos.getItem(posicao);
-                        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityForm.class);
-                        i.putExtra("PRODUTO", pro);
-                        startActivity(i);
-                    }
-                });
-                dialog.setNeutralButton(R.string.Detalhes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Produto pro = adpProdutos.getItem(posicao);
-                        Intent i = new Intent(NegocioActivityDetalhes.this, ProdutoActivityDetalhes.class);
-                        i.putExtra("PRODUTO", pro);
-                        startActivity(i);
-                    }
-                });
-                dialog.setPositiveButton(R.string.Cancelar,null);
-                dialog.show();*/
 
                 final int posicao = position;
                 AlertDialog.Builder ldg = new AlertDialog.Builder(NegocioActivityDetalhes.this);
@@ -148,8 +124,6 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         TextView cliente = (TextView)findViewById(R.id.negocioDetailCliente);
         TextView nome = (TextView)findViewById(R.id.negocioDetailNome);
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
-        TextView valorT = (TextView)findViewById(R.id.negocioDetailValorAdquirido);
-        TextView valorAd = (TextView)findViewById(R.id.negocioDetailValorTotal);
         TextView criacao = (TextView)findViewById(R.id.negocioDetalhesDataCriacao);
         TextView termino = (TextView)findViewById(R.id.negocioDetalhesDataTermino);
 
