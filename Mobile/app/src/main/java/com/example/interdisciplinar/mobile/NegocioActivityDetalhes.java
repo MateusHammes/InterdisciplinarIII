@@ -148,6 +148,8 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         TextView cliente = (TextView)findViewById(R.id.negocioDetailCliente);
         TextView nome = (TextView)findViewById(R.id.negocioDetailNome);
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
+        TextView valorT = (TextView)findViewById(R.id.negocioDetailValorAdquirido);
+        TextView valorAd = (TextView)findViewById(R.id.negocioDetailValorTotal);
         TextView criacao = (TextView)findViewById(R.id.negocioDetalhesDataCriacao);
         TextView termino = (TextView)findViewById(R.id.negocioDetalhesDataTermino);
 
