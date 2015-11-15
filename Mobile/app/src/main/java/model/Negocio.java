@@ -11,19 +11,16 @@ public class Negocio implements Serializable {
 
     private String neg_vnome;
     private Date neg_dcadastro;
-    private int neg_cstatus;
+    private int neg_cstatus; // define se o negocio/orçamento esta aberto ou comcluido, so posso editar os abertos
     private String neg_vcliente;
     private Date neg_dtermino;
-   // private  Date neg_dprevisao;
     private String neg_vendereco;
     private  String neg_vdescricao;
     private int neg_ctipo;///define se é Negocio ou Orçamento
-
     private double neg_valorTotal;
     private double neg_valorAdquirido;
-
     private List<Produto>lsProdutos;
-    private List<Negocio> neg_parent;
+    private Negocio neg_parent;
 
     public Negocio(){}
 
@@ -116,11 +113,11 @@ public class Negocio implements Serializable {
         this.lsProdutos = lsProdutos;
     }
 
-    public List<Negocio> getNeg_parent() {
+    public Negocio getNeg_parent() {
         return neg_parent;
     }
 
-    public void setNeg_parent(List<Negocio> neg_parent) {
+    public void setNeg_parent(Negocio neg_parent) {
         this.neg_parent = neg_parent;
     }
 

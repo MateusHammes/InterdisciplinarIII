@@ -41,4 +41,8 @@
     <string name="title_activity_produto_registro">Especificaçoes</string>
     <string name="Abrir">Abrir</string>
     <string name="Completar">Completar</string>
+    <string name="CriarNegocio">Criar Negocio</string>
+    <string name="MaisDetalhes">Mais Detalhes</string>
+    <string name="TotalProdutos">Total de Produtos</string>
+    <string name="ValorTotal">Valor Total</string>
 </resources>

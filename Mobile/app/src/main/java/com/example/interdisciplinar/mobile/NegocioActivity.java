@@ -22,6 +22,7 @@ import java.util.List;
 
 import DAO.NegocioDAO;
 import Enum.NegocioTipo;
+import Enum.NegocioStatus;
 import model.Negocio;
 
 public class NegocioActivity extends AppCompatActivity {
@@ -42,8 +43,6 @@ public class NegocioActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_negocio);
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.negocioBtnNovo);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,22 +61,23 @@ public class NegocioActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,  int position, long id) {
                 final int posicao = position;
+                final Negocio neg = adpNegocio.getItem(posicao);
                 AlertDialog.Builder ldg = new AlertDialog.Builder(NegocioActivity.this);
                 ldg.setTitle(R.string.tituloOpcao);
                 ldg.setMessage(R.string.mensagemOpcao);
-                ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Negocio neg = adpNegocio.getItem(posicao);
-                        Intent i = new Intent(NegocioActivity.this, NegocioActivityForm.class);
-                        i.putExtra("NEGOCIO", neg);
-                        startActivity(i);
-                    }
-                });
+                if(neg.getNeg_ctipo() == NegocioTipo.Orcamento && neg.getNeg_cstatus() == NegocioStatus.ABERTO){
+                    ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(NegocioActivity.this, NegocioActivityForm.class);
+                            i.putExtra("NEGOCIO", neg);
+                            startActivity(i);
+                        }
+                    });
+                }
                 ldg.setNeutralButton("Detalhes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Negocio neg = adpNegocio.getItem(posicao);
                         Intent i = new Intent(NegocioActivity.this, NegocioActivityDetalhes.class);
                         i.putExtra("NEGOCIO", neg);
                         startActivity(i);
@@ -107,8 +107,6 @@ public class NegocioActivity extends AppCompatActivity {
         if(bundle!=null && bundle.containsKey("TIPO")){
             int tipo =  bundle.getInt("TIPO");
             if(tipo== NegocioTipo.Orcamento){
-                //   TextView txtTitulo = (TextView)findViewById(R.id.negocioListagemTxtTitulo);
-                // txtTitulo.setText(R.string.Orcamento);
                 Log.i("TIPO","ORCAMENTO");
                 negocio.setNeg_ctipo(NegocioTipo.Orcamento);
             }else

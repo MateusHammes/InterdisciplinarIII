@@ -24,18 +24,10 @@ public class NegocioDAO {
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
-            // Add the message converters to the restTemplate
-            /*  Map<String, String> params = new HashMap<>();
-            params.put("tipo", String.valueOf(tipo));*/
-
             Log.i("---BUSCO--","TIPO - "+tipo);
-
-
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
             return Arrays.asList(rest.getForObject(url, Negocio[].class));
-            //  return Arrays.asList(rest.getForObject(url, Negocio[].class));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -59,16 +51,12 @@ public class NegocioDAO {
         return null;
     }
 
-
-
     public String Salvar(Negocio item){
-        String url = Connection.url.concat("negocios/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/grupos";
-
+        String url = Connection.url.concat("negocios/salva");
         RestTemplate rest = new RestTemplate();
         rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         rest.getMessageConverters().add(new StringHttpMessageConverter());
         rest.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        Log.i("VAI??", "So falta agora! ->"+item.getNeg_ctipo());
         return rest.postForObject(url, item, String.class);
     }
 
@@ -80,6 +68,16 @@ public class NegocioDAO {
         return rest.postForObject(url, item, String.class).equals("1");
     }
 
+    ///envio o id do orçamento e recebo o id do negocio criado
+    public String criaNegocioOrcamento(int neg_id){
+        String url = Connection.url.concat("negocios/criaNegocio/"+neg_id);
+        RestTemplate rest = new RestTemplate();
+        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        rest.getMessageConverters().add(new StringHttpMessageConverter());
+        rest.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        Log.i("VAI??", "So falta agora! ->" + neg_id);
+        return rest.getForObject(url, String.class);
+    }
 
 
 }

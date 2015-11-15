@@ -120,27 +120,28 @@
                 android:id="@+id/textView22"
                 android:textStyle="bold" />
 
-           <!-- <LinearLayout
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <TextView
-                    style="@style/labelDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Valor a ser Adquirido"
-                    android:id="@+id/textView23"
-                    android:layout_weight="2" />
-
-                <TextView
-                    style="@style/labelDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="... "
-                    android:id="@+id/negocioDetailValorAdquirido" />
-            </LinearLayout>-->
+                    android:text="@string/TotalProdutos"
+                    android:layout_weight="2"
+                    style="@style/labelDetails" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Unit."
+                    android:id="@+id/negocioDetalhesTxtQuantidadeProdutosNegocio"
+                    style="@style/labelDetails" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -152,10 +153,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Valor Total"
+                    android:text="@string/ValorTotal"
                     android:id="@+id/textView24"
-                    android:layout_weight="2"
-                     />
+                    android:layout_weight="2"/>
 
                 <TextView
                     style="@style/labelDetails"
@@ -164,6 +164,85 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="R$"
                     android:id="@+id/negocioDetailValorTotal" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/negocioDetalhesBtnCriarNegocio"
+                    android:text="@string/CriarNegocio"
+                    android:layout_weight="1"
+                    android:layout_marginTop="15dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/negocioDetalhesLayoutComparacao">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Valores do Orçamento"
+                    android:id="@+id/textView16"
+                    android:textStyle="bold"
+                    style="@style/labelDetails"
+                    android:layout_gravity="top" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/TotalProdutos"
+                        android:id="@+id/textView21"
+                        android:layout_weight="2"
+                        style="@style/labelDetails" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Unit."
+                        android:id="@+id/negocioDetalhesTxtQuantidadeProdutosOrcamento"
+                        style="@style/labelDetails" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/ValorTotal"
+                        android:id="@+id/textView14"
+                        android:layout_weight="2"
+                        style="@style/labelDetails" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="R$"
+                        android:id="@+id/negocioDetalhesTxtValorTotalOrcamento"
+                        style="@style/labelDetails" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

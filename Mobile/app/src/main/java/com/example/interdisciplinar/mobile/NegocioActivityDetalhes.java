@@ -12,17 +12,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 import DAO.NegocioDAO;
 import DAO.ProdutoDAO;
+import Enum.NegocioStatus;
+import Enum.NegocioTipo;
 import model.Negocio;
 import util.DateUtil;
-import Enum.NegocioTipo;
+import util.Dialog;
 
 public class NegocioActivityDetalhes extends AppCompatActivity {
     NegocioDAO DAO = new NegocioDAO();
     private Negocio negocio;
+    public static String mensage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,6 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ///  new CarregaProdutos().execute();
         new PegaValorTotal().execute();
         Button btnProduto = (Button)findViewById(R.id.negocioProdutoBtnIndex);
         btnProduto.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +53,17 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        Button btnCriaNegocio = (Button)findViewById(R.id.negocioDetalhesBtnCriarNegocio);
+        btnCriaNegocio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CriaNegocioOrcamento().execute(negocio.getNeg_codigo());
+            }
+        });
+
+        if(mensage != null){
+            Dialog.Show(this,"Novo Negócio","");
+        }
     }
 
     @Override
@@ -102,11 +114,16 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         if(item.getNeg_ctipo() == NegocioTipo.Orcamento){
             TextView header  = (TextView) findViewById(R.id.negocioDetalhesTxtHeader);
             header.setText(R.string.Orcamento);
+            if(item.getNeg_cstatus() == NegocioStatus.ABERTO) {
+                Button btnCriarNegocio = (Button) findViewById(R.id.negocioDetalhesBtnCriarNegocio);
+                btnCriarNegocio.setVisibility(View.VISIBLE);
+            }
+        }else {
+            if (item.getNeg_parent() != null && item.getNeg_parent().getNeg_codigo() != 0) { ///tem orçamento
+                new PegaValorTotal().execute(item.getNeg_parent());
+            }
         }
     }
-
-
-
     //endregion
 
 
@@ -124,22 +141,57 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     }
 
 
-    private class PegaValorTotal extends AsyncTask<String, String, String >{
+    private class PegaValorTotal extends AsyncTask<Negocio, String, String >{
         ProdutoDAO produtoDAO = new ProdutoDAO();
+        boolean isNegocio =true;
         @Override
-        protected String doInBackground(String... params) {
-            return produtoDAO.SelecionaValorTotal(negocio.getNeg_codigo());
+        protected String doInBackground(Negocio... params) {
+            isNegocio = params[0].getNeg_ctipo()==NegocioTipo.Negocio;
+            return produtoDAO.SelecionaValorTotal(params[0].getNeg_codigo());
         }
 
         @Override
         protected void onPostExecute(String valor) {
             super.onPostExecute(valor);
-            TextView txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
-            NumberFormat mbf = NumberFormat.getCurrencyInstance();
+            TextView txt;
+            if(isNegocio)
+                txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
+            else
+                txt = (TextView)findViewById(R.id.negocioDetalhesTxtValorTotalOrcamento);
             Log.i("Valor", "TOTALLL = " + valor);
             if(!valor.isEmpty())
                 txt.setText(DecimalFormat.getInstance().format(Double.parseDouble(valor)));
+        }
+    }
 
+    /**
+     * Metodo responsável por criar o neocio baseado no orçamento
+     */
+    private class CriaNegocioOrcamento extends  AsyncTask<Integer, String, String>{
+        @Override
+        protected String doInBackground(Integer... params) {
+            return DAO.criaNegocioOrcamento(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String valor) {
+            super.onPostExecute(valor);
+            Dialog.CancelProgressDialog();
+
+            if(valor.equals("0"))//deu erro
+                Dialog.ShowAlertError(NegocioActivityDetalhes.this);
+            else{
+                Negocio ng = negocio;
+                ng.getNeg_parent().setNeg_cstatus(NegocioStatus.CONCLUIDO);
+                negocio.setNeg_parent(ng);
+                negocio.setNeg_codigo(Integer.parseInt(valor));
+                negocio.setNeg_ctipo(NegocioTipo.Negocio);
+                //SetValues(negocio);
+                Intent i  = new Intent(NegocioActivityDetalhes.this, NegocioActivityDetalhes.class);
+                i.putExtra("NEGOCIO",negocio);
+                startActivity(i);
+                finish();
+            }
         }
     }
 
