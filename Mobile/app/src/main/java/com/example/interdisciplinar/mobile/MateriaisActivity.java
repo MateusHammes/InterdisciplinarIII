@@ -110,6 +110,7 @@ public class MateriaisActivity extends AppCompatActivity {
         if(ClearList){
             adpMaterial.clear();
             materialListView.setAdapter(adpMaterial);
+            ClearList=false;
         }
 
         if(GoLoad) {

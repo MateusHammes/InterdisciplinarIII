@@ -31,6 +31,7 @@ public class ProdutoMaterialDAO {
         return "1".equals(rest.postForObject(url, Pmaterial, String.class));
     }
 
+
     public List<Produto_material> Seleciona(int pro_codigo){
         try {
             String url = Connection.url.concat("produtoMaterial/"+pro_codigo);
@@ -45,6 +46,14 @@ public class ProdutoMaterialDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean Delete (Produto_material Pmaterial){
+        String url = Connection.url.concat("produtoMaterial/delete");
+        RestTemplate rest = new RestTemplate();
+        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        rest.getMessageConverters().add(new StringHttpMessageConverter());
+        return "1".equals(rest.postForObject(url, Pmaterial, String.class));
     }
 
 

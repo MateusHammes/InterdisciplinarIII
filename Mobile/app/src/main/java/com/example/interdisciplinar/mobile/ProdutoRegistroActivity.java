@@ -18,10 +18,12 @@ import java.util.List;
 
 import DAO.RegistrosDAO;
 import Enum.RegistroStatus;
+import model.Negocio;
 import model.Produto;
 import model.Registros;
 import util.Dialog;
 import util.FuncoesExternas;
+import Enum.NegocioTipo;
 
 public class ProdutoRegistroActivity extends AppCompatActivity {
     private ArrayAdapter<Registros> adpRegistros;
@@ -63,63 +65,67 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Registros reg = adpRegistros.getItem(position);
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoRegistroActivity.this);
-                if (reg.getRgs_cstatus() == RegistroStatus.aberto) {
-                    dialog.setTitle("Deseja completar esta Especificaçao?");
-                    dialog.setNegativeButton(R.string.Completar, null);
-                } else {
-                    dialog.setTitle("Deseja abrir esta Especificaçao?");
-                    dialog.setNegativeButton(R.string.Abrir, null);
-                }
-                dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());
 
-                dialog.setNeutralButton(R.string.Editar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        final EditText txt = new EditText(ProdutoRegistroActivity.this);
-                        //   AlertDialog alertEdit;
-                        txt.setText(reg.getRgs_vdescricao());
-                        AlertDialog.Builder dialogEdit = new AlertDialog.Builder(ProdutoRegistroActivity.this);
-                        dialogEdit.setTitle(R.string.EditarEspecificacao);
-                        dialogEdit.setView(txt);
-                        dialogEdit.setNeutralButton(R.string.Cancelar, null);
-                        dialogEdit.setNegativeButton(R.string.Salvar, null);
+                Negocio neg = reg.getProduto().getNegocio();
+                if(neg!=null && neg.getNeg_codigo()!=0 && neg.getNeg_ctipo()== NegocioTipo.Negocio) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoRegistroActivity.this);
+                    if (reg.getRgs_cstatus() == RegistroStatus.aberto) {
+                        dialog.setTitle("Deseja completar esta Especificaçao?");
+                        dialog.setNegativeButton(R.string.Completar, null);
+                    } else {
+                        dialog.setTitle("Deseja abrir esta Especificaçao?");
+                        dialog.setNegativeButton(R.string.Abrir, null);
+                    }
+                    dialog.setMessage("Especificaçao: " + reg.getRgs_vdescricao());
 
-                        alert = dialogEdit.create();
-                        alert.show();
-                        alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (FuncoesExternas.Valida(txt)) {
-                                    registro = reg;
-                                    registro.setRgs_vdescricao(txt.getText().toString());
-                                    new SalvaRegistro().execute();
-                                    Dialog.ShowProgressDialog(ProdutoRegistroActivity.this);
+                    dialog.setNeutralButton(R.string.Editar, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            final EditText txt = new EditText(ProdutoRegistroActivity.this);
+                            //   AlertDialog alertEdit;
+                            txt.setText(reg.getRgs_vdescricao());
+                            AlertDialog.Builder dialogEdit = new AlertDialog.Builder(ProdutoRegistroActivity.this);
+                            dialogEdit.setTitle(R.string.EditarEspecificacao);
+                            dialogEdit.setView(txt);
+                            dialogEdit.setNeutralButton(R.string.Cancelar, null);
+                            dialogEdit.setNegativeButton(R.string.Salvar, null);
+
+                            alert = dialogEdit.create();
+                            alert.show();
+                            alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (FuncoesExternas.Valida(txt)) {
+                                        registro = reg;
+                                        registro.setRgs_vdescricao(txt.getText().toString());
+                                        new SalvaRegistro().execute();
+                                        Dialog.ShowProgressDialog(ProdutoRegistroActivity.this);
+                                    }
                                 }
-                            }
-                        });
-                    }
-                });
-                dialog.setPositiveButton(R.string.Cancelar, null).show();
+                            });
+                        }
+                    });
+                    dialog.setPositiveButton(R.string.Cancelar, null).show();
 
-                alert = dialog.create();
-                alert.show();
-                alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        registro = reg;
-                        if (reg.getRgs_cstatus() == RegistroStatus.aberto)
-                            registro.setRgs_cstatus(RegistroStatus.completo);
-                        else
-                            registro.setRgs_cstatus(RegistroStatus.aberto);
-                        new SalvaRegistro().execute();
-                        Dialog.ShowProgressDialog(ProdutoRegistroActivity.this);
-                    }
-                });
-
+                    alert = dialog.create();
+                    alert.show();
+                    alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            registro = reg;
+                            if (reg.getRgs_cstatus() == RegistroStatus.aberto)
+                                registro.setRgs_cstatus(RegistroStatus.completo);
+                            else
+                                registro.setRgs_cstatus(RegistroStatus.aberto);
+                            new SalvaRegistro().execute();
+                            Dialog.ShowProgressDialog(ProdutoRegistroActivity.this);
+                        }
+                    });
+                }
             }
         });
         new CarregaRegistros().execute();
+
     }
 
 
@@ -208,3 +214,4 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
     }
 
 }
+

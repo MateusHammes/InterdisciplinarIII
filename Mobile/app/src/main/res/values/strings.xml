@@ -5,7 +5,7 @@
     <string name="title_activity_grupo">Categorias</string>
     <string name="title_activity_activity_grupo_form">Categoria</string>
     <string name="GrupoNome">Nome</string>
-    <string name="grupoNomeHint">Nome do Grupo</string>
+    <string name="grupoNomeHint">Nome da Categoria</string>
     <string name="Salvar">Salvar</string>
     <string name="grupoNovo">Novo Grupo</string>
     <string name="title_activity_negocio">Negócios</string>
@@ -45,4 +45,6 @@
     <string name="MaisDetalhes">Mais Detalhes</string>
     <string name="TotalProdutos">Total de Produtos</string>
     <string name="ValorTotal">Valor Total</string>
+    <string name="Deletar">Deletar</string>
 </resources>
+

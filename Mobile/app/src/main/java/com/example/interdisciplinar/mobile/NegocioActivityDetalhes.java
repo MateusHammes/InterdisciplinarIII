@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -43,7 +44,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new PegaValorTotal().execute();
+        new PegaValorTotal().execute(negocio);
         Button btnProduto = (Button)findViewById(R.id.negocioProdutoBtnIndex);
         btnProduto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +122,8 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         }else {
             if (item.getNeg_parent() != null && item.getNeg_parent().getNeg_codigo() != 0) { ///tem orçamento
                 new PegaValorTotal().execute(item.getNeg_parent());
+                LinearLayout layout = (LinearLayout)findViewById(R.id.negocioDetalhesLayoutComparacao);
+                layout.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -146,18 +149,21 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         boolean isNegocio =true;
         @Override
         protected String doInBackground(Negocio... params) {
-            isNegocio = params[0].getNeg_ctipo()==NegocioTipo.Negocio;
-            return produtoDAO.SelecionaValorTotal(params[0].getNeg_codigo());
+//            if(params.length>0) {
+                isNegocio = params[0].getNeg_ctipo() == NegocioTipo.Negocio;
+                return produtoDAO.SelecionaValorTotal(params[0].getNeg_codigo());
+  //          }else
+    //            return "0";
         }
 
         @Override
         protected void onPostExecute(String valor) {
             super.onPostExecute(valor);
-            TextView txt;
-            if(isNegocio)
-                txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
-            else
-                txt = (TextView)findViewById(R.id.negocioDetalhesTxtValorTotalOrcamento);
+            //TextView txt;
+           // if(isNegocio)
+            TextView  txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
+            //else
+            //    txt = (TextView)findViewById(R.id.negocioDetalhesTxtValorTotalOrcamento);
             Log.i("Valor", "TOTALLL = " + valor);
             if(!valor.isEmpty())
                 txt.setText(DecimalFormat.getInstance().format(Double.parseDouble(valor)));

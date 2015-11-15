@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -94,8 +93,6 @@ public class NegocioActivityForm extends AppCompatActivity {
         EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
         if(FuncoesExternas.Valida(txtNome))
             if(FuncoesExternas.Valida(txtCliente)){
-                Toast t = Toast.makeText(this,"SALVARIA",Toast.LENGTH_SHORT);
-                t.show();
                 GetNegocio();
 
                 if(negocio.getNeg_codigo()==0)

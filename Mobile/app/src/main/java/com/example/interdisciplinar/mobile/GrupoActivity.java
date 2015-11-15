@@ -130,6 +130,8 @@ public class GrupoActivity extends AppCompatActivity {
         if(GoLoad) {
             GoLoad=false;
             new CarregaRegistros().execute();
+            Log.i("--ACAO--", "onRESUME  -  Goload");
+
         }
         if(msn!=null&& !msn.isEmpty()){
             Toast t = Toast.makeText(this,msn,Toast.LENGTH_SHORT);
@@ -140,13 +142,11 @@ public class GrupoActivity extends AppCompatActivity {
 
     public void GrupoForm(){
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle(R.string.GrupoNome);
-        alert.setMessage(R.string.grupoNomeHint);
+        alert.setTitle(R.string.grupoNomeHint);
 
         final EditText txt = new EditText(this);
         if(grupo!=null)
             txt.setText(grupo.getGru_vdescricao());
-
 
         alert.setView(txt);
         alert.setCancelable(false);

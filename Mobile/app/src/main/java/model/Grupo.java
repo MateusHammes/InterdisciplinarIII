@@ -27,6 +27,6 @@ public class Grupo implements Serializable {
 
     @Override
     public String toString() {
-        return getGru_vdescricao()+" id:"+getGru_codigo();
+        return getGru_vdescricao();
     }
 }

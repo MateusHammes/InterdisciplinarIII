@@ -138,8 +138,8 @@ public class MateriaisActivityForm extends AppCompatActivity {
             super.onPostExecute(salvo);
             if(salvo){
                 MateriaisActivity.GoLoad = true;
-                if(material.getMtr_codigo()!=0)
-                    MateriaisActivity.ClearList=true;
+                ///if(material.getMtr_codigo()!=0
+                MateriaisActivity.ClearList=true;
                 Dialog.CancelProgressDialog();
                 finish();
             }else {
