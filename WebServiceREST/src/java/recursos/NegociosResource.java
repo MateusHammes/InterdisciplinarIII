@@ -3,6 +3,7 @@ package recursos;
 import Enum.NegocioStatus;
 import Enum.NegocioTipo;
 import dao.NegocioDAO;
+import java.util.Calendar;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -86,16 +87,23 @@ public class NegociosResource {
     public String criaNegocio(@PathParam("id") Integer id) {
         try {
             Negocio orcamento = negocioDAO.findById(id);
-            Negocio neg = orcamento;
-            neg.setNeg_codigo(0);
+            Negocio neg = new Negocio(); //orcamento;
+            neg.setNeg_cstatus(NegocioStatus.Aberto);
             neg.setNeg_ctipo(NegocioTipo.Negocio);
+            Calendar c = Calendar.getInstance();
+            neg.setNeg_dcadastro(c.getTime());
             neg.setNeg_parent(orcamento);
-           negocioDAO.insert(neg);
+            neg.setNeg_vcliente(orcamento.getNeg_vcliente());
+            neg.setNeg_vdescricao(orcamento.getNeg_vdescricao());
+            neg.setNeg_vendereco(orcamento.getNeg_vendereco());
+            neg.setNeg_vnome(orcamento.getNeg_vnome());
+            neg.setNeg_codigo(0);
+            negocioDAO.insert(neg);
 
-           orcamento.setNeg_cstatus(NegocioStatus.Concluido);
-           negocioDAO.update(orcamento);
- 
-            
+            orcamento.setNeg_cstatus(NegocioStatus.Concluido);
+            negocioDAO.update(orcamento);
+            return neg.getNeg_codigo() + "";
+
         } catch (Exception e) {
         }
         return "0";

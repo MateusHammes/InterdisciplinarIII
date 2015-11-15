@@ -2,13 +2,12 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,7 +21,7 @@ public class Negocio implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "neg_codigo")
     private int neg_codigo;
  
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "neg_parent")
     private Negocio neg_parent;
     //private List<Negocio> neg_parent;
@@ -64,6 +63,7 @@ public class Negocio implements Serializable {
     public void setNeg_parent(Negocio neg_parent) {
         this.neg_parent = neg_parent;
     }
+
     
 
     public String getNeg_vnome() {
