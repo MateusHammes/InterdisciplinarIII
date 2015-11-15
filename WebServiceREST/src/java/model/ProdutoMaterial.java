@@ -20,10 +20,10 @@ public class ProdutoMaterial implements Serializable {
     @ManyToOne
     @JoinColumn(name = "pro_codigo", referencedColumnName = "pro_codigo")
     private Produto produto;
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "neg_codigo", referencedColumnName = "neg_codigo")
-    private Negocio negocio;
+//    @Id
+//    @ManyToOne
+//    @JoinColumn(name = "neg_codigo", referencedColumnName = "neg_codigo")
+//    private Negocio negocio;
 
     private int prm_iunidade;
     private int prm_iunidadeUtilizada;
@@ -48,13 +48,13 @@ public class ProdutoMaterial implements Serializable {
         this.produto = produto;
     }
 
-    public Negocio getNegocio() {
-        return negocio;
-    }
-
-    public void setNegocio(Negocio negocio) {
-        this.negocio = negocio;
-    }
+//    public Negocio getNegocio() {
+//        return negocio;
+//    }
+//
+//    public void setNegocio(Negocio negocio) {
+//        this.negocio = negocio;
+//    }
 
     public int getPrm_iunidade() {
         return prm_iunidade;

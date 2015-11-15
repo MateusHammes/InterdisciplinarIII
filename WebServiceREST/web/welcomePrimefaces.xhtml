@@ -16,16 +16,15 @@
                             gru_vdescricao: $("#grp").val()
 
                         };
-                  
 
                         $.ajax({
-                            url: "http://192.168.0.102:44608/WebServiceREST/service/grupos",
+                            url: "http://192.168.0.108:44608/WebServiceREST/service/grupos",
                             type: 'POST',
-                            data: {g : grupo},
+                            data: {g: grupo},
                             success: function (response) {
-                                alert("lista:"+ response);
+                                alert("lista:" + response);
                             }, error: function (e) {
-                                alert("Errro: "+e.toString());
+                                alert("Errro: " + e.toString());
                             }
 
                         });
@@ -39,6 +38,14 @@
 
 
             </script>
+
+
+            <style>
+                .head{
+                    alignment-adjust: central;
+                }
+
+            </style>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>Web Service</title>
@@ -50,7 +57,9 @@
             <p:layout fullPage="true">  
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    Header
+                    <div class="head">
+                        Central de Monitoramento Web Service Rest
+                    </div>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">

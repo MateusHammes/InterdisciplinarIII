@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -26,13 +28,16 @@ public class Negocio implements Serializable {
     private Negocio neg_parent;
     //private List<Negocio> neg_parent;
     private String neg_vnome;
+    @Temporal(TemporalType.DATE)
     private Date neg_dcadastro;
     private int neg_cstatus;
     private String neg_vcliente;
+    @Temporal(TemporalType.DATE)
     private Date neg_dtermino;
     private String neg_vendereco;
     private String neg_vdescricao;
     private int neg_ctipo;
+    
 
 //   @ManyToOne
 //    @JoinColumn(name = "pes_codigo", referencedColumnName = "pes_codigo")

@@ -32,6 +32,7 @@ public class MateriaisResource {
 
         return materiaisDAO.findById(id);
     }
+  
 
     @POST
     @Path("salva")

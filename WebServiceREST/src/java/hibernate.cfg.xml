@@ -7,6 +7,9 @@
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/Interdisciplinar</property>
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">rot</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">true</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="model.Grupo"/>
     <mapping class="model.Materiais"/>
     <mapping class="model.Negocio"/>
