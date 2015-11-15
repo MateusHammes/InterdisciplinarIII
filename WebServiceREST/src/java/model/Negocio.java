@@ -24,7 +24,8 @@ public class Negocio implements Serializable {
  
     @OneToMany
     @JoinColumn(name = "neg_parent")
-    private List<Negocio> neg_parent;
+    private Negocio neg_parent;
+    //private List<Negocio> neg_parent;
     private String neg_vnome;
     private Date neg_dcadastro;
     private int neg_cstatus;
@@ -48,13 +49,22 @@ public class Negocio implements Serializable {
         this.neg_codigo = neg_codigo;
     }
 
-    public List<Negocio> getNeg_parent() {
+//    public List<Negocio> getNeg_parent() {
+//        return neg_parent;
+//    }
+//
+//    public void setNeg_parent(List<Negocio> neg_parent) {
+//        this.neg_parent = neg_parent;
+//    }
+
+    public Negocio getNeg_parent() {
         return neg_parent;
     }
 
-    public void setNeg_parent(List<Negocio> neg_parent) {
+    public void setNeg_parent(Negocio neg_parent) {
         this.neg_parent = neg_parent;
     }
+    
 
     public String getNeg_vnome() {
         return neg_vnome;

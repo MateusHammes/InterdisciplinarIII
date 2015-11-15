@@ -1,5 +1,7 @@
 package recursos;
 
+import Enum.NegocioStatus;
+import Enum.NegocioTipo;
 import dao.NegocioDAO;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -33,7 +35,7 @@ public class NegociosResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("tipo/{tipo}/{idRange}")
-    public List<Negocio> findRange(@PathParam("tipo") Integer tipo,@PathParam("idRange") Integer idRange ) {
+    public List<Negocio> findRange(@PathParam("tipo") Integer tipo, @PathParam("idRange") Integer idRange) {
         return negocioDAO.findRange(tipo, idRange);
     }
 
@@ -76,6 +78,27 @@ public class NegociosResource {
         } catch (Exception e) {
             return "0";
         }
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("criaNegocio/{id}")
+    public String criaNegocio(@PathParam("id") Integer id) {
+        try {
+            Negocio orcamento = negocioDAO.findById(id);
+            Negocio neg = orcamento;
+            neg.setNeg_codigo(0);
+            neg.setNeg_ctipo(NegocioTipo.Negocio);
+            neg.setNeg_parent(orcamento);
+           negocioDAO.insert(neg);
+
+           orcamento.setNeg_cstatus(NegocioStatus.Concluido);
+           negocioDAO.update(orcamento);
+ 
+            
+        } catch (Exception e) {
+        }
+        return "0";
     }
 
 }
