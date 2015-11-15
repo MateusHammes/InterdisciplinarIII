@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import java.io.Serializable;
@@ -20,10 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author mateus
- */
+
 @Entity
 @Table(name = "produto")
 @XmlRootElement
@@ -41,12 +34,12 @@ public class Produto implements Serializable{
     @JoinColumn(name = "neg_codigo", referencedColumnName = "neg_codigo")
     private Negocio negocio;
    
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<ProdutoMaterial> lsProdutoMaterial;
-    
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Registros> lsRegistros;
-    
+//    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//    private List<ProdutoMaterial> lsProdutoMaterial;
+//    
+//    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//    private List<Registros> lsRegistros;
+//    
     
     public Produto() {
     }
@@ -89,37 +82,6 @@ public class Produto implements Serializable{
         return getPro_vnome();
     }
 
-    public List<ProdutoMaterial> getLsProdutoMaterial() {
-        return lsProdutoMaterial;
-    }
-
-    public void setLsProdutoMaterial(List<ProdutoMaterial> lsProdutoMaterial) {
-        this.lsProdutoMaterial = lsProdutoMaterial;
-    }
-    
-    
-    
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + this.pro_codigo;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Produto other = (Produto) obj;
-        if (this.pro_codigo != other.pro_codigo) {
-            return false;
-        }
-        return true;
-    }
 
     public int getPro_ctipo() {
         return pro_ctipo;
@@ -129,12 +91,6 @@ public class Produto implements Serializable{
         this.pro_ctipo = pro_ctipo;
     }
 
-    public List<Registros> getLsRegistros() {
-        return lsRegistros;
-    }
-
-    public void setLsRegistros(List<Registros> lsRegistros) {
-        this.lsRegistros = lsRegistros;
-    }
+ 
 
 }

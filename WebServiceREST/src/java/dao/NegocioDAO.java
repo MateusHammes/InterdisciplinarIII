@@ -76,4 +76,6 @@ public class NegocioDAO {
         q.setFirstResult(id * 15);
         return q.list();
     }
+
+   
 }

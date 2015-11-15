@@ -36,9 +36,9 @@ public class Registros implements Serializable{
     @JoinColumn(name = "pro_codigo", referencedColumnName = "pro_codigo")
     private Produto produto;
 
-    @ManyToOne
-    @JoinColumn(name = "neg_codigo", referencedColumnName = "neg_codigo")
-    private Negocio negocio;
+//    @ManyToOne
+//    @JoinColumn(name = "neg_codigo", referencedColumnName = "neg_codigo")
+//    private Negocio negocio;
 
     public Registros() {
     }
@@ -67,13 +67,13 @@ public class Registros implements Serializable{
         this.produto = produto;
     }
 
-    public Negocio getNegocio() {
-        return negocio;
-    }
-
-    public void setNegocio(Negocio negocio) {
-        this.negocio = negocio;
-    }
+//    public Negocio getNegocio() {
+//        return negocio;
+//    }
+//
+//    public void setNegocio(Negocio negocio) {
+//        this.negocio = negocio;
+//    }
 
     @Override
     public String toString() {

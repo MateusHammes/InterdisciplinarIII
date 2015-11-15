@@ -2,15 +2,16 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -22,17 +23,21 @@ public class Negocio implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "neg_codigo")
     private int neg_codigo;
  
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "neg_parent")
-    private List<Negocio> neg_parent;
+    private Negocio neg_parent;
+    //private List<Negocio> neg_parent;
     private String neg_vnome;
+    @Temporal(TemporalType.DATE)
     private Date neg_dcadastro;
     private int neg_cstatus;
     private String neg_vcliente;
+    @Temporal(TemporalType.DATE)
     private Date neg_dtermino;
     private String neg_vendereco;
     private String neg_vdescricao;
     private int neg_ctipo;
+    
 
 //   @ManyToOne
 //    @JoinColumn(name = "pes_codigo", referencedColumnName = "pes_codigo")
@@ -48,13 +53,23 @@ public class Negocio implements Serializable {
         this.neg_codigo = neg_codigo;
     }
 
-    public List<Negocio> getNeg_parent() {
+//    public List<Negocio> getNeg_parent() {
+//        return neg_parent;
+//    }
+//
+//    public void setNeg_parent(List<Negocio> neg_parent) {
+//        this.neg_parent = neg_parent;
+//    }
+
+    public Negocio getNeg_parent() {
         return neg_parent;
     }
 
-    public void setNeg_parent(List<Negocio> neg_parent) {
+    public void setNeg_parent(Negocio neg_parent) {
         this.neg_parent = neg_parent;
     }
+
+    
 
     public String getNeg_vnome() {
         return neg_vnome;

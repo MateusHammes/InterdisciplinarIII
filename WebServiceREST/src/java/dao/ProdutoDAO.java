@@ -17,9 +17,9 @@ import util.HibernateUtil;
  * @author mateus
  */
 public class ProdutoDAO {
-     
+
     private Session session;
-    
+
     public ProdutoDAO() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
@@ -65,9 +65,12 @@ public class ProdutoDAO {
     //id -> id do Negocio
     public List<Produto> findAll(int negocio) {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<Produto> ls = session.createQuery("from Produto where neg_codigo = "+negocio).list();
+        List<Produto> ls = session.createQuery("select p from Produto p "
+                + "left outer join p.negocio n "
+                + "where n.neg_codigo = :id")
+                .setParameter("id", negocio).list();
         //session.close();
         return ls;
     }
-    
+
 }
