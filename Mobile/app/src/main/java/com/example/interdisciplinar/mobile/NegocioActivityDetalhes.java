@@ -98,13 +98,11 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
 
     //region Get e Set Values
     private void SetValues(Negocio item){
-
-
         TextView cliente = (TextView)findViewById(R.id.negocioDetailCliente);
         TextView nome = (TextView)findViewById(R.id.negocioDetailNome);
         TextView endereco = (TextView)findViewById(R.id.negocioDetailEndereco);
         TextView criacao = (TextView)findViewById(R.id.negocioDetalhesDataCriacao);
-        TextView termino = (TextView)findViewById(R.id.negocioDetalhesDataTermino);
+        TextView termino = (TextView)findViewById(R.id.negocioDetalhesTxtDataTermino);
 
         nome.setText(item.getNeg_vnome());
         cliente.setText(item.getNeg_vcliente());
@@ -118,6 +116,9 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
             if(item.getNeg_cstatus() == NegocioStatus.ABERTO) {
                 Button btnCriarNegocio = (Button) findViewById(R.id.negocioDetalhesBtnCriarNegocio);
                 btnCriarNegocio.setVisibility(View.VISIBLE);
+                termino.setVisibility(View.GONE);
+                TextView terminoLabel = (TextView)findViewById(R.id.negocioDetalhestxtDataTerminoLabel);
+                terminoLabel.setVisibility(View.GONE);
             }
         }else {
             if (item.getNeg_parent() != null && item.getNeg_parent().getNeg_codigo() != 0) { ///tem orçamento

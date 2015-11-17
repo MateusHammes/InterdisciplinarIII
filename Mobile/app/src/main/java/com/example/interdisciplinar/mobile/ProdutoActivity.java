@@ -17,11 +17,12 @@ import android.widget.ProgressBar;
 import java.util.List;
 
 import DAO.ProdutoDAO;
+import Enum.NegocioStatus;
 import model.Negocio;
 import model.Produto;
+import util.Dialog;
 
 public class ProdutoActivity extends AppCompatActivity {
-
     private Negocio negocio = new Negocio();
     private ListView listView = null;
     private ArrayAdapter<Produto> adpProdutos = null;
@@ -41,10 +42,14 @@ public class ProdutoActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ProdutoActivity.this, ProdutoActivityForm.class);
-                i.putExtra("NEGOCIO", negocio);
-                startActivity(i);
-                finish();
+                if(negocio.getNeg_codigo()!=0 && negocio.getNeg_cstatus() == NegocioStatus.ABERTO) {
+                    Intent i = new Intent(ProdutoActivity.this, ProdutoActivityForm.class);
+                    i.putExtra("NEGOCIO", negocio);
+                    startActivity(i);
+                    finish();
+                }else{
+                    Dialog.Show(ProdutoActivity.this,"Adicionar Produto", "Não é possível adicionar produtos, pois este registro esta fechado!");
+                }
             }
         });
 
@@ -65,15 +70,17 @@ public class ProdutoActivity extends AppCompatActivity {
                 AlertDialog.Builder ldg = new AlertDialog.Builder(ProdutoActivity.this);
                 ldg.setTitle(R.string.tituloOpcao);
                 ldg.setMessage(R.string.mensagemOpcao);
-                ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Produto pro = adpProdutos.getItem(posicao);
-                        Intent i = new Intent(ProdutoActivity.this, ProdutoActivityForm.class);
-                        i.putExtra("PRODUTO", pro);
-                        startActivity(i);
-                    }
-                });
+                if(negocio.getNeg_codigo() !=0 && negocio.getNeg_cstatus() == NegocioStatus.ABERTO){
+                    ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Produto pro = adpProdutos.getItem(posicao);
+                            Intent i = new Intent(ProdutoActivity.this, ProdutoActivityForm.class);
+                            i.putExtra("PRODUTO", pro);
+                            startActivity(i);
+                        }
+                    });
+                }
                 ldg.setNeutralButton("Detalhes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

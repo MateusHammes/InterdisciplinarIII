@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Data de Término"
-                android:id="@+id/textView26"
+                android:id="@+id/negocioDetalhestxtDataTerminoLabel"
                 style="@style/labelDetails" />
 
             <TextView
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/negocioDetalhesDataTermino" />
+                android:id="@+id/negocioDetalhesTxtDataTermino" />
 
             <LinearLayout
                 android:orientation="horizontal"

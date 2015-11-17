@@ -19,12 +19,12 @@ import android.widget.ProgressBar;
 import java.util.List;
 
 import DAO.ProdutoMaterialDAO;
+import Enum.NegocioStatus;
 import model.Negocio;
 import model.Produto;
 import model.Produto_material;
 import util.Dialog;
 import util.FuncoesExternas;
-import Enum.NegocioTipo;
 
 public class ProdutoMaterialActivity extends AppCompatActivity {
 
@@ -46,9 +46,13 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ProdutoMaterialActivity.this, MateriaisProdutoActivity.class);
-                i.putExtra("PRODUTO", produto);
-                startActivity(i);
+                if(produto.getNegocio().getNeg_codigo()!=0 && produto.getNegocio().getNeg_cstatus() == NegocioStatus.ABERTO) {
+                    Intent i = new Intent(ProdutoMaterialActivity.this, MateriaisProdutoActivity.class);
+                    i.putExtra("PRODUTO", produto);
+                    startActivity(i);
+                }else{
+                    Dialog.Show(ProdutoMaterialActivity.this,"Adicionar Materiais", "Não é possível adicionar materiais a este produto, pois este registro esta fechado!");
+                }
             }
         });
 
@@ -108,7 +112,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
                 .setMessage(R.string.mensagemOpcao);
 
         dialog.setNegativeButton(R.string.Deletar, null);
-        if(neg!=null && neg.getNeg_codigo()!=0 && neg.getNeg_ctipo()== NegocioTipo.Negocio)
+        if(neg!=null && neg.getNeg_codigo()!=0 && neg.getNeg_cstatus()== NegocioStatus.ABERTO)
             dialog.setNeutralButton(R.string.Editar, null);
 
         dialog.setPositiveButton(R.string.Cancelar, null);
@@ -122,13 +126,11 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void EditaValorMaterial(int position){
         Negocio neg = produto.getNegocio();
-        if(neg!=null && neg.getNeg_codigo()!=0 && neg.getNeg_ctipo()== NegocioTipo.Negocio) {
+        if(neg!=null && neg.getNeg_codigo() != 0 && neg.getNeg_cstatus() == NegocioStatus.ABERTO) {
             final Produto_material produtMaterial = adpMateriais.getItem(position);
             AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoMaterialActivity.this);
             final EditText txt = new EditText(ProdutoMaterialActivity.this);

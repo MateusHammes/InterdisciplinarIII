@@ -21,6 +21,7 @@ import model.Negocio;
 import util.DateUtil;
 import util.Dialog;
 import util.FuncoesExternas;
+import Enum.NegocioStatus;
 
 public class NegocioActivityForm extends AppCompatActivity {
 
@@ -152,6 +153,7 @@ private class Salvar extends AsyncTask<Negocio, String, Boolean>{
             Calendar c = Calendar.getInstance();
             if(negocio.getNeg_codigo()==0) {
                 negocio.setNeg_dcadastro(c.getTime());
+                negocio.setNeg_cstatus(NegocioStatus.ABERTO);
                 Log.i("DATE","PEGO a aDAtaA");
             }
             String id = DAO.Salvar(negocio);

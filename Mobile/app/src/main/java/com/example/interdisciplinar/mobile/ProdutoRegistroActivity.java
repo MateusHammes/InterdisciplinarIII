@@ -23,7 +23,7 @@ import model.Produto;
 import model.Registros;
 import util.Dialog;
 import util.FuncoesExternas;
-import Enum.NegocioTipo;
+import Enum.NegocioStatus;
 
 public class ProdutoRegistroActivity extends AppCompatActivity {
     private ArrayAdapter<Registros> adpRegistros;
@@ -46,7 +46,10 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(produto.getNegocio().getNeg_codigo()!=0 && produto.getNegocio().getNeg_cstatus() == NegocioStatus.ABERTO)
                 NovoRegistro();
+                else
+                    Dialog.Show(ProdutoRegistroActivity.this,"Adicionar Especificação", "Não é possível adicionar especificações, pois este registro esta fechado!");
             }
         });
 
@@ -67,7 +70,7 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
                 final Registros reg = adpRegistros.getItem(position);
 
                 Negocio neg = reg.getProduto().getNegocio();
-                if(neg!=null && neg.getNeg_codigo()!=0 && neg.getNeg_ctipo()== NegocioTipo.Negocio) {
+                if (neg != null && neg.getNeg_codigo() != 0 && neg.getNeg_cstatus() == NegocioStatus.ABERTO) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoRegistroActivity.this);
                     if (reg.getRgs_cstatus() == RegistroStatus.aberto) {
                         dialog.setTitle("Deseja completar esta Especificaçao?");
