@@ -108,8 +108,10 @@ public class NegocioActivity extends AppCompatActivity {
             if(tipo== NegocioTipo.Orcamento){
                 Log.i("TIPO","ORCAMENTO");
                 negocio.setNeg_ctipo(NegocioTipo.Orcamento);
-            }else
+            }else {
+                setTitle(R.string.Negocio);
                 negocio.setNeg_ctipo(NegocioTipo.Negocio);
+            }
         }
     }
 

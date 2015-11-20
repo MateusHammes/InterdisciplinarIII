@@ -111,6 +111,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         termino.setText(DateUtil.dateToString(negocio.getNeg_dtermino()));
 
         if(item.getNeg_ctipo() == NegocioTipo.Orcamento){
+            setTitle(R.string.Orcamento);
             TextView header  = (TextView) findViewById(R.id.negocioDetalhesTxtHeader);
             header.setText(R.string.Orcamento);
             if(item.getNeg_cstatus() == NegocioStatus.ABERTO) {
@@ -121,6 +122,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
                 terminoLabel.setVisibility(View.GONE);
             }
         }else {
+            setTitle(R.string.Negocio);
             if (item.getNeg_parent() != null && item.getNeg_parent().getNeg_codigo() != 0) { ///tem orçamento
                 new PegaValorTotal().execute(item.getNeg_parent());
                 LinearLayout layout = (LinearLayout)findViewById(R.id.negocioDetalhesLayoutComparacao);

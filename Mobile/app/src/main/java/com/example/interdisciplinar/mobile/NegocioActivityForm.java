@@ -44,6 +44,9 @@ public class NegocioActivityForm extends AppCompatActivity {
                 if(negocio.getNeg_ctipo()==NegocioTipo.Orcamento){
                     txtHeader.setText(R.string.Orcamento);
                     txtNome.setHint(R.string.OrcamentoNome);
+                    setTitle(R.string.Orcamento);
+                }else {
+                    setTitle(R.string.Negocio);
                 }
                 SetNegocio(negocio);
             }
