@@ -58,7 +58,10 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         btnCriaNegocio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CriaNegocioOrcamento().execute(negocio.getNeg_codigo());
+                if(Dialog.ShowDialog(NegocioActivityDetalhes.this,"Criar Negócio!","Caso você criar um negócio, não será mais possível editar este orçamento, você tem certeza?")){
+                    Dialog.ShowProgressDialog(NegocioActivityDetalhes.this);
+                    new CriaNegocioOrcamento().execute(negocio.getNeg_codigo());
+                }
             }
         });
 
@@ -124,7 +127,7 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         }else {
             setTitle(R.string.Negocio);
             if (item.getNeg_parent() != null && item.getNeg_parent().getNeg_codigo() != 0) { ///tem orçamento
-                new PegaValorTotal().execute(item.getNeg_parent());
+                new PegaValorTotalOrcamento().execute(item.getNeg_parent());
                 LinearLayout layout = (LinearLayout)findViewById(R.id.negocioDetalhesLayoutComparacao);
                 layout.setVisibility(View.VISIBLE);
             }
@@ -149,14 +152,12 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
 
     private class PegaValorTotal extends AsyncTask<Negocio, String, String >{
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        boolean isNegocio =true;
         @Override
         protected String doInBackground(Negocio... params) {
-//            if(params.length>0) {
-            isNegocio = params[0].getNeg_ctipo() == NegocioTipo.Negocio;
-            return produtoDAO.SelecionaValorTotal(params[0].getNeg_codigo());
-            //          }else
-            //            return "0";
+            try {
+                return produtoDAO.SelecionaValorTotal(params[0].getNeg_codigo());
+            }catch (Exception e){ Log.e("ERROR",e.toString());}
+            return "0";
         }
 
         @Override
@@ -165,7 +166,28 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
             TextView  txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
             Log.i("Valor", "TOTALLL = " + valor);
             if(valor != null)
-                txt.setText(DecimalFormat.getInstance().format(Double.parseDouble(valor)));
+                txt.setText("R$ "+DecimalFormat.getInstance().format(Double.parseDouble(valor)));
+        }
+    }
+
+    private class PegaValorTotalOrcamento extends AsyncTask<Negocio, String, String >{
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        boolean isNegocio =true;
+        @Override
+        protected String doInBackground(Negocio... params) {
+            try {
+                return produtoDAO.SelecionaValorTotal(params[0].getNeg_codigo());
+            }catch (Exception e){ Log.e("ERROR",e.toString());}
+            return "0";
+        }
+
+        @Override
+        protected void onPostExecute(String valor) {
+            super.onPostExecute(valor);
+            TextView  txt = (TextView)findViewById(R.id.negocioDetalhesTxtValorTotalOrcamento);
+            Log.i("Valor", "TOTALLL = " + valor);
+            if(valor != null)
+                txt.setText("R$ "+DecimalFormat.getInstance().format(Double.parseDouble(valor)));
         }
     }
 

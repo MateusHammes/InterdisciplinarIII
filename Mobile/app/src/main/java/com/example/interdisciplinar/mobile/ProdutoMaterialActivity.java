@@ -137,7 +137,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
             txt.setInputType(InputType.TYPE_CLASS_NUMBER);
             dialog.setView(txt);
             dialog.setTitle("Unidades do Material");
-            dialog.setMessage("Informe quantas unidades você já utilizou de " + produtMaterial.getMaterial().getMtr_vnome());
+            dialog.setMessage("Informe quantas unidades você já utilizou de " + produtMaterial.getMaterial().getMtr_vnome()+"?");
             dialog.setNegativeButton(R.string.Salvar, null);
             dialog.setNeutralButton(R.string.Cancelar, null);
 
@@ -156,7 +156,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
                             Dialog.ShowProgressDialog(ProdutoMaterialActivity.this);
                             new EditaProdutoMaterial().execute();
                         } else
-                            txt.setError("O quantidade deve ser menor que " + produtMaterial.getPrm_iunidade() + " e maior que 0");
+                            txt.setError("A quantidade informada deve ser maior que 0!");
                     }
                 }
             });
@@ -184,7 +184,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
                 new CarregaMaterial().execute();
                 adpMateriais.clear();
             }else
-                Dialog.ShowAlert(ProdutoMaterialActivity.this,"Material do Produto","Ops.. Não foi posivel Editar, favor tente novamente!");
+                Dialog.ShowAlertError(ProdutoMaterialActivity.this);
         }
     }
     private  class DeleteProdutoMaterial extends AsyncTask<Produto_material, String, Boolean>{

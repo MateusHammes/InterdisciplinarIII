@@ -38,7 +38,7 @@ public class NegocioActivityForm extends AppCompatActivity {
         if(bundle !=null){
             if(bundle.containsKey("NEGOCIO")){
                 negocio =(Negocio) bundle.getSerializable("NEGOCIO");
-               // Log.i("NEG Akiii","tenho->"+negocio.getNeg_ctipo());
+                // Log.i("NEG Akiii","tenho->"+negocio.getNeg_ctipo());
                 TextView txtHeader = (TextView)findViewById(R.id.negocioTxtHeader);
                 EditText txtNome = (EditText) findViewById(R.id.negocioTxtNome);
                 if(negocio.getNeg_ctipo()==NegocioTipo.Orcamento){
@@ -107,21 +107,21 @@ public class NegocioActivityForm extends AppCompatActivity {
             }
     }
 
-private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        String dt =  DateUtil.dateToString(year,monthOfYear,dayOfMonth);
-        txtDate.setText(dt);
-        // negocio.setNeg_dprevisao(date); //passo a data direto pro objeto
+    private class SelecionaDateListener implements DatePickerDialog.OnDateSetListener{
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            String dt =  DateUtil.dateToString(year,monthOfYear,dayOfMonth);
+            txtDate.setText(dt);
+            // negocio.setNeg_dprevisao(date); //passo a data direto pro objeto
+        }
     }
-}
 
     //region /Get e Set Valores
     private void SetNegocio(Negocio negocio){
         EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
         EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
         EditText txtEndereço = (EditText)findViewById(R.id.negocioTxtClienteEndereco);
-      ////  EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
+        ////  EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
         EditText txtdescricao = (EditText)findViewById(R.id.negocioTxtDescricao);
 
         txtNome.setText(negocio.getNeg_vnome());
@@ -135,7 +135,7 @@ private class SelecionaDateListener implements DatePickerDialog.OnDateSetListene
         EditText txtNome = (EditText)findViewById(R.id.negocioTxtNome);
         EditText txtCliente = (EditText)findViewById(R.id.negocioTxtCliente);
         EditText txtEndereço = (EditText)findViewById(R.id.negocioTxtClienteEndereco);
-       // EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
+        // EditText txtDataPrevisao = (EditText)findViewById(R.id.negocioTxtDataPrevisao);
         EditText txtdescricao = (EditText)findViewById(R.id.negocioTxtDescricao);
 
         negocio.setNeg_vnome(txtNome.getText().toString());
@@ -147,52 +147,46 @@ private class SelecionaDateListener implements DatePickerDialog.OnDateSetListene
 //endregion
 
 
-//region salvar Assincrono
-private class Salvar extends AsyncTask<Negocio, String, Boolean>{
-    @Override
-    protected Boolean doInBackground(Negocio... params) {
-        try {
-            Log.i("Foi ate aki","NEgocios"+negocio.getNeg_ctipo());
-            Calendar c = Calendar.getInstance();
-            if(negocio.getNeg_codigo()==0) {
-                negocio.setNeg_dcadastro(c.getTime());
-                negocio.setNeg_cstatus(NegocioStatus.ABERTO);
-                Log.i("DATE","PEGO a aDAtaA");
+    //region salvar Assincrono
+    private class Salvar extends AsyncTask<Negocio, String, Boolean>{
+        @Override
+        protected Boolean doInBackground(Negocio... params) {
+            try {
+                Log.i("Foi ate aki","NEgocios"+negocio.getNeg_ctipo());
+                if(negocio.getNeg_codigo()==0) {
+                    negocio.setNeg_dcadastro(DateUtil.GetDate());
+                    negocio.setNeg_cstatus(NegocioStatus.ABERTO);
+                    Log.i("DATE","PEGO a aDAtaA");
+                }
+                String id = DAO.Salvar(negocio);
+                if(!id.equals("0")) {///se for diferente de 0, salvou :)
+                    negocio.setNeg_codigo(Integer.parseInt(id));
+                    return true;
+                }else
+                    return false;
+            }catch (Exception e){
+                Log.e("ERRO",e.toString());
             }
-            String id = DAO.Salvar(negocio);
-            if(!id.equals("0")) {///se for diferente de 0, salvou :)
-                negocio.setNeg_codigo(Integer.parseInt(id));
-                return true;
-            }else
-                return false;
-        }catch (Exception e){
-            Log.e("ERRO",e.toString());
+            return false;
         }
-        return false;
-    }
 
-    @Override
-    protected void onPostExecute(Boolean salvo) {
-        super.onPostExecute(salvo);
-        if(salvo) {
-            Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetalhes.class);
-            i.putExtra("NEGOCIO", negocio);
-            startActivity(i);
+        @Override
+        protected void onPostExecute(Boolean salvo) {
+            super.onPostExecute(salvo);
+            if(salvo) {
+                Intent i = new Intent(NegocioActivityForm.this, NegocioActivityDetalhes.class);
+                i.putExtra("NEGOCIO", negocio);
+                startActivity(i);
+                if(negocio.getNeg_codigo()!=0)
+                    NegocioActivity.msn ="Registro salvo com Sucesso!";
 
-            if(negocio.getNeg_codigo()!=0) {
-                NegocioActivity.msn ="Registro editado com Sucesso!";
-                NegocioActivity.clearList = true;
+                finish();
             }else{
-                NegocioActivity.msn = "Registro inserido com Sucesso!";
-
+                Dialog.ShowAlert(NegocioActivityForm.this, "Erro", "Ops, houve um imprevisto, favor tente novamente!");
             }
-            finish();
-        }else{
-            Dialog.ShowAlert(NegocioActivityForm.this, "Erro", "Ops, houve um imprevisto, favor tente novamente!");
+            Dialog.CancelProgressDialog();
         }
-        Dialog.CancelProgressDialog();
     }
-}
 //endregion
 
 }

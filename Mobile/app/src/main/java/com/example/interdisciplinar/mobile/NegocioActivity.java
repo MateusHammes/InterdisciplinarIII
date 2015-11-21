@@ -37,7 +37,6 @@ public class NegocioActivity extends AppCompatActivity {
     public static String msn=null;
     private int pageList=0;
     public static boolean goLoad=true;
-    public static boolean clearList=false;
     private AlertDialog dlg;
     final android.os.Handler handler = new android.os.Handler();
 
@@ -129,11 +128,7 @@ public class NegocioActivity extends AppCompatActivity {
         pgI.setVisibility(View.VISIBLE);
         Log.i("estado","GoLoad="+goLoad);
 
-        if(clearList) {
-            adpNegocio.clear();
-            pageList=0;
-            goLoad=true;
-        }
+
         if(goLoad) {
             goLoad=false;
             Log.i("load", "foi pelo Resume");
@@ -144,8 +139,6 @@ public class NegocioActivity extends AppCompatActivity {
             t.show();
             msn = null;
         }
-
-
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -164,7 +157,7 @@ public class NegocioActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(search.isSelected()) {
+                        if(search.isFocused()) {
                             Log.i("iscreveuu -- ", "Inside of the method! ;) value:- " + search.getText().toString());
                             CarregaPesquisa(search.getText().toString());
                         }
@@ -178,6 +171,7 @@ public class NegocioActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
         Log.i(" acao", "pause");
     }
 
@@ -231,7 +225,7 @@ public class NegocioActivity extends AppCompatActivity {
 
     protected void AtualizaGrid(List<Negocio> lsItens){
         if(lsItens!=null) {
-          ///  adpNegocio.clear();
+            ///  adpNegocio.clear();
             for (Negocio item : lsItens) {
                 adpNegocio.add(item);//converte object em Grupo
             }

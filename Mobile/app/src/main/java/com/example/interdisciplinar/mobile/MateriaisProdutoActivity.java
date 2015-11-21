@@ -80,7 +80,7 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
                 txt.setInputType(InputType.TYPE_CLASS_NUMBER);
                 AlertDialog.Builder dialog = new  AlertDialog.Builder(MateriaisProdutoActivity.this)
                         .setTitle("Materiais do Produto")
-                        .setMessage("Informe a quantidade de " + mtr.getMtr_vnome() + " que voce deseja reservar")
+                        .setMessage("Informe a quantidade de " + mtr.getMtr_vnome() + " que você deseja reservar?")
                         .setView(txt)
                         .setNegativeButton(R.string.Salvar, null)
                         .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -179,7 +179,8 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
                 dlg.cancel();
                 finish();
             }else{
-                Dialog.ShowAlert(MateriaisProdutoActivity.this,"Material do Produto","Ops.. Não foi posivel salvar, favor tente novamente!");
+                Dialog.ShowAlertError(MateriaisProdutoActivity.this);
+                //Dialog.ShowAlert(MateriaisProdutoActivity.this,"Material do Produto","Ops.. Não foi posivel salvar, favor tente novamente!");
             }
             Dialog.CancelProgressDialog();
         }

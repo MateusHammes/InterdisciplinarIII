@@ -48,7 +48,7 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(produto.getNegocio().getNeg_codigo()!=0 && produto.getNegocio().getNeg_cstatus() == NegocioStatus.ABERTO)
-                NovoRegistro();
+                    NovoRegistro();
                 else
                     Dialog.Show(ProdutoRegistroActivity.this,"Adicionar Especificação", "Não é possível adicionar especificações, pois este registro esta fechado!");
             }
@@ -85,6 +85,8 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
                     dialog.setNeutralButton(R.string.Editar, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            if(alert!= null)
+                                alert.cancel();
                             final EditText txt = new EditText(ProdutoRegistroActivity.this);
                             txt.setText(reg.getRgs_vdescricao());
                             AlertDialog.Builder dialogEdit = new AlertDialog.Builder(ProdutoRegistroActivity.this);
@@ -92,10 +94,9 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
                             dialogEdit.setView(txt);
                             dialogEdit.setNeutralButton(R.string.Cancelar, null);
                             dialogEdit.setNegativeButton(R.string.Salvar, null);
-
-                            alert2 = dialogEdit.create();
-                            alert2.show();
-                            alert2.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                            alert = dialogEdit.create();
+                            alert.show();
+                            alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     if (FuncoesExternas.Valida(txt)) {
@@ -108,8 +109,7 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
                             });
                         }
                     });
-                    dialog.setPositiveButton(R.string.Cancelar, null).show();
-
+                    dialog.setPositiveButton(R.string.Cancelar, null);
                     alert = dialog.create();
                     alert.show();
                     alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
@@ -206,8 +206,10 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if(aBoolean){
-                alert.cancel();
-                alert2.cancel();
+                if(alert != null)
+                    alert.cancel();
+                if(alert2!=null)
+                    alert2.cancel();
                 adpRegistros.clear();
                 new CarregaRegistros().execute();
             }else {
