@@ -32,6 +32,22 @@ public class ProdutoDAO {
         return null;
     }
 
+    public List<Produto> SelecionaPesquisa(int neg_id, String name){
+        try {
+            String url = Connection.url.concat("produtos/search/"+neg_id+"/"+name);
+            RestTemplate rest = new RestTemplate();
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            rest.setMessageConverters(messageConverters);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            Produto[] arrayProduto = rest.getForObject(url, Produto[].class); //(url,Produto.class,));
+            return Arrays.asList(arrayProduto);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String Salvar(Produto Produto){
         try {
             Log.i("veio Salva", "Na DAO");

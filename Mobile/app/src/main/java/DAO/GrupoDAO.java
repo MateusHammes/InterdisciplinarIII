@@ -1,5 +1,7 @@
 package DAO;
 
+import android.util.Log;
+
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -44,6 +46,22 @@ public class GrupoDAO {
             return Arrays.asList(arrayGrupo);
         }catch (Exception e){
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Grupo> SelecionaPesquisa(String name){
+        try{
+            String url = Connection.url.concat("grupos/search/"+name);
+            RestTemplate rest = new RestTemplate();
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            rest.setMessageConverters(messageConverters);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            Grupo[] arrayGrupo = rest.getForObject(url,Grupo[].class);
+            return Arrays.asList(arrayGrupo);
+        }catch (Exception e){
+            Log.e("Errrouu!", e.toString());
         }
         return null;
     }

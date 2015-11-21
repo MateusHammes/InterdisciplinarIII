@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +38,7 @@ public class GrupoActivity extends AppCompatActivity {
     private boolean GoLoad=true;
     AlertDialog dlg;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +68,6 @@ public class GrupoActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 final Grupo gp = adpGrupo.getItem(position);
-                //  boolean deleta = Dialog.ShowDialog(GrupoActivity.this, "Deletar Grupo", "Você deseja deletar este Grupo?");
-                Log.i("Clickou", " -  Passou - ");
                 new AlertDialog.Builder(GrupoActivity.this)
                         .setTitle(R.string.tituloOpcao)
                         .setMessage(R.string.mensagemOpcao)
@@ -74,7 +75,7 @@ public class GrupoActivity extends AppCompatActivity {
                         .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                grupo=gp;
+                                grupo = gp;
                                 new Delete().execute();
                             }
                         }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
@@ -97,9 +98,10 @@ public class GrupoActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                Log.i("TOTAL!", "Total::: -- - -- " + totalItemCount+"");
+                Log.i("TOTAL!", "Total::: -- - -- " + totalItemCount + "");
                 if (GoLoad && grupoListView.getLastVisiblePosition() == (adpGrupo.getCount() - 1)) {
                     Log.e("AKI", "--- FINALZAUM -- da lista -- -");
                     GoLoad = false;
@@ -110,20 +112,6 @@ public class GrupoActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i("--ACAO--", "onPAUSEES");
-
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i("--ACAO--", "onRESTART");
-        // new CarregaGrupos().execute();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         Log.i("--ACAO--", "onRESUME");
@@ -131,26 +119,56 @@ public class GrupoActivity extends AppCompatActivity {
             GoLoad=false;
             new CarregaRegistros().execute();
             Log.i("--ACAO--", "onRESUME  -  Goload");
-
         }
         if(msn!=null&& !msn.isEmpty()){
             Toast t = Toast.makeText(this,msn,Toast.LENGTH_SHORT);
             t.show();
             msn = null;
         }
+
+        final EditText search = (EditText)findViewById(R.id.grupoTxtPesquisar);
+        final android.os.Handler handler = new android.os.Handler();
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                handler.removeCallbacksAndMessages(null);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("iscreveuu -- ", "Inside of the method! ;) value:- " + search.getText().toString());
+                        if (!search.getText().toString().trim().equals(""))
+                            CarregaPesquisa(search.getText().toString());
+                        else {
+                            pageList = 0;
+                            adpGrupo.clear();
+                            //// GoLoad = true;
+                            new CarregaRegistros().execute();
+                        }
+                    }
+                }, 1000);
+                Log.i("iscreveuu", "out method");
+            }
+        });
     }
 
     public void GrupoForm(){
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.grupoNomeHint);
-
         final EditText txt = new EditText(this);
         if(grupo!=null)
             txt.setText(grupo.getGru_vdescricao());
-
         alert.setView(txt);
         alert.setCancelable(false);
-
         alert.setNegativeButton(R.string.Salvar, null);
         alert.setPositiveButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
             @Override
@@ -198,10 +216,8 @@ public class GrupoActivity extends AppCompatActivity {
 
     protected void AtualizaGrid(List<Grupo> lsGrupos){
         if(lsGrupos!=null) {
-            ///   adpGrupo.clear();
             for (Grupo gp : lsGrupos) {
                 adpGrupo.add(gp);//converte object em Grupo
-                //grupoListView.addView(gp.getGru_vdescricao().tos);
             }
             if(pageList==0)
                 grupoListView.setAdapter(adpGrupo);
@@ -212,16 +228,14 @@ public class GrupoActivity extends AppCompatActivity {
                 GoLoad = true;
                 pageList++;
             }
-
         }
     }
 
     private class CarregaRegistros extends AsyncTask<String, Integer, List<Grupo>> {
-        ProgressBar pg = (ProgressBar) findViewById(R.id.grupoProgressBar);
+        ProgressBar pg =(ProgressBar) findViewById(R.id.grupoProgressBar);
         @Override
         protected List<Grupo> doInBackground(String... params) {
             try{
-
                 return DAO.SelecionaGrupo(pageList);
             }catch (Exception e){
                 Log.e("CARREGA-GRUPOS",e.getMessage(),e);
@@ -234,7 +248,6 @@ public class GrupoActivity extends AppCompatActivity {
             super.onPostExecute(lsGrupo);
 
             if(lsGrupo!=null) {
-                Log.i("Carrega", "RETOURNOU com" + lsGrupo.size());
                 AtualizaGrid(lsGrupo);
             }else
                 Log.i("Carrega", "--- LISTA NULA ---");
@@ -310,7 +323,31 @@ public class GrupoActivity extends AppCompatActivity {
         }
     }
 
+    public void CarregaPesquisa(String name){
+        ProgressBar pg =(ProgressBar) findViewById(R.id.grupoProgressBar);
+        if(!name.trim().equals("")){
+            pg.setVisibility(View.VISIBLE);
+            new CarregaPesquisa().execute(name);
+        }
+    }
 
+    private class CarregaPesquisa extends AsyncTask<String, String, List<Grupo>>{
+        ProgressBar pg =(ProgressBar) findViewById(R.id.grupoProgressBar);
+        @Override
+        protected List<Grupo> doInBackground(String... params) {
+            return DAO.SelecionaPesquisa(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<Grupo> lsGrupos) {
+            super.onPostExecute(lsGrupos);
+            adpGrupo.clear();
+            if(lsGrupos!=null)
+                adpGrupo.addAll(lsGrupos);
+            adpGrupo.notifyDataSetChanged();
+            pg.setVisibility(View.GONE);
+        }
+    }
 
 
 }

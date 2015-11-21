@@ -8,9 +8,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -26,6 +30,7 @@ public class ProdutoActivity extends AppCompatActivity {
     private Negocio negocio = new Negocio();
     private ListView listView = null;
     private ArrayAdapter<Produto> adpProdutos = null;
+    private ProdutoDAO DAO = new ProdutoDAO();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +75,7 @@ public class ProdutoActivity extends AppCompatActivity {
                 AlertDialog.Builder ldg = new AlertDialog.Builder(ProdutoActivity.this);
                 ldg.setTitle(R.string.tituloOpcao);
                 ldg.setMessage(R.string.mensagemOpcao);
-                if(negocio.getNeg_codigo() !=0 && negocio.getNeg_cstatus() == NegocioStatus.ABERTO){
+                if (negocio.getNeg_codigo() != 0 && negocio.getNeg_cstatus() == NegocioStatus.ABERTO) {
                     ldg.setNegativeButton(R.string.Editar, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -96,14 +101,55 @@ public class ProdutoActivity extends AppCompatActivity {
 
             }
         });
+
+        final EditText search = (EditText)findViewById(R.id.produtoIndexTxtPesquisa);
+        final android.os.Handler handler = new android.os.Handler();
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                handler.removeCallbacksAndMessages(null);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("iscreveuu -- ", "Inside of the method! ;) value:- " + search.getText().toString());
+                        CarregaPesquisa(search.getText().toString());
+                    }
+                }, 1000);
+                Log.i("iscreveuu", "out method");
+            }
+        });
+
+    }
+
+
+    public void CarregaPesquisa(String name){
+        ProgressBar pg = (ProgressBar) findViewById(R.id.produtoIndexProgressBar);
+        pg.setVisibility(View.VISIBLE);
+
+        if(name.trim().equals("")){
+            adpProdutos.clear();
+            new CarregaProdutos().execute();
+        }else{
+            new CarregaPesquisa().execute(name);
+        }
     }
 
     private class CarregaProdutos extends AsyncTask<Produto, String, List<Produto>> {
-        ProdutoDAO produtoDAO = new ProdutoDAO();
+
         ProgressBar pgProduto = (ProgressBar) findViewById(R.id.produtoIndexProgressBar);
         @Override
         protected List<Produto> doInBackground(Produto... params) {
-            return produtoDAO.SelecionaProduto(negocio.getNeg_codigo());
+            return DAO.SelecionaProduto(negocio.getNeg_codigo());
         }
 
         @Override
@@ -120,4 +166,25 @@ public class ProdutoActivity extends AppCompatActivity {
         }
     }
 
+    private class CarregaPesquisa extends AsyncTask<String, String, List<Produto>>{
+        ProgressBar pgProduto = (ProgressBar) findViewById(R.id.produtoIndexProgressBar);
+        @Override
+        protected List<Produto> doInBackground(String... params) {
+            return DAO.SelecionaPesquisa(negocio.getNeg_codigo(), params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<Produto> produtos) {
+            super.onPostExecute(produtos);
+            adpProdutos.clear();
+            if(produtos!=null)
+                adpProdutos.addAll(produtos);
+
+            adpProdutos.notifyDataSetChanged();
+            pgProduto.setVisibility(View.GONE);
+        }
+
+    }
+
 }
+

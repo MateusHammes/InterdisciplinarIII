@@ -34,6 +34,21 @@ public class NegocioDAO {
         return null;
     }
 
+    public List<Negocio>SelecionaPesquisa(int tipo, String name){
+        try{
+            String url = Connection.url.concat("negocios/search/"+tipo+"/"+name);
+            RestTemplate rest = new RestTemplate();
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            rest.setMessageConverters(messageConverters);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            return Arrays.asList(rest.getForObject(url, Negocio[].class));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public Negocio SelecionaNegocio (int neg_id){
         try{
             String url = Connection.url.concat("negocios/"+neg_id);

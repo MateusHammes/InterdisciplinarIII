@@ -30,6 +30,22 @@ public class MateriaisDAO {
         return null;
     }
 
+    public List<Materiais> SelecionaPesquisa(String name){
+        try {
+            String url = Connection.url.concat("materiais/search/"+name);
+            RestTemplate rest = new RestTemplate();
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            rest.setMessageConverters(messageConverters);
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            Materiais[] arrayMateriais = rest.getForObject(url, Materiais[].class); //(url,Materiais.class,));
+            return Arrays.asList(arrayMateriais);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean Salvar(Materiais Materiais){
         String url = Connection.url.concat("materiais/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/Materiais";
         RestTemplate rest = new RestTemplate();

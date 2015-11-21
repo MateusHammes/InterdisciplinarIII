@@ -3,6 +3,7 @@ package com.example.interdisciplinar.mobile;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,9 +29,6 @@ public class MateriaisActivityForm extends AppCompatActivity {
     private ArrayAdapter<Grupo>adpGrupos;
     private Grupo grupo = null;
     private ProgressBar pgg = null;
-    //private EditText valor;
-    //private NumberFormat formatMoeda = NumberFormat.getCurrencyInstance();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +45,9 @@ public class MateriaisActivityForm extends AppCompatActivity {
         if(bundle!=null && bundle.containsKey("MATERIAL")){
             material =(Materiais) bundle.getSerializable("MATERIAL");
             SetItem(material);
+            grupo = material.getGrupo();
         }
         new CarregaGrupos().execute();
-
-
-
         Button btnSalvar = (Button)findViewById(R.id.materialBtnSalvar);
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,14 +83,6 @@ public class MateriaisActivityForm extends AppCompatActivity {
 
 
     public void SetItem(Materiais mtr){
-      /*  if(material.getGrupo()!=null)
-            if(adpGrupos.getCount()>0) {
-                adpGrupos.add(mtr.getGrupo());
-                adpGrupos.notifyDataSetChanged();
-                spnGrupos.setSelection(adpGrupos.getPosition(mtr.getGrupo()));
-            }else
-                grupo = material.getGrupo();*/
-
         EditText txtNome = (EditText)findViewById(R.id.materialTxtNome);
         EditText txtvalor= (EditText)findViewById(R.id.materialTxtValor);
         EditText txtEstoque = (EditText)findViewById(R.id.materialTxtEstoque);
@@ -138,7 +126,6 @@ public class MateriaisActivityForm extends AppCompatActivity {
             super.onPostExecute(salvo);
             if(salvo){
                 MateriaisActivity.GoLoad = true;
-                ///if(material.getMtr_codigo()!=0
                 MateriaisActivity.ClearList=true;
                 Dialog.CancelProgressDialog();
                 finish();
@@ -159,13 +146,19 @@ public class MateriaisActivityForm extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Grupo> lsGrupos) {
             super.onPostExecute(lsGrupos);
+            Grupo gSelect = new Grupo();
+            Log.i("rt", "com " + lsGrupos.size());
             if(lsGrupos!=null) {
-                for (Grupo gp : lsGrupos)
+                for (Grupo gp : lsGrupos) {
                     adpGrupos.add(gp);
+                    if(gp.getGru_codigo()==grupo.getGru_codigo()) {
+                        gSelect = gp;
+                    }
+                }
                 spnGrupos.setAdapter(adpGrupos);
-                if(grupo!=null)
-                    spnGrupos.setSelection(adpGrupos.getPosition(grupo));
-
+                if(grupo!=null) {
+                    spnGrupos.setSelection(adpGrupos.getPosition(gSelect));
+                }
             }
             pgg.setVisibility(View.GONE);
         }

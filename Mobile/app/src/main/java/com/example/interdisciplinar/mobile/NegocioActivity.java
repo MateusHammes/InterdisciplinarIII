@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -132,6 +135,45 @@ public class NegocioActivity extends AppCompatActivity {
             t.show();
             msn = null;
         }
+
+        final EditText search = (EditText)findViewById(R.id.negocioListagemTxtPesquisar);
+        final android.os.Handler handler = new android.os.Handler();
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                handler.removeCallbacksAndMessages(null);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("iscreveuu -- ", "Inside of the method! ;) value:- " + search.getText().toString());
+                        CarregaPesquisa(search.getText().toString());
+                    }
+                }, 1000);
+                Log.i("iscreveuu", "out method");
+            }
+        });
+
+    }
+
+    public void CarregaPesquisa(String name){
+        ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
+        pg.setVisibility(View.VISIBLE);
+        if(name.trim().equals("")){
+            pageList=0;
+            new CarregaRegistros().execute();
+        }else{
+            new CarregaPesquisa().execute(name);
+        }
     }
 
     @Override
@@ -204,6 +246,23 @@ public class NegocioActivity extends AppCompatActivity {
         }
     }
 
+    private class CarregaPesquisa extends AsyncTask<String, String, List<Negocio>>{
+        ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
+        @Override
+        protected List<Negocio> doInBackground(String... params) {
+            return DAO.SelecionaPesquisa(negocio.getNeg_ctipo(),params[0]);
+        }
 
+        @Override
+        protected void onPostExecute(List<Negocio> negocios) {
+            super.onPostExecute(negocios);
+            adpNegocio.clear();
+            if(negocios!=null)
+                adpNegocio.addAll(negocios);
+
+            adpNegocio.notifyDataSetChanged();
+            pg.setVisibility(View.GONE);
+        }
+    }
 
 }
