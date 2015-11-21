@@ -29,6 +29,7 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
     private ArrayAdapter<Registros> adpRegistros;
     private ListView listViewRegistros;
     private AlertDialog alert;
+    private AlertDialog alert2;
     private Registros registro = new Registros();
     private Produto produto = new Produto();
     private RegistrosDAO DAO = new RegistrosDAO();
@@ -85,7 +86,6 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             final EditText txt = new EditText(ProdutoRegistroActivity.this);
-                            //   AlertDialog alertEdit;
                             txt.setText(reg.getRgs_vdescricao());
                             AlertDialog.Builder dialogEdit = new AlertDialog.Builder(ProdutoRegistroActivity.this);
                             dialogEdit.setTitle(R.string.EditarEspecificacao);
@@ -93,9 +93,9 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
                             dialogEdit.setNeutralButton(R.string.Cancelar, null);
                             dialogEdit.setNegativeButton(R.string.Salvar, null);
 
-                            alert = dialogEdit.create();
-                            alert.show();
-                            alert.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                            alert2 = dialogEdit.create();
+                            alert2.show();
+                            alert2.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     if (FuncoesExternas.Valida(txt)) {
@@ -198,7 +198,7 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
     private class SalvaRegistro extends AsyncTask<Registros,String, Boolean> {
         @Override
         protected Boolean doInBackground(Registros... params) {
-            Log.i("Salva registo::?","vamos ver"+registro.getRgs_codigo());
+            Log.i("Salva registo::?","vamos ver "+registro.getRgs_codigo());
             return DAO.Salvar(registro);
         }
 
@@ -207,6 +207,7 @@ public class ProdutoRegistroActivity extends AppCompatActivity {
             super.onPostExecute(aBoolean);
             if(aBoolean){
                 alert.cancel();
+                alert2.cancel();
                 adpRegistros.clear();
                 new CarregaRegistros().execute();
             }else {

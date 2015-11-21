@@ -42,4 +42,9 @@ public class DateUtil {
         Calendar cl = Calendar.getInstance();
         return  cl.getTime();
     }
+
+    public static  String GetDateFormated(){
+        Calendar cl = Calendar.getInstance();
+        return  dateToString(cl.getTime());
+    }
 }

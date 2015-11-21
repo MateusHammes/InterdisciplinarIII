@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 public class Produto implements Serializable {
 
@@ -9,6 +10,7 @@ public class Produto implements Serializable {
     private String pro_vdescricao;
     private int pro_cstatus;
     private int pro_ctipo;
+    private double valor;
 
     private Negocio negocio;
 
@@ -57,22 +59,13 @@ public class Produto implements Serializable {
         this.negocio = negocio;
     }
 
-  /*  public List<Produto_material> getLsProdutoMaterial() {
-        return lsProdutoMaterial;
+    public double getValor() {
+        return valor;
     }
 
-    public void setLsProdutoMaterial(List<Produto_material> lsProdutoMaterial) {
-        this.lsProdutoMaterial = lsProdutoMaterial;
+    public void setValor(double valor) {
+        this.valor = valor;
     }
-
-    public List<Registros> getLsRegistros() {
-        return lsRegistros;
-    }
-
-    public void setLsRegistros(List<Registros> lsRegistros) {
-        this.lsRegistros = lsRegistros;
-    }
-*/
 
     public int getPro_ctipo() {
         return pro_ctipo;
@@ -84,6 +77,6 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return getPro_vnome();
+        return getPro_vnome()+"  valor:"+ DecimalFormat.getInstance().format(getValor());
     }
 }

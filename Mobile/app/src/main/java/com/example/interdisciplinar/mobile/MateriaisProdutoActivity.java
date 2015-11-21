@@ -151,7 +151,7 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
 
         @Override
         protected List<Materiais> doInBackground(Materiais... params) {
-            return DAO.SelecionaMateriais();
+            return DAO.SelecionaMateriais(pageList);
         }
 
         @Override

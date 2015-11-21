@@ -153,22 +153,18 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         @Override
         protected String doInBackground(Negocio... params) {
 //            if(params.length>0) {
-                isNegocio = params[0].getNeg_ctipo() == NegocioTipo.Negocio;
-                return produtoDAO.SelecionaValorTotal(params[0].getNeg_codigo());
-  //          }else
-    //            return "0";
+            isNegocio = params[0].getNeg_ctipo() == NegocioTipo.Negocio;
+            return produtoDAO.SelecionaValorTotal(params[0].getNeg_codigo());
+            //          }else
+            //            return "0";
         }
 
         @Override
         protected void onPostExecute(String valor) {
             super.onPostExecute(valor);
-            //TextView txt;
-           // if(isNegocio)
             TextView  txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
-            //else
-            //    txt = (TextView)findViewById(R.id.negocioDetalhesTxtValorTotalOrcamento);
             Log.i("Valor", "TOTALLL = " + valor);
-            if(!valor.isEmpty())
+            if(valor != null)
                 txt.setText(DecimalFormat.getInstance().format(Double.parseDouble(valor)));
         }
     }
@@ -179,7 +175,12 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     private class CriaNegocioOrcamento extends  AsyncTask<Integer, String, String>{
         @Override
         protected String doInBackground(Integer... params) {
-            return DAO.criaNegocioOrcamento(params[0]);
+            try {
+                return DAO.criaNegocioOrcamento(params[0]);
+            }catch (Exception e){
+                Log.e("ERROR",e.toString());
+            }
+            return "0";
         }
 
         @Override
@@ -190,12 +191,12 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
             if(valor.equals("0"))//deu erro
                 Dialog.ShowAlertError(NegocioActivityDetalhes.this);
             else{
-                Negocio ng = negocio;
-                ng.getNeg_parent().setNeg_cstatus(NegocioStatus.CONCLUIDO);
+                Negocio ng = new Negocio();
+                ng.setNeg_cstatus(NegocioStatus.CONCLUIDO);
                 negocio.setNeg_parent(ng);
                 negocio.setNeg_codigo(Integer.parseInt(valor));
                 negocio.setNeg_ctipo(NegocioTipo.Negocio);
-                //SetValues(negocio);
+                negocio.setNeg_dcadastro(DateUtil.GetDate());
                 Intent i  = new Intent(NegocioActivityDetalhes.this, NegocioActivityDetalhes.class);
                 i.putExtra("NEGOCIO",negocio);
                 startActivity(i);

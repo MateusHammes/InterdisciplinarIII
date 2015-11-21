@@ -11,7 +11,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_grupo"
     tools:context="com.example.interdisciplinar.mobile.GrupoActivity"
+    android:focusable="true" android:focusableInTouchMode="true"
     android:orientation="vertical">
+
 
 
     <EditText

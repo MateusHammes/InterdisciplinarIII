@@ -103,6 +103,7 @@ public class MateriaisActivityForm extends AppCompatActivity {
                 if(FuncoesExternas.Valida(txtEstoque)){
                     GetItem();
                     Dialog.ShowProgressDialog(MateriaisActivityForm.this);
+                    Log.i("vai ", "sarva!!");
                     new Salvar().execute();
                 }
     }
@@ -118,7 +119,12 @@ public class MateriaisActivityForm extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Materiais... params) {
-            return DAO.Salvar(material);
+            try {
+                return DAO.Salvar(material);
+            }catch (Exception e){
+                Log.e("ERRRO!",e.toString());
+            }
+            return false;
         }
 
         @Override
@@ -130,8 +136,8 @@ public class MateriaisActivityForm extends AppCompatActivity {
                 Dialog.CancelProgressDialog();
                 finish();
             }else {
-                Dialog.ShowAlertError(MateriaisActivityForm.this);
                 Dialog.CancelProgressDialog();
+                Dialog.ShowAlertError(MateriaisActivityForm.this);
             }
         }
     }
@@ -140,18 +146,22 @@ public class MateriaisActivityForm extends AppCompatActivity {
         GrupoDAO gDAO =new GrupoDAO();
         @Override
         protected List<Grupo> doInBackground(Grupo... params) {
-            return gDAO.SelecionaTodosGrupo();
+            try {
+                return gDAO.SelecionaTodosGrupo();
+            }catch (Exception e){
+                Log.e("ERROR",e.toString());
+            }
+            return null;
         }
 
         @Override
         protected void onPostExecute(List<Grupo> lsGrupos) {
             super.onPostExecute(lsGrupos);
             Grupo gSelect = new Grupo();
-            Log.i("rt", "com " + lsGrupos.size());
-            if(lsGrupos!=null) {
+            if(lsGrupos!=null && lsGrupos.size()>0) {
                 for (Grupo gp : lsGrupos) {
                     adpGrupos.add(gp);
-                    if(gp.getGru_codigo()==grupo.getGru_codigo()) {
+                    if(grupo!=null && gp.getGru_codigo()==grupo.getGru_codigo()) {
                         gSelect = gp;
                     }
                 }

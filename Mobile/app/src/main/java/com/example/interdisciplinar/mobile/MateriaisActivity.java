@@ -34,6 +34,7 @@ public class MateriaisActivity extends AppCompatActivity {
     public static boolean ClearList=false;
     private int pageList=0;
     AlertDialog dlg;
+    final android.os.Handler handler = new android.os.Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +73,15 @@ public class MateriaisActivity extends AppCompatActivity {
                         .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                EditText search = (EditText)findViewById(R.id.materialTxtPesquisar);
+                                search.setText("");
                                 new Delete().execute(mtr);
                             }
                         }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //material = mtr;
+                        EditText search = (EditText)findViewById(R.id.materialTxtPesquisar);
+                        search.setText("");
                         Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
                         i.putExtra("MATERIAL", mtr);
                         startActivity(i);
@@ -110,9 +114,13 @@ public class MateriaisActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("--ACAO--", "onRESUME");
-        if(ClearList){
+        final EditText search = (EditText)findViewById(R.id.materialTxtPesquisar);
+        search.setText("");
+        if(ClearList) {
+            Log.i("--LIMPO--", " a lista ");
             adpMaterial.clear();
-            materialListView.setAdapter(adpMaterial);
+            adpMaterial.notifyDataSetChanged();
+           // materialListView.setAdapter(adpMaterial);
             ClearList=false;
         }
 
@@ -121,8 +129,7 @@ public class MateriaisActivity extends AppCompatActivity {
             new CarregaRegistros().execute();
         }
 
-        final EditText search = (EditText)findViewById(R.id.materialTxtPesquisar);
-        final android.os.Handler handler = new android.os.Handler();
+
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -140,8 +147,10 @@ public class MateriaisActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.i("iscreveuu -- ", "Inside of the method! ;) value:- " + search.getText().toString());
-                        CarregaPesquisa(search.getText().toString());
+                        if (search.isFocused()) {
+                            Log.i("iscreveuu -- ", "Inside of the method! ;) value:- " + search.getText().toString());
+                            CarregaPesquisa(search.getText().toString());
+                        }
                     }
                 }, 1000);
                 Log.i("iscreveuu", "out method");
@@ -149,6 +158,13 @@ public class MateriaisActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        pageList=0;
+        GoLoad=true;
+        adpMaterial.clear();
+    }
 
     public void CarregaPesquisa(String name){
         ProgressBar pg = (ProgressBar) findViewById(R.id.materialProgressBar);
@@ -156,6 +172,7 @@ public class MateriaisActivity extends AppCompatActivity {
         if(name.trim().equals("")){
             pageList=0;
             adpMaterial.clear();
+            Log.i("foi","vaziu");
             new CarregaRegistros().execute();
         }else{
             new CarregaPesquisa().execute(name);
@@ -165,6 +182,7 @@ public class MateriaisActivity extends AppCompatActivity {
 
     protected void AtualizaGrid(List<Materiais> lsItens){
         if(lsItens!=null) {
+            Log.i("Lista com","veio com "+lsItens.size());
             for (Materiais mt : lsItens) {
                 adpMaterial.add(mt);//converte object em Grupo
             }
@@ -176,7 +194,8 @@ public class MateriaisActivity extends AppCompatActivity {
                 GoLoad = true;
                 pageList++;
             }
-        }
+        }else
+            Log.i("Lista","Nulla");
     }
 
     private class CarregaRegistros extends AsyncTask<Materiais, String, List<Materiais>> {
@@ -184,7 +203,13 @@ public class MateriaisActivity extends AppCompatActivity {
 
         @Override
         protected List<Materiais> doInBackground(Materiais... params) {
-            return DAO.SelecionaMateriais();
+            try {
+                Log.i("foi", "carrega cm pag." + pageList);
+                return DAO.SelecionaMateriais(pageList);
+            }catch (Exception e){
+                Log.e("ERRO", e.toString());
+            }
+            return null;
         }
 
         @Override
@@ -226,6 +251,7 @@ public class MateriaisActivity extends AppCompatActivity {
         protected void onPostExecute(List<Materiais> materiaises) {
             super.onPostExecute(materiaises);
             adpMaterial.clear();
+            Log.i("retorno", "retornouuuu!!");
             if(materiaises!=null)
                 adpMaterial.addAll(materiaises);
             else

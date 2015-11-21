@@ -1,5 +1,7 @@
 package DAO;
 
+import android.util.Log;
+
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -16,19 +18,29 @@ import util.Connection;
 public class ProdutoMaterialDAO {
 
     public boolean Salvar(Produto_material Pmaterial){
-        String url = Connection.url.concat("produtoMaterial/salva");
-        RestTemplate rest = new RestTemplate();
-        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return "1".equals(rest.postForObject(url, Pmaterial, String.class));
+        try {
+            String url = Connection.url.concat("produtoMaterial/salva");
+            RestTemplate rest = new RestTemplate();
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            rest.getMessageConverters().add(new StringHttpMessageConverter());
+            return "1".equals(rest.postForObject(url, Pmaterial, String.class));
+        }catch (Exception e){
+            Log.e("ERROR", e.toString());
+        }
+        return false;
     }
 
     public boolean Editar(Produto_material Pmaterial){
-        String url = Connection.url.concat("produtoMaterial/edita");
-        RestTemplate rest = new RestTemplate();
-        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return "1".equals(rest.postForObject(url, Pmaterial, String.class));
+        try {
+            String url = Connection.url.concat("produtoMaterial/edita");
+            RestTemplate rest = new RestTemplate();
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            rest.getMessageConverters().add(new StringHttpMessageConverter());
+            return "1".equals(rest.postForObject(url, Pmaterial, String.class));
+        }catch (Exception e){
+            Log.e("ERROR", e.toString());
+        }
+        return false;
     }
 
 

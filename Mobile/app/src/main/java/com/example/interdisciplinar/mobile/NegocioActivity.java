@@ -39,6 +39,7 @@ public class NegocioActivity extends AppCompatActivity {
     public static boolean goLoad=true;
     public static boolean clearList=false;
     private AlertDialog dlg;
+    final android.os.Handler handler = new android.os.Handler();
 
 
     @Override
@@ -52,7 +53,7 @@ public class NegocioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NegocioActivity.this, NegocioActivityForm.class);
-                intent.putExtra("NEGOCIO",negocio);
+                intent.putExtra("NEGOCIO", negocio);
                 startActivity(intent);
             }
         });
@@ -100,6 +101,7 @@ public class NegocioActivity extends AppCompatActivity {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if(goLoad && listView.getLastVisiblePosition() == (adpNegocio.getCount() - 1)) {
                     goLoad = false;
+                    Log.i("laod", "foi pela lista");
                     new CarregaRegistros().execute();
                 }
             }
@@ -121,6 +123,12 @@ public class NegocioActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        final EditText search = (EditText)findViewById(R.id.negocioListagemTxtPesquisar);
+        search.setText("");
+        ProgressBar pgI = (ProgressBar) findViewById(R.id.negocioProgressBar);
+        pgI.setVisibility(View.VISIBLE);
+        Log.i("estado","GoLoad="+goLoad);
+
         if(clearList) {
             adpNegocio.clear();
             pageList=0;
@@ -128,6 +136,7 @@ public class NegocioActivity extends AppCompatActivity {
         }
         if(goLoad) {
             goLoad=false;
+            Log.i("load", "foi pelo Resume");
             new CarregaRegistros().execute();
         }
         if(msn!=null&& !msn.isEmpty()){
@@ -136,8 +145,8 @@ public class NegocioActivity extends AppCompatActivity {
             msn = null;
         }
 
-        final EditText search = (EditText)findViewById(R.id.negocioListagemTxtPesquisar);
-        final android.os.Handler handler = new android.os.Handler();
+
+
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -155,14 +164,30 @@ public class NegocioActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.i("iscreveuu -- ", "Inside of the method! ;) value:- " + search.getText().toString());
-                        CarregaPesquisa(search.getText().toString());
+                        if(search.isSelected()) {
+                            Log.i("iscreveuu -- ", "Inside of the method! ;) value:- " + search.getText().toString());
+                            CarregaPesquisa(search.getText().toString());
+                        }
                     }
                 }, 1000);
                 Log.i("iscreveuu", "out method");
             }
         });
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(" acao", "pause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        goLoad=true;
+        pageList=0;
+        adpNegocio.clear();
+        Log.i(" acao", "Sttoopp");
     }
 
     public void CarregaPesquisa(String name){
@@ -170,6 +195,7 @@ public class NegocioActivity extends AppCompatActivity {
         pg.setVisibility(View.VISIBLE);
         if(name.trim().equals("")){
             pageList=0;
+            adpNegocio.clear();
             new CarregaRegistros().execute();
         }else{
             new CarregaPesquisa().execute(name);
@@ -205,7 +231,7 @@ public class NegocioActivity extends AppCompatActivity {
 
     protected void AtualizaGrid(List<Negocio> lsItens){
         if(lsItens!=null) {
-            adpNegocio.clear();
+          ///  adpNegocio.clear();
             for (Negocio item : lsItens) {
                 adpNegocio.add(item);//converte object em Grupo
             }
@@ -226,6 +252,7 @@ public class NegocioActivity extends AppCompatActivity {
         ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
         @Override
         protected List<Negocio> doInBackground(String... params) {
+            Log.i("foi carreg.", "do "+ negocio.getNeg_codigo()+" em pg: "+pageList);
             return DAO.SelecionaNegocios(negocio.getNeg_ctipo(), pageList);
         }
 

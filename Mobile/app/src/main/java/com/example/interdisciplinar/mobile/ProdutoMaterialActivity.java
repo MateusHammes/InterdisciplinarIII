@@ -168,21 +168,23 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Produto_material... params) {
-            Log.i("Edita",prm.getPrm_iunidadeUtilizada()+"");
-            return prmDAO.Editar(prm);
+            try {
+                Log.i("Edita", prm.getPrm_iunidadeUtilizada() + "");
+                return prmDAO.Editar(prm);
+            }catch (Exception e){ Log.e("Error",e.toString());}
+            return false;
         }
 
         @Override
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
+            Dialog.CancelProgressDialog();
             if(salvo){
                 alertM.cancel();
                 new CarregaMaterial().execute();
                 adpMateriais.clear();
-            }else{
+            }else
                 Dialog.ShowAlert(ProdutoMaterialActivity.this,"Material do Produto","Ops.. Não foi posivel Editar, favor tente novamente!");
-            }
-            Dialog.CancelProgressDialog();
         }
     }
     private  class DeleteProdutoMaterial extends AsyncTask<Produto_material, String, Boolean>{
@@ -195,6 +197,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+            Dialog.CancelProgressDialog();
             if(aBoolean){
                 alertM.cancel();
                 new CarregaMaterial().execute();
@@ -202,7 +205,6 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
             }else
                 Dialog.ShowAlertError(ProdutoMaterialActivity.this);
 
-            Dialog.CancelProgressDialog();
         }
     }
 

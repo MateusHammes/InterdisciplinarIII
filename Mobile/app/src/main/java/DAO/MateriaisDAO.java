@@ -1,5 +1,7 @@
 package DAO;
 
+import android.util.Log;
+
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -13,9 +15,9 @@ import model.Materiais;
 import util.Connection;
 
 public class MateriaisDAO {
-    public List<Materiais> SelecionaMateriais(){
+    public List<Materiais> SelecionaMateriais(int page){
         try {
-            String url = Connection.url.concat("materiais");
+            String url = Connection.url.concat("materiais/range/"+page);
             RestTemplate rest = new RestTemplate();
             List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
             messageConverters.add(new MappingJackson2HttpMessageConverter());
@@ -23,7 +25,8 @@ public class MateriaisDAO {
             rest.setMessageConverters(messageConverters);
             rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             Materiais[] arrayMateriais = rest.getForObject(url, Materiais[].class); //(url,Materiais.class,));
-            return Arrays.asList(arrayMateriais);
+            if(arrayMateriais!=null)
+                return Arrays.asList(arrayMateriais);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -47,11 +50,17 @@ public class MateriaisDAO {
     }
 
     public boolean Salvar(Materiais Materiais){
-        String url = Connection.url.concat("materiais/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/Materiais";
-        RestTemplate rest = new RestTemplate();
-        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return "1".equals(rest.postForObject(url, Materiais, String.class));
+        try {
+            String url = Connection.url.concat("materiais/salva"); ////"http://192.168.0.102:8080/WebServiceREST/service/Materiais";
+
+            RestTemplate rest = new RestTemplate();
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            rest.getMessageConverters().add(new StringHttpMessageConverter());
+            return "1".equals(rest.postForObject(url, Materiais, String.class));
+        }catch (Exception e){
+            Log.e("ERRO",e.toString());
+        }
+        return false;
     }
 
     public boolean Deletar(Materiais Materiais){
