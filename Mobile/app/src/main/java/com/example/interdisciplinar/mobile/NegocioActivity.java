@@ -27,6 +27,7 @@ import DAO.NegocioDAO;
 import Enum.NegocioTipo;
 import Enum.NegocioStatus;
 import model.Negocio;
+import util.Dialog;
 
 public class NegocioActivity extends AppCompatActivity {
 
@@ -60,6 +61,7 @@ public class NegocioActivity extends AppCompatActivity {
         negocio = new Negocio();
         adpNegocio = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listView = (ListView) findViewById(R.id.negocioListView);
+        //region  eventos ListView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,  int position, long id) {
@@ -98,7 +100,7 @@ public class NegocioActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(goLoad && listView.getLastVisiblePosition() == (adpNegocio.getCount() - 1)) {
+                if (goLoad && listView.getLastVisiblePosition() == (adpNegocio.getCount() - 1)) {
                     goLoad = false;
                     Log.i("laod", "foi pela lista");
                     new CarregaRegistros().execute();
@@ -106,6 +108,13 @@ public class NegocioActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                return false;
+            }
+        });
+        //endregion
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null && bundle.containsKey("TIPO")){
             int tipo =  bundle.getInt("TIPO");
@@ -127,7 +136,6 @@ public class NegocioActivity extends AppCompatActivity {
         ProgressBar pgI = (ProgressBar) findViewById(R.id.negocioProgressBar);
         pgI.setVisibility(View.VISIBLE);
         Log.i("estado","GoLoad="+goLoad);
-
 
         if(goLoad) {
             goLoad=false;
@@ -283,6 +291,30 @@ public class NegocioActivity extends AppCompatActivity {
 
             adpNegocio.notifyDataSetChanged();
             pg.setVisibility(View.GONE);
+        }
+    }
+
+    private class DeletaRegistro extends AsyncTask<Negocio,String, Boolean>{
+
+        @Override
+        protected Boolean doInBackground(Negocio... params) {
+            return DAO.Deletar(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            Dialog.CancelProgressDialog();
+            if(aBoolean){
+                pageList=0;
+                goLoad=true;
+                ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
+                pg.setVisibility(View.VISIBLE);
+                new CarregaRegistros().execute();
+                adpNegocio.clear();
+            }else{
+                Dialog.ShowAlertError(NegocioActivity.this);
+            }
         }
     }
 

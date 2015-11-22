@@ -68,27 +68,36 @@ public class GrupoActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 final Grupo gp = adpGrupo.getItem(position);
-                new AlertDialog.Builder(GrupoActivity.this)
-                        .setTitle(R.string.tituloOpcao)
-                        .setMessage(R.string.mensagemOpcao)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                grupo = gp;
-                                new Delete().execute();
-                            }
-                        }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder alert =   new AlertDialog.Builder(GrupoActivity.this);
+                alert.setTitle(R.string.tituloOpcao);
+                alert.setMessage(R.string.mensagemOpcao);
+                alert.setIcon(android.R.drawable.ic_dialog_alert);
+                alert.setNeutralButton("Excluir", null);
+                alert.setNegativeButton("Editar", null);
+                alert.setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                    }
+                });//.show();
+                dlg = alert.create();
+                dlg.show();
+                dlg.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        grupo = gp;
+                        Dialog.ShowProgressDialog(GrupoActivity.this);
+                        new Delete().execute();
+                    }
+                });
+                dlg.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         grupo = adpGrupo.getItem(position);
+                        dlg.cancel();
                         GrupoForm();
                     }
-                }).setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).show();
+                });
+
                 return false;
             }
         });
@@ -267,7 +276,7 @@ public class GrupoActivity extends AppCompatActivity {
             try{
                 return DAO.Deletar(grupo);
             }catch (Exception e){
-                e.printStackTrace();
+                Log.e("ERROR", e.toString());
             }
             return false;
         }
@@ -275,12 +284,14 @@ public class GrupoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+            Dialog.CancelProgressDialog();
             if(aBoolean){
                 pageList =0;
                 new CarregaRegistros().execute();
                 adpGrupo.clear();
+                dlg.cancel();
             }else{
-                Dialog.ShowAlert(GrupoActivity.this,"Deletar","Opss, Esta Categoria ja esta sendo utilizada por outros registros!");
+                Dialog.ShowAlert(GrupoActivity.this,"Deletar","Opss, Esta Categoria já esta sendo utilizada por outros registros!");
             }
         }
     }
@@ -302,23 +313,22 @@ public class GrupoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
+            Dialog.CancelProgressDialog();
+
             if(salvo){
                 if(grupo.getGru_codigo()!=0 ){
                     msn = "Registro editado com Sucesso!";
                 }else
                     msn="Registro salvo com Sucesso!";
-
                 pageList =0;
                 new CarregaRegistros().execute();
                 adpGrupo.clear();
+                dlg.cancel();
+                Toast t = Toast.makeText(GrupoActivity.this,msn,Toast.LENGTH_SHORT);
+                t.show();
             } else {
                 Dialog.ShowAlert(GrupoActivity.this, "Erro", "Erro ao Inserir registro, Favor tente novamente");
-
             }
-            dlg.cancel();
-            Dialog.CancelProgressDialog();
-            Toast t = Toast.makeText(GrupoActivity.this,msn,Toast.LENGTH_SHORT);
-            t.show();
             msn = null;
         }
     }

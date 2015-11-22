@@ -130,13 +130,10 @@ public class MateriaisActivityForm extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean salvo) {
             super.onPostExecute(salvo);
+            Dialog.CancelProgressDialog();
             if(salvo){
-                MateriaisActivity.GoLoad = true;
-                MateriaisActivity.ClearList=true;
-                Dialog.CancelProgressDialog();
                 finish();
             }else {
-                Dialog.CancelProgressDialog();
                 Dialog.ShowAlertError(MateriaisActivityForm.this);
             }
         }

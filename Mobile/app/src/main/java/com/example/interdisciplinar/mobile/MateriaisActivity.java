@@ -66,31 +66,39 @@ public class MateriaisActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final Materiais mtr = adpMaterial.getItem(position);
-                new AlertDialog.Builder(MateriaisActivity.this)
-                        .setTitle(R.string.tituloOpcao)
-                        .setMessage(R.string.mensagemOpcao)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                EditText search = (EditText)findViewById(R.id.materialTxtPesquisar);
-                                search.setText("");
-                                new Delete().execute(mtr);
-                            }
-                        }).setNegativeButton("Editar", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder alert = new AlertDialog.Builder(MateriaisActivity.this);
+                       alert.setTitle(R.string.tituloOpcao);
+                alert.setMessage(R.string.mensagemOpcao);
+                alert.setIcon(android.R.drawable.ic_dialog_alert);
+                alert.setNeutralButton("Excluir", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        EditText search = (EditText)findViewById(R.id.materialTxtPesquisar);
+
+                    }
+                });
+                alert.setNegativeButton("Editar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText search = (EditText) findViewById(R.id.materialTxtPesquisar);
                         search.setText("");
                         Intent i = new Intent(MateriaisActivity.this, MateriaisActivityForm.class);
                         i.putExtra("MATERIAL", mtr);
                         startActivity(i);
                     }
-                }).setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+                });
+                alert.setPositiveButton("Cancelar", null);
+
+                dlg = alert.create();
+                dlg.show();
+                dlg.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
+                        EditText search = (EditText) findViewById(R.id.materialTxtPesquisar);
+                        search.setText("");
+                        Dialog.ShowProgressDialog(MateriaisActivity.this);
+                        new Delete().execute(mtr);
                     }
-                }).show();
+                });
                 return false;
             }
         });
@@ -116,13 +124,9 @@ public class MateriaisActivity extends AppCompatActivity {
         Log.i("--ACAO--", "onRESUME");
         final EditText search = (EditText)findViewById(R.id.materialTxtPesquisar);
         search.setText("");
-        if(ClearList) {
-            Log.i("--LIMPO--", " a lista ");
-            adpMaterial.clear();
-            adpMaterial.notifyDataSetChanged();
-           // materialListView.setAdapter(adpMaterial);
-            ClearList=false;
-        }
+        ProgressBar pgI = (ProgressBar) findViewById(R.id.materialProgressBar);
+        pgI.setVisibility(View.VISIBLE);
+
 
         if(GoLoad) {
             GoLoad=false;
@@ -224,19 +228,21 @@ public class MateriaisActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Materiais... params) {
-            if(DAO.Deletar(params[0])){
-                adpMaterial.remove(params[0]);
-                adpMaterial.notifyDataSetChanged();
-                return true;
-            }else
-                Dialog.ShowAlert(MateriaisActivity.this, "Deletar Material", "Ops.. Este material ja esta sendo Utilizado por outros Produtos");
-            return false;
+            return DAO.Deletar(params[0]);
         }
 
         @Override
         protected void onPostExecute(Boolean deleto) {
             super.onPostExecute(deleto);
             Dialog.CancelProgressDialog();
+            if(deleto){
+                pageList=0;
+                new CarregaRegistros().execute();
+                adpMaterial.clear();
+                dlg.cancel();
+            }else{
+                Dialog.ShowAlert(MateriaisActivity.this, "Deletar Material", "Ops.. Este material talvez já esteja sendo Utilizado por outros Produtos");
+            }
         }
     }
 
