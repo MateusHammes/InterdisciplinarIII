@@ -43,6 +43,19 @@ public class ProdutoMaterialDAO {
         return false;
     }
 
+    public boolean EditaReserva(Produto_material Pmaterial){
+        try {
+            String url = Connection.url.concat("produtoMaterial/editaReserva");
+            RestTemplate rest = new RestTemplate();
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            rest.getMessageConverters().add(new StringHttpMessageConverter());
+            return "1".equals(rest.postForObject(url, Pmaterial, String.class));
+        }catch (Exception e){
+            Log.e("ERROR", e.toString());
+        }
+        return false;
+    }
+
 
     public List<Produto_material> Seleciona(int pro_codigo){
         try {
@@ -60,12 +73,17 @@ public class ProdutoMaterialDAO {
         return null;
     }
 
-    public boolean Delete (Produto_material Pmaterial){
-        String url = Connection.url.concat("produtoMaterial/delete");
-        RestTemplate rest = new RestTemplate();
-        rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        rest.getMessageConverters().add(new StringHttpMessageConverter());
-        return "1".equals(rest.postForObject(url, Pmaterial, String.class));
+    public boolean Delete (int pro_id, int mtr_id){
+        try {
+            String url = Connection.url.concat("produtoMaterial/delete/" + pro_id + "/" + mtr_id);
+            RestTemplate rest = new RestTemplate();
+            rest.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            rest.getMessageConverters().add(new StringHttpMessageConverter());
+            return "1".equals(rest.getForObject(url, String.class));
+        }catch (Exception e){
+            Log.e("ERRROR",e.toString());
+        }
+        return false;
     }
 
 

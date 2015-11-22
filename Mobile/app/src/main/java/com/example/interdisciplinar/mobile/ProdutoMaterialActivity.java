@@ -80,6 +80,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
         listViewMateial.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                OpcaoesMaterial(position);
                 return false;
             }
         });
@@ -110,29 +111,65 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
         }
     }
 
-    private void OpcaoesMaterial(int position){
+    private void OpcaoesMaterial(final int position){
 
         final Produto_material produtMaterial = adpMateriais.getItem(position);
         Negocio neg = produto.getNegocio();
         AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoMaterialActivity.this);
         dialog.setTitle(R.string.tituloOpcao)
                 .setMessage(R.string.mensagemOpcao);
-
-        dialog.setNegativeButton(R.string.Deletar, null);
+        if(produtMaterial.getPrm_iunidadeUtilizada()==0)
+            dialog.setNegativeButton(R.string.Deletar, null);
         if(neg!=null && neg.getNeg_codigo()!=0 && neg.getNeg_cstatus()== NegocioStatus.ABERTO)
-            dialog.setNeutralButton(R.string.Editar, null);
+            dialog.setNeutralButton(R.string.Editar,null);
 
         dialog.setPositiveButton(R.string.Cancelar, null);
 
         alertM = dialog.create();
         alertM.show();
+        if(produtMaterial.getPrm_iunidadeUtilizada()==0)
+            alertM.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Dialog.ShowProgressDialog(ProdutoMaterialActivity.this);
+                    new DeleteProdutoMaterial().execute(produtMaterial);
+                    Log.i("Deleta","vai deleta!");
+                }
+            });
+        if(neg!=null && neg.getNeg_codigo()!=0 && neg.getNeg_cstatus()== NegocioStatus.ABERTO)
+            alertM.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertM.cancel();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoMaterialActivity.this);
+                    final EditText txtReserva = new EditText(ProdutoMaterialActivity.this);
+                    txtReserva.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    txtReserva.setText(produtMaterial.getPrm_iunidade() + "");
+                    dialog.setView(txtReserva);
+                    dialog.setTitle("Reservas do Material");
+                    dialog.setMessage("Informe quantas unidades você deseja reservar  de " + produtMaterial.getMaterial().getMtr_vnome() + "?");
+                    dialog.setNegativeButton(R.string.Salvar, null);
+                    dialog.setNeutralButton(R.string.Cancelar, null);
 
-        alertM.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+                    alertM = dialog.create();
+                    alertM.show();
+                    alertM.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (FuncoesExternas.Valida(txtReserva)) {
+                                int unidUsadas = Integer.parseInt(txtReserva.getText().toString());
+                                if (unidUsadas >= produtMaterial.getPrm_iunidadeUtilizada()) {///&& unidUsadas < prm.getPrm_iunidade()
+                                    prm = produtMaterial;
+                                    prm.setPrm_iunidade(unidUsadas);
+                                    Dialog.ShowProgressDialog(ProdutoMaterialActivity.this);
+                                    new EditaProdutoMaterialReserva().execute();
+                                } else
+                                    txtReserva.setError("A quantidade informada deve ser maior que "+produtMaterial.getPrm_iunidadeUtilizada()+"!");
+                            }
+                        }
+                    });
+                }
+            });
     }
 
     private void EditaValorMaterial(int position){
@@ -188,6 +225,8 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
             Dialog.CancelProgressDialog();
             if(salvo){
                 alertM.cancel();
+                ProgressBar pg = (ProgressBar)findViewById(R.id.produtoMaterialProgressBar);
+                pg.setVisibility(View.VISIBLE);
                 new CarregaMaterial().execute();
                 adpMateriais.clear();
                 lsMateriais.clear();
@@ -195,11 +234,40 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
                 Dialog.ShowAlertError(ProdutoMaterialActivity.this);
         }
     }
+
+    private class EditaProdutoMaterialReserva extends AsyncTask<Produto_material, String, Boolean>{
+        ProdutoMaterialDAO prmDAO = new ProdutoMaterialDAO();
+
+        @Override
+        protected Boolean doInBackground(Produto_material... params) {
+            try {
+                Log.i("Edita", prm.getPrm_iunidade() + "");
+                return prmDAO.EditaReserva(prm);
+            }catch (Exception e){ Log.e("Error",e.toString());}
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean salvo) {
+            super.onPostExecute(salvo);
+            Dialog.CancelProgressDialog();
+            if(salvo){
+                alertM.cancel();
+                ProgressBar pg = (ProgressBar)findViewById(R.id.produtoMaterialProgressBar);
+                pg.setVisibility(View.VISIBLE);
+                new CarregaMaterial().execute();
+                adpMateriais.clear();
+                lsMateriais.clear();
+            }else
+                Dialog.ShowAlertError(ProdutoMaterialActivity.this);
+        }
+    }
+
     private  class DeleteProdutoMaterial extends AsyncTask<Produto_material, String, Boolean>{
         ProdutoMaterialDAO prmDAO = new ProdutoMaterialDAO();
         @Override
         protected Boolean doInBackground(Produto_material... params) {
-            return prmDAO.Delete(prm);
+            return prmDAO.Delete(params[0].getProduto().getPro_codigo(), params[0].getMaterial().getMtr_codigo());
         }
 
         @Override
@@ -208,6 +276,8 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
             Dialog.CancelProgressDialog();
             if(aBoolean){
                 alertM.cancel();
+                ProgressBar pg = (ProgressBar)findViewById(R.id.produtoMaterialProgressBar);
+                pg.setVisibility(View.VISIBLE);
                 new CarregaMaterial().execute();
                 adpMateriais.clear();
                 lsMateriais.clear();

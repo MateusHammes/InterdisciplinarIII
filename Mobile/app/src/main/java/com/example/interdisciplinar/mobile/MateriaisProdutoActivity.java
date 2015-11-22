@@ -61,10 +61,7 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
-           /* if(bundle.containsKey("NEGOCIO")){
-                Negocio neg =(Negocio) bundle.getSerializable("CODIGO");
-              ///  prm.setNegocio(neg);
-            }*/
+
             if(bundle.containsKey("PRODUTO")){
                 Produto pro =(Produto) bundle.getSerializable("PRODUTO");
                 prm.setProduto(pro);
