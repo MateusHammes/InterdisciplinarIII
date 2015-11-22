@@ -16,10 +16,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import DAO.ProdutoMaterialDAO;
 import Enum.NegocioStatus;
+import model.Materiais;
 import model.Negocio;
 import model.Produto;
 import model.Produto_material;
@@ -31,6 +33,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
     private Produto_material prm = new Produto_material();
     private Produto produto  =new Produto();
     private ArrayAdapter<Produto_material> adpMateriais = null;
+    public static List<Materiais> lsMateriais = new ArrayList<>();
     private ListView listViewMateial = null;
     private  AlertDialog alertM;
 
@@ -95,9 +98,13 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
             super.onPostExecute(lsProdutoMaterial);
             if(lsProdutoMaterial!=null) {
                 adpMateriais.clear();
-                for (Produto_material rg : lsProdutoMaterial)
+                lsMateriais.clear();
+                for (Produto_material rg : lsProdutoMaterial) {
                     adpMateriais.add(rg);
+                    lsMateriais.add(rg.getMaterial());
+                }
                 listViewMateial.setAdapter(adpMateriais);
+
             }
             pg.setVisibility(View.GONE);
         }
@@ -183,6 +190,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
                 alertM.cancel();
                 new CarregaMaterial().execute();
                 adpMateriais.clear();
+                lsMateriais.clear();
             }else
                 Dialog.ShowAlertError(ProdutoMaterialActivity.this);
         }
@@ -202,6 +210,7 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
                 alertM.cancel();
                 new CarregaMaterial().execute();
                 adpMateriais.clear();
+                lsMateriais.clear();
             }else
                 Dialog.ShowAlertError(ProdutoMaterialActivity.this);
 

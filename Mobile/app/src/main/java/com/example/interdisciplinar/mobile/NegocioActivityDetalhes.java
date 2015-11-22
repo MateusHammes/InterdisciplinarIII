@@ -1,5 +1,7 @@
 package com.example.interdisciplinar.mobile;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,11 +35,17 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         setContentView(R.layout.activity_negocio_detalhes);
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null && bundle.containsKey("NEGOCIO")){
-            Log.i("Vai apresenta","PARAMETROSSSSS");
-            negocio =(Negocio) bundle.getSerializable("NEGOCIO");
-            Log.i("Vai apresenta","O NEgsds");
-            SetValues(negocio);
+        if(bundle!=null){
+
+            if(bundle.containsKey("NEGOCIO")){
+                Log.i("Vai apresenta","PARAMETROSSSSS");
+                negocio =(Negocio) bundle.getSerializable("NEGOCIO");
+                Log.i("Vai apresenta","O NEgsds");
+                SetValues(negocio);
+            }
+            if(bundle.containsKey("NOVO_NEGOCIO")){
+                Dialog.Show(NegocioActivityDetalhes.this,"Novo Negócio!","Parabéns, Você acabou de criar um novo négocio apartir de um orçamento");
+            }
         }
     }
 
@@ -58,10 +66,17 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         btnCriaNegocio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Dialog.ShowDialog(NegocioActivityDetalhes.this,"Criar Negócio!","Caso você criar um negócio, não será mais possível editar este orçamento, você tem certeza?")){
-                    Dialog.ShowProgressDialog(NegocioActivityDetalhes.this);
-                    new CriaNegocioOrcamento().execute(negocio.getNeg_codigo());
-                }
+                new AlertDialog.Builder(NegocioActivityDetalhes.this)
+                        .setTitle("Criar Negócio!")
+                        .setMessage("Caso você criar um negócio, não será mais possível editar este orçamento, você tem certeza?")
+                        .setNegativeButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Dialog.ShowProgressDialog(NegocioActivityDetalhes.this);
+                                new CriaNegocioOrcamento().execute(negocio.getNeg_codigo());
+                            }
+                        })
+                        .setPositiveButton("Não", null).show();
             }
         });
 
@@ -215,12 +230,14 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
             else{
                 Negocio ng = new Negocio();
                 ng.setNeg_cstatus(NegocioStatus.CONCLUIDO);
+                ng.setNeg_codigo(negocio.getNeg_codigo());
                 negocio.setNeg_parent(ng);
                 negocio.setNeg_codigo(Integer.parseInt(valor));
                 negocio.setNeg_ctipo(NegocioTipo.Negocio);
                 negocio.setNeg_dcadastro(DateUtil.GetDate());
                 Intent i  = new Intent(NegocioActivityDetalhes.this, NegocioActivityDetalhes.class);
                 i.putExtra("NEGOCIO",negocio);
+                i.putExtra("NOVO_NEGOCIO",true);
                 startActivity(i);
                 finish();
             }

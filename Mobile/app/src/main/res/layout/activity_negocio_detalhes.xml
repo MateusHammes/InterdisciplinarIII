@@ -120,7 +120,7 @@
                 android:id="@+id/textView22"
                 android:textStyle="bold" />
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -141,7 +141,7 @@
                     android:text="Unit."
                     android:id="@+id/negocioDetalhesTxtQuantidadeProdutosNegocio"
                     style="@style/labelDetails" />
-            </LinearLayout>
+            </LinearLayout>-->
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -153,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/ValorTotal"
+                    android:text="Valor Atual"
                     android:id="@+id/textView24"
                     android:layout_weight="2"/>
 
@@ -198,7 +198,7 @@
                     style="@style/labelDetails"
                     android:layout_gravity="top" />
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -220,7 +220,7 @@
                         android:text="Unit."
                         android:id="@+id/negocioDetalhesTxtQuantidadeProdutosOrcamento"
                         style="@style/labelDetails" />
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <LinearLayout
                     android:orientation="horizontal"

@@ -124,12 +124,19 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
     }
 
     protected void AtualizaGrid(List<Materiais> lsItens){
-    /*    Materiais mtt = new Materiais();
-        mtt.setMtr_vnome("TESTE MATERIAL");
-        lsItens.add(mtt);*/
         if(lsItens!=null) {
             for (Materiais mt : lsItens) {
-                adpMaterial.add(mt);//converte object em Grupo
+                try{
+                    boolean add=true;
+                    for (Materiais mtLs : ProdutoMaterialActivity.lsMateriais) {
+                        if(mtLs.getMtr_codigo()==mt.getMtr_codigo())
+                            add=false;
+                    }
+                    if(add)
+                        adpMaterial.add(mt);
+                }catch (Exception e) {
+                    adpMaterial.add(mt);
+                }
             }
             if(pageList==0)
                 materialListView.setAdapter(adpMaterial);
@@ -140,10 +147,7 @@ public class MateriaisProdutoActivity extends AppCompatActivity {
                 GoLoad = true;
                 pageList++;
             }
-
         }
-
-
     }
 
     private class CarregaRegistros extends AsyncTask<Materiais, String, List<Materiais>> {

@@ -3,7 +3,6 @@ package util;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
 
 public class Dialog {
@@ -30,7 +29,7 @@ public class Dialog {
         alert.setNeutralButton("Ok", null);
         alert.show();
     }
-    public static boolean ShowDialog(Context ctx, String titulo, String msm){
+  /*  public static boolean ShowDialog(Context ctx, String titulo, String msm){
         return ShowDialog(ctx, titulo, msm, "Sim", "Não");
     }
 
@@ -40,13 +39,13 @@ public class Dialog {
         Log.i("DIALOG", "TAMO AKI");
         dialog.setTitle(titulo);
         dialog.setMessage(msm);
-        dialog.setPositiveButton(textBtnPositive, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(textBtnPositive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 bool = true;
             }
         });
-        dialog.setNegativeButton(textBtnNegative, new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(textBtnNegative, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 bool = false;
@@ -55,7 +54,7 @@ public class Dialog {
         dialog.show();
         return bool;
     }
-
+*/
     public static  void ShowProgressDialog(Context ctx){
         try {
             PD = new ProgressDialog(ctx);

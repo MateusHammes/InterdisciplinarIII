@@ -111,6 +111,47 @@ public class NegocioActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final Negocio neg = adpNegocio.getItem(position);
+                AlertDialog.Builder alert = new  AlertDialog.Builder(NegocioActivity.this);
+                alert.setTitle("Excluir Registro!");
+                alert.setMessage("Você deseja excluir este registro?");
+                alert.setNegativeButton("Excluir", null);
+                alert.setPositiveButton("Cancelar", null);
+                dlg = alert.create();
+                dlg.show();
+                dlg.getButton(DialogInterface.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                      /*  if(neg.getNeg_ctipo()==NegocioTipo.Orcamento){
+                            if(neg.getNeg_cstatus()==NegocioStatus.CONCLUIDO){*/
+                            new AlertDialog.Builder(NegocioActivity.this)
+                                    .setTitle("Excluir Registro")
+                                    .setMessage("Caso você delete este registro, não será mais possível visualiza-lo, você tem certeza?")
+                                    .setNegativeButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Dialog.ShowProgressDialog(NegocioActivity.this);
+                                            new DeletaRegistro().execute(neg);
+                                        }
+                                    })
+                                    .setPositiveButton("Não", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dlg.cancel();
+                                        }
+                                    }).show();
+                            }
+                        /*}else{
+                            if(neg.getNeg_parent()!=null && neg.getNeg_parent().getNeg_codigo()!=0)
+                                if(Dialog.ShowDialog(NegocioActivity.this,"Excluir Registro","Caso você deletar este registro, não será mais possível visualiza-lo, você tem certeza?")){
+                                    Dialog.ShowProgressDialog(NegocioActivity.this);
+                                    new DeletaRegistro().execute(neg);
+                                }else
+                                    dlg.cancel();
+                        }*/
+                    //}
+                });
                 return false;
             }
         });
@@ -194,10 +235,10 @@ public class NegocioActivity extends AppCompatActivity {
 
     public void CarregaPesquisa(String name){
         ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
+        adpNegocio.clear();
         pg.setVisibility(View.VISIBLE);
         if(name.trim().equals("")){
             pageList=0;
-            adpNegocio.clear();
             new CarregaRegistros().execute();
         }else{
             new CarregaPesquisa().execute(name);
@@ -298,20 +339,20 @@ public class NegocioActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Negocio... params) {
+            Log.i("Deleta","vai deleta!!!");
             return DAO.Deletar(params[0]);
         }
-
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             Dialog.CancelProgressDialog();
             if(aBoolean){
                 pageList=0;
-                goLoad=true;
                 ProgressBar pg = (ProgressBar) findViewById(R.id.negocioProgressBar);
                 pg.setVisibility(View.VISIBLE);
                 new CarregaRegistros().execute();
                 adpNegocio.clear();
+                dlg.cancel();
             }else{
                 Dialog.ShowAlertError(NegocioActivity.this);
             }
