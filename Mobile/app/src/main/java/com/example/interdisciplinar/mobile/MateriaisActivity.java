@@ -66,8 +66,8 @@ public class MateriaisActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final Materiais mtr = adpMaterial.getItem(position);
-            AlertDialog.Builder alert = new AlertDialog.Builder(MateriaisActivity.this);
-                       alert.setTitle(R.string.tituloOpcao);
+                AlertDialog.Builder alert = new AlertDialog.Builder(MateriaisActivity.this);
+                alert.setTitle(R.string.tituloOpcao);
                 alert.setMessage(R.string.mensagemOpcao);
                 alert.setIcon(android.R.drawable.ic_dialog_alert);
                 alert.setNeutralButton("Excluir", new DialogInterface.OnClickListener() {
@@ -238,6 +238,8 @@ public class MateriaisActivity extends AppCompatActivity {
             if(deleto){
                 pageList=0;
                 new CarregaRegistros().execute();
+                ProgressBar pg = (ProgressBar) findViewById(R.id.materialProgressBar);
+                pg.setVisibility(View.VISIBLE);
                 adpMaterial.clear();
                 dlg.cancel();
             }else{

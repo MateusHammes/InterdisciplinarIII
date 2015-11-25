@@ -80,7 +80,9 @@ public class ProdutoMaterialActivity extends AppCompatActivity {
         listViewMateial.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                OpcaoesMaterial(position);
+                Negocio neg = produto.getNegocio();
+                if(neg!=null && neg.getNeg_codigo() != 0 && neg.getNeg_cstatus() == NegocioStatus.ABERTO)
+                    OpcaoesMaterial(position);
                 return false;
             }
         });

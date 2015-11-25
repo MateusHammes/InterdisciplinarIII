@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import DAO.NegocioDAO;
 import DAO.ProdutoDAO;
@@ -28,6 +28,9 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
     NegocioDAO DAO = new NegocioDAO();
     private Negocio negocio;
     public static String mensage = null;
+    private double valorNegocio = 0;
+    private double valorOrcamento = 0;
+    final NumberFormat mbf = NumberFormat.getCurrencyInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,15 +182,21 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         protected void onPostExecute(String valor) {
             super.onPostExecute(valor);
             TextView  txt = (TextView)findViewById(R.id.negocioDetailValorTotal);
-            Log.i("Valor", "TOTALLL = " + valor);
-            if(valor != null)
-                txt.setText("R$ "+DecimalFormat.getInstance().format(Double.parseDouble(valor)));
+            Log.i("Valor", "TOTALLL Negocio = " + valor);
+            txt.setText(mbf.format(Double.parseDouble(valor)));
+            //mbf.format()
+            //  Log.i("Valor", "TOTALLL Negocio Atualizado= " + valorNegocio);
+            valorNegocio = Double.parseDouble(valor);
+            if(valorOrcamento!=0){
+                TextView  txtValor = (TextView)findViewById(R.id.negocioDetailValorDescricao);
+                txtValor.setText(PegaPorcentagem());
+                txtValor.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     private class PegaValorTotalOrcamento extends AsyncTask<Negocio, String, String >{
         ProdutoDAO produtoDAO = new ProdutoDAO();
-        boolean isNegocio =true;
         @Override
         protected String doInBackground(Negocio... params) {
             try {
@@ -200,9 +209,14 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
         protected void onPostExecute(String valor) {
             super.onPostExecute(valor);
             TextView  txt = (TextView)findViewById(R.id.negocioDetalhesTxtValorTotalOrcamento);
-            Log.i("Valor", "TOTALLL = " + valor);
-            if(valor != null)
-                txt.setText("R$ "+DecimalFormat.getInstance().format(Double.parseDouble(valor)));
+            txt.setText(mbf.format(Double.parseDouble(valor)));
+            TextView  txtValor = (TextView)findViewById(R.id.negocioDetailValorDescricao);
+            Log.i("Valor", "TOTALLL Orcamento = " + valor);
+            valorOrcamento = Double.parseDouble(valor);
+            if(valorNegocio != 0) {
+                txtValor.setText(PegaPorcentagem());
+                txtValor.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -242,6 +256,39 @@ public class NegocioActivityDetalhes extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    private String PegaPorcentagem(){
+        String porc = "";
+        try{
+            //  double orcamentDouble = Double.parseDouble(orcamento);
+            Log.i("orcamentDouble", valorOrcamento+"");
+            Log.i("valorNegocio",valorNegocio+"");
+            if(valorNegocio != valorOrcamento){
+                if(valorOrcamento==0 && valorNegocio >0){
+                    porc=" Aumento de 100%";
+                }else if(valorNegocio==0 && valorOrcamento > 0){
+                    porc=" Queda de 100%";
+                }else{
+                    double result = (valorOrcamento / valorNegocio);
+                    Log.i("VALOR antes dos 100**",result+"");
+                    result =Math.round(result*100); ///Math.pow((result*100),3);
+                    Log.i("VALOR depois d100**",result+"");
+                    if(result>100) {
+                        result = result - 100;
+                        porc = "Queda de "+result+"%";
+                    }else{
+                        result = (result - 100)*(-1);
+                        porc=" Aumento de "+result+"%";
+                    }
+                }
+            }else{
+                porc=" Parabéns, até agora sua estimativa de valor está correta!";
+            }
+        }catch (Exception e){
+            Log.i("Excent",e.toString());
+        }
+        return porc;
     }
 
 }

@@ -91,14 +91,16 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Data de Término"
                 android:id="@+id/negocioDetalhestxtDataTerminoLabel"
-                style="@style/labelDetails" />
+                style="@style/labelDetails"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/negocioDetalhesTxtDataTermino" />
+                android:id="@+id/negocioDetalhesTxtDataTermino"
+                android:visibility="invisible" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -114,11 +116,7 @@
 
             </LinearLayout>
 
-            <TextView
-                style="@style/labelDetails"
-                android:text="Totais"
-                android:id="@+id/textView22"
-                android:textStyle="bold" />
+
 
            <!-- <LinearLayout
                 android:orientation="horizontal"
@@ -144,44 +142,6 @@
             </LinearLayout>-->
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/labelDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Valor Atual"
-                    android:id="@+id/textView24"
-                    android:layout_weight="2"/>
-
-                <TextView
-                    style="@style/labelDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="R$"
-                    android:id="@+id/negocioDetailValorTotal" />
-            </LinearLayout>
-
-            <LinearLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="visible">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/negocioDetalhesBtnCriarNegocio"
-                    android:text="@string/CriarNegocio"
-                    android:layout_weight="1"
-                    android:layout_marginTop="15dp"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -197,30 +157,6 @@
                     android:textStyle="bold"
                     style="@style/labelDetails"
                     android:layout_gravity="top" />
-
-                <!--<LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/TotalProdutos"
-                        android:id="@+id/textView21"
-                        android:layout_weight="2"
-                        style="@style/labelDetails" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Unit."
-                        android:id="@+id/negocioDetalhesTxtQuantidadeProdutosOrcamento"
-                        style="@style/labelDetails" />
-                </LinearLayout>-->
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -245,6 +181,71 @@
                         style="@style/labelDetails" />
                 </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                style="@style/labelDetails"
+                android:text="Totais"
+                android:id="@+id/textView22"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/labelDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Valor Atual"
+                    android:id="@+id/textView24"
+                    android:layout_weight="2"/>
+
+                <TextView
+                    style="@style/labelDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="R$"
+                    android:id="@+id/negocioDetailValorTotal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/labelDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="descricao"
+                    android:id="@+id/negocioDetailValorDescricao"
+                    android:gravity="center"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/negocioDetalhesBtnCriarNegocio"
+                    android:text="@string/CriarNegocio"
+                    android:layout_weight="1"
+                    android:layout_marginTop="15dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
     </ScrollView>
